@@ -1,5 +1,19 @@
 package com.bugsjkeeee.tempo.ui.journal
 
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.AlertDialog
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlin.math.roundToInt
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.gestures.rememberDraggableState
+import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.animation.core.Animatable
+import kotlinx.coroutines.launch
+import androidx.compose.runtime.remember
 import com.bugsjkeeee.tempo.ui.components.RoundIconButton
 import com.bugsjkeeee.tempo.ui.components.SegmentedControl
 import com.bugsjkeeee.tempo.ui.components.AddFab
@@ -77,7 +91,11 @@ data class JournalState(
     val complexRecords: List<ComplexRecord> = emptyList(),
 )
 
-class JournalViewModel(app: TempoApp) : ViewModel() {
+class JournalViewModel(private val app: TempoApp) : ViewModel() {
+    fun delete(id: Long) {
+        viewModelScope.launch { app.journalRepository.delete(id) }
+    }
+
     val state: StateFlow<JournalState> = combine(app.journalRepository.entries, app.contentRepository.exercisesFlow) { entries, ex ->
         val map = ex.associateBy { it.id }
         JournalState(
@@ -106,6 +124,7 @@ private val journalTabs = listOf("Список", "Календарь", "Реко
 fun JournalScreen(
     contentPadding: PaddingValues,
     onEntry: (Long) -> Unit,
+    onEdit: (Long) -> Unit,
     onAdd: () -> Unit,
     onExerciseRecord: (String) -> Unit,
     onComplexRecord: (String) -> Unit,
@@ -113,6 +132,7 @@ fun JournalScreen(
     val vm = appViewModel { JournalViewModel(it) }
     val state by vm.state.collectAsStateWithLifecycle()
     var tab by rememberSaveable { mutableIntStateOf(0) }
+    var toDelete by remember { mutableStateOf<JournalEntry?>(null) }
     if (!state.loaded) return
 
     Box(Modifier.fillMaxSize().padding(top = contentPadding.calculateTopPadding())) {
@@ -120,12 +140,60 @@ fun JournalScreen(
             SegmentedControl(journalTabs, tab, { tab = it }, Modifier.padding(horizontal = 16.dp))
             val padding = PaddingValues(start = 16.dp, end = 16.dp, top = 12.dp, bottom = contentPadding.calculateBottomPadding() + 88.dp)
             when (tab) {
-                0 -> EntryList(state.entries, padding, onEntry)
+                0 -> EntryList(state.entries, padding, onEntry, onEdit) { toDelete = it }
                 1 -> CalendarTab(state, padding, onEntry)
                 else -> RecordsTab(state, padding, onExerciseRecord, onComplexRecord)
             }
         }
         AddFab(onAdd, Modifier.align(Alignment.BottomEnd).padding(end = 20.dp, bottom = contentPadding.calculateBottomPadding() + 16.dp))
+    }
+
+    toDelete?.let { e ->
+        AlertDialog(
+            onDismissRequest = { toDelete = null },
+            title = { Text("Удалить запись?") },
+            text = { Text("«${e.title}» от ${formatDate(e.date)} будет удалена из журнала.") },
+            confirmButton = {
+                TextButton(onClick = {
+                    vm.delete(e.id)
+                    toDelete = null
+                }) { Text("Удалить") }
+            },
+            dismissButton = { TextButton(onClick = { toDelete = null }) { Text("Отмена") } },
+        )
+    }
+}
+
+/** Свайп влево открывает справа кнопки «Редактировать» и «Удалить». */
+@Composable
+private fun SwipeActions(onEdit: () -> Unit, onDelete: () -> Unit, content: @Composable () -> Unit) {
+    val revealPx = with(LocalDensity.current) { 104.dp.toPx() }
+    val offset = remember { Animatable(0f) }
+    val scope = rememberCoroutineScope()
+    fun close() = scope.launch { offset.animateTo(0f) }
+    Box(Modifier.fillMaxWidth().height(IntrinsicSize.Min)) {
+        Row(
+            Modifier.matchParentSize().padding(end = 4.dp),
+            horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.End),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            RoundIconButton(TempoIcons.Edit, "Редактировать", { close(); onEdit() })
+            RoundIconButton(TempoIcons.Trash, "Удалить", { close(); onDelete() }, tint = MaterialTheme.colorScheme.error)
+        }
+        Box(
+            Modifier
+                .offset { IntOffset(offset.value.roundToInt(), 0) }
+                .draggable(
+                    orientation = Orientation.Horizontal,
+                    state = rememberDraggableState { delta ->
+                        scope.launch { offset.snapTo((offset.value + delta).coerceIn(-revealPx, 0f)) }
+                    },
+                    onDragStopped = { velocity ->
+                        val open = offset.value < -revealPx / 2 || velocity < -800f
+                        offset.animateTo(if (open && velocity <= 800f) -revealPx else 0f)
+                    },
+                ),
+        ) { content() }
     }
 }
 
@@ -145,7 +213,13 @@ fun EntryCard(entry: JournalEntry, onClick: () -> Unit) {
 }
 
 @Composable
-private fun EntryList(entries: List<JournalEntry>, padding: PaddingValues, onEntry: (Long) -> Unit) {
+private fun EntryList(
+    entries: List<JournalEntry>,
+    padding: PaddingValues,
+    onEntry: (Long) -> Unit,
+    onEdit: (Long) -> Unit,
+    onDelete: (JournalEntry) -> Unit,
+) {
     LazyColumn(contentPadding = padding, verticalArrangement = Arrangement.spacedBy(10.dp)) {
         if (entries.isEmpty()) {
             item {
@@ -155,7 +229,9 @@ private fun EntryList(entries: List<JournalEntry>, padding: PaddingValues, onEnt
                 )
             }
         }
-        items(entries, key = { it.id }) { EntryCard(it) { onEntry(it.id) } }
+        items(entries, key = { it.id }) { e ->
+            SwipeActions(onEdit = { onEdit(e.id) }, onDelete = { onDelete(e) }) { EntryCard(e) { onEntry(e.id) } }
+        }
     }
 }
 

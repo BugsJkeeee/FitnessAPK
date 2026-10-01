@@ -147,7 +147,7 @@ fun RandomScreen(contentPadding: PaddingValues, resetKey: Int, onNavigate: (Stri
         ),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        item { FilterPanel(state.filters, vm::setFilters, initiallyExpanded = !state.rolled) }
+        item { FilterPanel(state.filters, vm::setFilters) }
         item {
             PrimaryButton(
                 "Новая тренировка",

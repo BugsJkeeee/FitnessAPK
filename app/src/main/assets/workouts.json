@@ -227,12 +227,13 @@
  },
  {
   "id": "f008",
-  "name": "Хелен на гребле",
+  "name": "Хелен",
   "type": "functional",
   "format": "FOR_TIME",
   "level": 2,
   "durationMin": 15,
   "muscles": [
+   "legs",
    "full",
    "back",
    "arms"
@@ -240,12 +241,12 @@
   "equipment": [
    "kettlebell",
    "pullup_bar",
-   "rower"
+   "treadmill"
   ],
   "items": [
    {
-    "exercise": "row_erg",
-    "dose": "500 м"
+    "exercise": "treadmill_run",
+    "dose": "400 м"
    },
    {
     "exercise": "kb_swing",
@@ -260,7 +261,7 @@
    "mode": "FOR_TIME",
    "capSec": 900
   },
-  "description": "3 раунда. Бег заменён греблей."
+  "description": "3 раунда."
  },
  {
   "id": "f009",
@@ -330,26 +331,26 @@
  },
  {
   "id": "f011",
-  "name": "Мёрф на гребле",
+  "name": "Мёрф",
   "type": "functional",
   "format": "FOR_TIME",
   "level": 3,
   "durationMin": 60,
   "muscles": [
+   "legs",
    "full",
    "back",
    "arms",
-   "chest",
-   "legs"
+   "chest"
   ],
   "equipment": [
    "pullup_bar",
-   "rower"
+   "treadmill"
   ],
   "items": [
    {
-    "exercise": "row_erg",
-    "dose": "2000 м"
+    "exercise": "treadmill_run",
+    "dose": "1,6 км"
    },
    {
     "exercise": "pullup",
@@ -364,15 +365,15 @@
     "dose": "300"
    },
    {
-    "exercise": "row_erg",
-    "dose": "2000 м"
+    "exercise": "treadmill_run",
+    "dose": "1,6 км"
    }
   ],
   "timer": {
    "mode": "FOR_TIME",
    "capSec": 3600
   },
-  "description": "Гребля, затем подтягивания, отжимания и приседания в любом порядке и разбивке, в конце снова гребля."
+  "description": "Бег 1 миля, затем подтягивания, отжимания и приседания в любом порядке и разбивке, в конце снова бег 1 миля."
  },
  {
   "id": "f012",
@@ -2819,6 +2820,397 @@
    "rounds": 6
   },
   "description": "6 раундов: 2 мин работы, 1 мин отдыха."
+ },
+ {
+  "id": "f085",
+  "name": "Майкл",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 40,
+  "muscles": [
+   "legs",
+   "full",
+   "back",
+   "abs"
+  ],
+  "equipment": [
+   "machine",
+   "treadmill"
+  ],
+  "items": [
+   {
+    "exercise": "treadmill_run",
+    "dose": "800 м"
+   },
+   {
+    "exercise": "hyperextension",
+    "dose": "50"
+   },
+   {
+    "exercise": "situp",
+    "dose": "50"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 2400
+  },
+  "description": "3 раунда."
+ },
+ {
+  "id": "f086",
+  "name": "Бег и бёрпи",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 25,
+  "muscles": [
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "treadmill"
+  ],
+  "items": [
+   {
+    "exercise": "treadmill_run",
+    "dose": "400 м"
+   },
+   {
+    "exercise": "burpee",
+    "dose": "15"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 1500
+  },
+  "description": "5 раундов."
+ },
+ {
+  "id": "f087",
+  "name": "Дорожка и штанга",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 25,
+  "muscles": [
+   "legs",
+   "full",
+   "back",
+   "arms"
+  ],
+  "equipment": [
+   "barbell",
+   "pullup_bar",
+   "treadmill"
+  ],
+  "items": [
+   {
+    "exercise": "treadmill_run",
+    "dose": "400 м"
+   },
+   {
+    "exercise": "thruster",
+    "dose": "12, 43/30 кг"
+   },
+   {
+    "exercise": "pullup",
+    "dose": "9"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 1500
+  },
+  "description": "4 раунда."
+ },
+ {
+  "id": "f088",
+  "name": "Бег и гиря",
+  "type": "functional",
+  "format": "AMRAP",
+  "level": 2,
+  "durationMin": 20,
+  "muscles": [
+   "legs",
+   "full",
+   "chest",
+   "arms"
+  ],
+  "equipment": [
+   "kettlebell",
+   "treadmill"
+  ],
+  "items": [
+   {
+    "exercise": "treadmill_run",
+    "dose": "400 м"
+   },
+   {
+    "exercise": "kb_swing",
+    "dose": "15, 24/16 кг"
+   },
+   {
+    "exercise": "pushup",
+    "dose": "10"
+   }
+  ],
+  "timer": {
+   "mode": "AMRAP",
+   "durationSec": 1200
+  },
+  "description": "Как можно больше раундов за 20 минут."
+ },
+ {
+  "id": "f089",
+  "name": "Горка и выпады",
+  "type": "functional",
+  "format": "AMRAP",
+  "level": 2,
+  "durationMin": 24,
+  "muscles": [
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "treadmill"
+  ],
+  "items": [
+   {
+    "exercise": "treadmill_walk",
+    "dose": "2 мин, наклон 15 %"
+   },
+   {
+    "exercise": "walking_lunge",
+    "dose": "20"
+   },
+   {
+    "exercise": "air_squat",
+    "dose": "20"
+   }
+  ],
+  "timer": {
+   "mode": "AMRAP",
+   "durationSec": 1440
+  },
+  "description": "Как можно больше раундов за 24 минуты."
+ },
+ {
+  "id": "f090",
+  "name": "Вело и гантели",
+  "type": "functional",
+  "format": "AMRAP",
+  "level": 2,
+  "durationMin": 20,
+  "muscles": [
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "bike",
+   "dumbbell"
+  ],
+  "items": [
+   {
+    "exercise": "bike",
+    "dose": "1 км"
+   },
+   {
+    "exercise": "db_thruster",
+    "dose": "12, 15/10 кг"
+   },
+   {
+    "exercise": "burpee",
+    "dose": "8"
+   }
+  ],
+  "timer": {
+   "mode": "AMRAP",
+   "durationSec": 1200
+  },
+  "description": "Как можно больше раундов за 20 минут."
+ },
+ {
+  "id": "f091",
+  "name": "Вело и гиря",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 30,
+  "muscles": [
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "bike",
+   "kettlebell"
+  ],
+  "items": [
+   {
+    "exercise": "bike",
+    "dose": "1,5 км"
+   },
+   {
+    "exercise": "kb_swing",
+    "dose": "20, 24/16 кг"
+   },
+   {
+    "exercise": "kb_goblet_squat",
+    "dose": "15"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 1800
+  },
+  "description": "5 раундов."
+ },
+ {
+  "id": "f092",
+  "name": "Вело EMOM",
+  "type": "functional",
+  "format": "EMOM",
+  "level": 2,
+  "durationMin": 16,
+  "muscles": [
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "bike"
+  ],
+  "items": [
+   {
+    "exercise": "bike",
+    "dose": "15 кал — нечётные минуты"
+   },
+   {
+    "exercise": "burpee",
+    "dose": "12 — чётные минуты"
+   }
+  ],
+  "timer": {
+   "mode": "EMOM",
+   "intervalSec": 60,
+   "rounds": 16
+  },
+  "description": "16 минут, упражнения чередуются каждую минуту."
+ },
+ {
+  "id": "f093",
+  "name": "Степпер и пресс",
+  "type": "functional",
+  "format": "AMRAP",
+  "level": 1,
+  "durationMin": 20,
+  "muscles": [
+   "legs",
+   "abs",
+   "full"
+  ],
+  "equipment": [
+   "stepper"
+  ],
+  "items": [
+   {
+    "exercise": "stepper",
+    "dose": "2 мин"
+   },
+   {
+    "exercise": "situp",
+    "dose": "20"
+   },
+   {
+    "exercise": "plank",
+    "dose": "30 с"
+   }
+  ],
+  "timer": {
+   "mode": "AMRAP",
+   "durationSec": 1200
+  },
+  "description": "Как можно больше раундов за 20 минут."
+ },
+ {
+  "id": "f094",
+  "name": "Эллипс и турник",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 30,
+  "muscles": [
+   "full",
+   "back",
+   "arms",
+   "chest"
+  ],
+  "equipment": [
+   "elliptical",
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "elliptical",
+    "dose": "3 мин"
+   },
+   {
+    "exercise": "pullup",
+    "dose": "10"
+   },
+   {
+    "exercise": "pushup",
+    "dose": "15"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 1800
+  },
+  "description": "4 раунда."
+ },
+ {
+  "id": "f095",
+  "name": "Кардио-силовой круг",
+  "type": "functional",
+  "format": "TABATA",
+  "level": 2,
+  "durationMin": 12,
+  "muscles": [
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "bike",
+   "kettlebell",
+   "treadmill"
+  ],
+  "items": [
+   {
+    "exercise": "treadmill_run",
+    "dose": "раунды 1, 5, 9"
+   },
+   {
+    "exercise": "kb_swing",
+    "dose": "раунды 2, 6, 10"
+   },
+   {
+    "exercise": "bike",
+    "dose": "раунды 3, 7, 11"
+   },
+   {
+    "exercise": "burpee",
+    "dose": "раунды 4, 8, 12"
+   }
+  ],
+  "timer": {
+   "mode": "INTERVALS",
+   "workSec": 40,
+   "restSec": 20,
+   "rounds": 12
+  },
+  "description": "12 раундов: 40 с работы, 20 с отдыха на переход."
  },
  {
   "id": "s001",
@@ -5382,48 +5774,49 @@
  },
  {
   "id": "c009",
-  "name": "Гребля 1/1",
+  "name": "Беговые 400-ки",
   "type": "cardio",
   "format": "INTERVALS",
   "level": 2,
-  "durationMin": 20,
+  "durationMin": 21,
   "muscles": [
+   "legs",
    "full"
   ],
   "equipment": [
-   "rower"
+   "treadmill"
   ],
   "items": [
    {
-    "exercise": "row_erg",
-    "dose": "1 мин мощно 26–28 гребков/мин, 1 мин легко"
+    "exercise": "treadmill_run",
+    "dose": "400 м быстро (~2 мин), 1,5 мин ходьба"
    }
   ],
   "timer": {
    "mode": "INTERVALS",
-   "workSec": 60,
-   "restSec": 60,
-   "rounds": 10
+   "workSec": 120,
+   "restSec": 90,
+   "rounds": 6
   },
-  "description": "Считайте метры за рабочую минуту — старайтесь держать их ровными."
+  "description": "6 отрезков по 400 м в темпе чуть быстрее, чем на 5 км. Скорость подберите так, чтобы отрезок занимал около 2 минут."
  },
  {
   "id": "c010",
-  "name": "Табата на гребле",
+  "name": "Табата на степпере",
   "type": "cardio",
   "format": "TABATA",
   "level": 3,
   "durationMin": 4,
   "muscles": [
-   "full"
+   "legs"
   ],
   "equipment": [
-   "rower"
+   "stepper"
   ],
   "items": [
    {
-    "exercise": "row_erg",
-    "dose": "20 с максимально, 10 с отдых"
+    "exercise": "stepper",
+    "dose": "20 с максимальный темп, 10 с медленно"
    }
   ],
   "timer": {
@@ -5432,7 +5825,7 @@
    "restSec": 10,
    "rounds": 8
   },
-  "description": "8 раундов. Результат — сумма метров за все рабочие отрезки."
+  "description": "8 раундов на пределе, без опоры на поручни."
  },
  {
   "id": "c011",

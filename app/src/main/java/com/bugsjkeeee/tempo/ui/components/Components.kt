@@ -151,7 +151,7 @@ fun Chip(
         .then(if (outlined && !selected) Modifier.border(1.5.dp, style.outline, shape) else Modifier)
         .clickable(onClick = onClick)
         .defaultMinSize(minHeight = 40.dp)
-        .padding(horizontal = 13.dp, vertical = 10.dp)
+        .padding(horizontal = if (center) 6.dp else 13.dp, vertical = 10.dp)
     Box(base, contentAlignment = if (center) Alignment.Center else Alignment.CenterStart) {
         Text(
             text,
@@ -162,6 +162,8 @@ fun Chip(
             },
             style = MaterialTheme.typography.labelLarge.copy(fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Medium),
             textAlign = TextAlign.Center,
+            maxLines = if (center) 1 else Int.MAX_VALUE,
+            softWrap = !center,
         )
     }
 }

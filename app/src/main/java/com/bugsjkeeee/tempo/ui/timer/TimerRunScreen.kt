@@ -1,5 +1,8 @@
 package com.bugsjkeeee.tempo.ui.timer
 
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.rememberTextMeasurer
 import android.app.Activity
 import android.view.WindowManager
 import androidx.activity.compose.BackHandler
@@ -237,23 +240,56 @@ private fun ActiveView(s: TimerSnapshot, controller: TimerController, onMinimize
 
 private val Thin = TextStyle(fontFamily = Inter)
 
+/**
+ * Текст в разрядку в одну строку: уменьшается, если не помещается по ширине.
+ * Разрядка добавляется и после последней буквы, поэтому слева такой же отступ — иначе текст смещён от центра.
+ */
+@Composable
+private fun SpacedText(text: String, style: TextStyle, color: Color, modifier: Modifier = Modifier) {
+    BoxWithConstraints(modifier, contentAlignment = Alignment.Center) {
+        val measurer = rememberTextMeasurer()
+        val density = LocalDensity.current
+        val maxPx = constraints.maxWidth
+        val fitted = remember(text, style, maxPx) {
+            var st = style
+            var steps = 0
+            while (steps < 15) {
+                val width = measurer.measure(text, st, maxLines = 1, softWrap = false).size.width +
+                    with(density) { st.letterSpacing.toPx() }
+                if (width <= maxPx) break
+                st = st.copy(fontSize = st.fontSize * 0.92f, letterSpacing = st.letterSpacing * 0.8f)
+                steps++
+            }
+            st
+        }
+        Text(
+            text,
+            style = fitted,
+            color = color,
+            maxLines = 1,
+            softWrap = false,
+            modifier = Modifier.padding(start = with(density) { fitted.letterSpacing.toDp() }),
+        )
+    }
+}
+
 @Composable
 private fun Title(s: TimerSnapshot, c: RunColors) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(
+        SpacedText(
             phaseName(s.phase).uppercase(),
-            style = Thin.copy(fontSize = 32.sp, fontWeight = FontWeight.Light, letterSpacing = 12.sp),
-            color = c.content,
-            textAlign = TextAlign.Center,
-            maxLines = 1,
+            Thin.copy(fontSize = 32.sp, fontWeight = FontWeight.Light, letterSpacing = 12.sp),
+            c.content,
+            Modifier.fillMaxWidth(),
         )
         Spacer(Modifier.height(6.dp))
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
             Box(Modifier.width(60.dp).height(1.dp).background(c.content.copy(alpha = 0.2f)))
-            Text(
+            SpacedText(
                 (s.mode.title + if (s.status == RunStatus.PAUSED) " · ПАУЗА" else "").uppercase(),
-                style = Thin.copy(fontSize = 14.sp, letterSpacing = 8.sp),
-                color = c.content,
+                Thin.copy(fontSize = 14.sp, letterSpacing = 8.sp),
+                c.content,
+                Modifier.weight(1f, fill = false),
             )
             Box(Modifier.width(60.dp).height(1.dp).background(c.content.copy(alpha = 0.2f)))
         }

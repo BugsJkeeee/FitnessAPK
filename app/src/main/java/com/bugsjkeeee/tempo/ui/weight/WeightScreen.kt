@@ -1,5 +1,6 @@
 package com.bugsjkeeee.tempo.ui.weight
 
+import androidx.compose.material3.SelectableDates
 import com.bugsjkeeee.tempo.ui.icons.TempoIcons
 import com.bugsjkeeee.tempo.ui.components.TButton
 import com.bugsjkeeee.tempo.ui.components.TOutlinedButton
@@ -218,8 +219,14 @@ fun WeightScreen(contentPadding: PaddingValues) {
     }
 
     if (showDate) {
+        val todayUtc = LocalDate.now().atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli()
         val pickerState = rememberDatePickerState(
             initialSelectedDateMillis = LocalDate.ofEpochDay(day).atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli(),
+            selectableDates = object : SelectableDates {
+                // Вес за будущие дни вводить нельзя.
+                override fun isSelectableDate(utcTimeMillis: Long) = utcTimeMillis <= todayUtc
+                override fun isSelectableYear(year: Int) = year <= LocalDate.now().year
+            },
         )
         DatePickerDialog(
             onDismissRequest = { showDate = false },

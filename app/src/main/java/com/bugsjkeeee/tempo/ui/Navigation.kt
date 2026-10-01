@@ -1,5 +1,7 @@
 package com.bugsjkeeee.tempo.ui
 
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
@@ -118,6 +120,8 @@ private val tabs = listOf(
     Tab(Routes.WEIGHT, "Вес", TempoIcons.Scale),
 )
 
+private const val TabAnimMs = 380
+
 /**
  * Нижняя панель: неактивные вкладки — только иконки, активная — оранжевая «таблетка» с подписью.
  * При переключении подпись прежней вкладки сворачивается, новой — разворачивается.
@@ -140,23 +144,25 @@ private fun TabBar(current: String?, onSelect: (String) -> Unit) {
         ) {
             tabs.forEach { t ->
                 val selected = t.route == current
-                val bg by animateColorAsState(if (selected) accent else Color.Transparent, tween(250), label = "tabBg")
-                val tint by animateColorAsState(if (selected) Color.White else style.muted, tween(250), label = "tabTint")
+                val bg by animateColorAsState(if (selected) accent else Color.Transparent, tween(TabAnimMs, easing = FastOutSlowInEasing), label = "tabBg")
+                val tint by animateColorAsState(if (selected) Color.White else style.muted, tween(TabAnimMs, easing = FastOutSlowInEasing), label = "tabTint")
+                val hPad by animateDpAsState(if (selected) 16.dp else 11.dp, tween(TabAnimMs, easing = FastOutSlowInEasing), label = "tabPad")
                 Row(
                     Modifier
                         .height(42.dp)
                         .clip(RoundedCornerShape(50))
                         .background(bg)
                         .clickable(interactionSource = remember { MutableInteractionSource() }, indication = null) { onSelect(t.route) }
-                        .animateContentSize(tween(250))
-                        .padding(horizontal = if (selected) 16.dp else 11.dp),
+                        .padding(horizontal = hPad),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Icon(t.icon, contentDescription = t.title, tint = tint, modifier = Modifier.size(22.dp))
                     AnimatedVisibility(
                         visible = selected,
-                        enter = expandHorizontally(tween(250)) + fadeIn(tween(250)),
-                        exit = shrinkHorizontally(tween(250)) + fadeOut(tween(150)),
+                        enter = expandHorizontally(tween(TabAnimMs, easing = FastOutSlowInEasing), expandFrom = Alignment.Start) +
+                            fadeIn(tween(TabAnimMs / 2, delayMillis = TabAnimMs / 3)),
+                        exit = shrinkHorizontally(tween(TabAnimMs, easing = FastOutSlowInEasing), shrinkTowards = Alignment.Start) +
+                            fadeOut(tween(TabAnimMs / 3)),
                     ) {
                         Text(
                             t.title,
@@ -199,7 +205,7 @@ fun TempoNavHost(navController: NavHostController = rememberNavController()) {
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
         topBar = {
             if (tab != null) {
-                ScreenHeader(tab.title, Modifier.statusBarsPadding()) {
+                ScreenHeader(tab.title, Modifier.background(MaterialTheme.colorScheme.background).statusBarsPadding()) {
                     RoundIconButton(TempoIcons.Settings, "Настройки", onClick = { go(Routes.SETTINGS) })
                 }
             }
@@ -240,6 +246,7 @@ fun TempoNavHost(navController: NavHostController = rememberNavController()) {
                 JournalScreen(
                     padding,
                     onEntry = { go(Routes.entry(it)) },
+                    onEdit = { go(Routes.entryEdit(it)) },
                     onAdd = { go(Routes.entryEdit()) },
                     onExerciseRecord = { go(Routes.recordExercise(it)) },
                     onComplexRecord = { go(Routes.recordComplex(it)) },
