@@ -9,7 +9,6 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.bugsjkeeee.tempo.sound.SoundCatalog
 import com.bugsjkeeee.tempo.sound.SoundEvent
-import com.bugsjkeeee.tempo.timer.BlockCodec
 import com.bugsjkeeee.tempo.timer.TimerMode
 import com.bugsjkeeee.tempo.timer.TimerSettings
 import kotlinx.coroutines.flow.Flow
@@ -41,8 +40,6 @@ class SettingsRepository(private val context: Context) {
         val workSec = intPreferencesKey("timer_work_sec")
         val restSec = intPreferencesKey("timer_rest_sec")
         val intervalRounds = intPreferencesKey("timer_interval_rounds")
-        val customBlocks = stringPreferencesKey("timer_custom_blocks")
-        val customRestSec = intPreferencesKey("timer_custom_rest_sec")
     }
 
     val settings: Flow<AppSettings> = context.dataStore.data.map { p ->
@@ -64,8 +61,6 @@ class SettingsRepository(private val context: Context) {
             workSec = p[Keys.workSec] ?: d.workSec,
             restSec = p[Keys.restSec] ?: d.restSec,
             intervalRounds = p[Keys.intervalRounds] ?: d.intervalRounds,
-            customBlocks = p[Keys.customBlocks]?.let(BlockCodec::decode) ?: d.customBlocks,
-            customRestBetweenBlocksSec = p[Keys.customRestSec] ?: d.customRestBetweenBlocksSec,
         )
     }
 
@@ -89,7 +84,5 @@ class SettingsRepository(private val context: Context) {
         p[Keys.workSec] = s.workSec
         p[Keys.restSec] = s.restSec
         p[Keys.intervalRounds] = s.intervalRounds
-        p[Keys.customBlocks] = BlockCodec.encode(s.customBlocks)
-        p[Keys.customRestSec] = s.customRestBetweenBlocksSec
     }
 }

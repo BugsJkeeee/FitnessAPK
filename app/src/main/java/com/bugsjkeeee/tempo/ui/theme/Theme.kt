@@ -17,18 +17,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-val Accent = Color(0xFFFF5B1F)
-private val AccentLight = Color(0xFFF2551A)
+val Accent = Color(0xFFFF6C00)
 val Positive = Color(0xFF2ECC71)
 
 /** Цвета фаз таймера одинаковы в обеих темах. */
 object PhaseColors {
-    val Prep = Color(0xFFFFC531)
-    val Work = Color(0xFFE53935)
-    val Rest = Color(0xFF27A65A)
-    val OnPrep = Color(0xFF1A1A1A)
+    val Prep = Color(0xFFFFA340)
+    val Work = Color.Black
+    val Rest = Color(0xFFC7F83E)
+    val OnPrep = Color(0xFF111111)
     val OnWork = Color.White
-    val OnRest = Color.White
+    val OnRest = Color(0xFF111111)
 }
 
 /** Параметры плиток, которые отличаются между тёмной и светлой темой. */
@@ -64,7 +63,7 @@ private val DarkColors = darkColorScheme(
 )
 
 private val LightColors = lightColorScheme(
-    primary = AccentLight,
+    primary = Accent,
     onPrimary = Color.White,
     secondary = Color(0xFF1E9E52),
     background = Color(0xFFEEEEF0),

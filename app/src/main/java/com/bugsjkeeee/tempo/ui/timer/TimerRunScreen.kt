@@ -230,22 +230,20 @@ private fun Info(s: TimerSnapshot, content: Color) {
     val small = MaterialTheme.typography.titleMedium.merge(Digits)
     Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
         val roundText = when {
-            s.mode == TimerMode.AMRAP -> "Раунды: ${s.amrapRounds}"
+            s.mode == TimerMode.AMRAP -> "Раунды: ${s.laps.size}"
             s.mode == TimerMode.STOPWATCH -> "Круги: ${s.laps.size}"
-            s.totalBlocks > 1 && s.totalRounds > 0 -> "Блок ${s.block}/${s.totalBlocks} · Раунд ${s.round} / ${s.totalRounds}"
-            s.totalBlocks > 1 -> "Отдых перед блоком ${s.block + 1}"
             s.totalRounds > 1 -> "Раунд ${s.round} / ${s.totalRounds}"
             else -> null
         }
         if (roundText != null) Text(roundText, color = content, style = big)
         val total = "Общее " + formatClock(s.totalElapsedMs) + (s.totalDurationMs?.let { " / " + formatClock(it) } ?: "")
         Text(total, color = content.copy(alpha = 0.8f), style = small)
-        if (s.mode == TimerMode.STOPWATCH && s.laps.isNotEmpty()) {
+        if (s.mode.hasSplits && s.laps.isNotEmpty()) {
             Spacer(Modifier.height(8.dp))
             val laps = s.laps.mapIndexed { i, t -> Triple(i + 1, t - (s.laps.getOrNull(i - 1) ?: 0L), t) }
             laps.takeLast(4).reversed().forEach { (n, lap, total) ->
                 Text(
-                    "Круг $n   ${formatPrecise(lap)}   ${formatPrecise(total)}",
+                    "${s.mode.splitTitle} $n   ${formatPrecise(lap)}   ${formatPrecise(total)}",
                     color = content.copy(alpha = 0.85f),
                     style = MaterialTheme.typography.bodyLarge.merge(Digits),
                 )
@@ -262,7 +260,7 @@ private fun Controls(s: TimerSnapshot, controller: TimerController, content: Col
     Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(10.dp)) {
         when (s.mode) {
             TimerMode.AMRAP -> if (s.phase == Phase.WORK) {
-                Button(onClick = controller::addRound, colors = primaryColors, modifier = Modifier.fillMaxWidth().height(72.dp)) {
+                Button(onClick = controller::lap, colors = primaryColors, modifier = Modifier.fillMaxWidth().height(72.dp), enabled = !paused) {
                     Text("+1 раунд", style = MaterialTheme.typography.headlineMedium)
                 }
             }
@@ -335,7 +333,7 @@ private fun ResultView(s: TimerSnapshot, onClose: () -> Unit) {
             }
             val result: Pair<String, String>? = when (s.mode) {
                 TimerMode.FOR_TIME -> "Время" to formatPrecise(s.totalElapsedMs)
-                TimerMode.AMRAP -> "Раунды" to s.amrapRounds.toString()
+                TimerMode.AMRAP -> "Раунды" to s.laps.size.toString()
                 TimerMode.STOPWATCH -> "Круги" to s.laps.size.toString()
                 TimerMode.EMOM, TimerMode.INTERVALS -> "Раунды" to "${s.round} / ${s.totalRounds}"
                 else -> null
@@ -348,14 +346,14 @@ private fun ResultView(s: TimerSnapshot, onClose: () -> Unit) {
             }
         }
 
-        if (s.mode == TimerMode.STOPWATCH && s.laps.isNotEmpty()) {
+        if (s.mode.hasSplits && s.laps.isNotEmpty()) {
             Tile(Modifier.fillMaxWidth()) {
-                TileLabel("Круги")
+                TileLabel(if (s.mode == TimerMode.AMRAP) "Раунды" else "Круги")
                 Spacer(Modifier.height(8.dp))
                 s.laps.forEachIndexed { i, total ->
                     val lap = total - (s.laps.getOrNull(i - 1) ?: 0L)
                     Row(Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
-                        Text("Круг ${i + 1}", modifier = Modifier.weight(1f), color = style.muted)
+                        Text("${s.mode.splitTitle} ${i + 1}", modifier = Modifier.weight(1f), color = style.muted)
                         Text(formatPrecise(lap), style = Digits, modifier = Modifier.weight(1f), color = MaterialTheme.colorScheme.onSurface)
                         Text(formatPrecise(total), style = Digits, color = style.muted)
                     }
@@ -373,3 +371,7 @@ private fun ResultView(s: TimerSnapshot, onClose: () -> Unit) {
         }
     }
 }
+
+/** Режимы, где отмечаются круги или раунды со временем каждого. */
+private val TimerMode.hasSplits get() = this == TimerMode.STOPWATCH || this == TimerMode.AMRAP
+private val TimerMode.splitTitle get() = if (this == TimerMode.AMRAP) "Раунд" else "Круг"

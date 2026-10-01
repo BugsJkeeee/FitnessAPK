@@ -28,13 +28,11 @@ data class TimerSnapshot(
     val segmentDurationMs: Long?,
     val round: Int,
     val totalRounds: Int,
-    val block: Int,
-    val totalBlocks: Int,
     /** Общее время без подготовки. */
     val totalElapsedMs: Long,
     val totalDurationMs: Long?,
+    /** Отметки кругов секундомера или раундов AMRAP. */
     val laps: List<Long>,
-    val amrapRounds: Int,
 ) {
     val segmentRemainingMs: Long? get() = segmentDurationMs?.let { (it - segmentElapsedMs).coerceAtLeast(0) }
 }
@@ -115,11 +113,6 @@ class TimerController(
         publish()
     }
 
-    fun addRound() {
-        run?.addRound()
-        publish()
-    }
-
     /** «Стоп» и «Финиш»: фиксирует результат и открывает экран итога. */
     fun stop() {
         val r = run ?: return
@@ -159,12 +152,9 @@ class TimerController(
             segmentDurationMs = segment.durationMs,
             round = segment.round,
             totalRounds = segment.totalRounds,
-            block = segment.block,
-            totalBlocks = segment.totalBlocks,
             totalElapsedMs = (elapsed - plan.prepMs).coerceAtLeast(0),
             totalDurationMs = plan.totalMs?.minus(plan.prepMs),
             laps = r.laps.toList(),
-            amrapRounds = r.amrapRounds,
         )
     }
 }

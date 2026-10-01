@@ -10,14 +10,7 @@ enum class TimerMode(val title: String) {
     AMRAP("AMRAP"),
     EMOM("EMOM"),
     INTERVALS("Табата"),
-    CUSTOM("Свой"),
 }
-
-/** Интервал своего сценария: фаза (работа или отдых) и длительность. */
-data class Interval(val phase: Phase, val seconds: Int)
-
-/** Блок своего сценария: последовательность интервалов, повторяемая [repeats] раз. */
-data class Block(val intervals: List<Interval>, val repeats: Int)
 
 /** Последние настройки всех режимов; каждый режим помнит свои значения независимо. */
 data class TimerSettings(
@@ -29,18 +22,7 @@ data class TimerSettings(
     val workSec: Int = 20,
     val restSec: Int = 10,
     val intervalRounds: Int = 8,
-    val customBlocks: List<Block> = DEFAULT_CUSTOM,
-    val customRestBetweenBlocksSec: Int = 120,
-) {
-    companion object {
-        val DEFAULT_CUSTOM = listOf(
-            Block(listOf(Interval(Phase.WORK, 5 * 60)), 1),
-            Block(listOf(Interval(Phase.WORK, 40), Interval(Phase.REST, 20)), 8),
-            Block(listOf(Interval(Phase.WORK, 40), Interval(Phase.REST, 20)), 8),
-            Block(listOf(Interval(Phase.WORK, 40), Interval(Phase.REST, 20)), 8),
-        )
-    }
-}
+)
 
 /**
  * Отрезок плана тренировки.
@@ -51,10 +33,8 @@ data class Segment(
     val durationMs: Long?,
     val round: Int = 0,
     val totalRounds: Int = 0,
-    val block: Int = 0,
-    val totalBlocks: Int = 0,
 ) {
-    val isLastRound: Boolean get() = totalRounds > 1 && round == totalRounds && (totalBlocks <= 1 || block == totalBlocks)
+    val isLastRound: Boolean get() = totalRounds > 1 && round == totalRounds
 }
 
 data class TimerPlan(val mode: TimerMode, val segments: List<Segment>) {
@@ -86,19 +66,6 @@ fun buildPlan(mode: TimerMode, s: TimerSettings, prepSec: Int): TimerPlan {
             // После последнего раунда отдых не нужен — тренировка заканчивается.
             if (i < s.intervalRounds - 1 && s.restSec > 0) {
                 segments += Segment(Phase.REST, s.restSec * 1000L, i + 1, s.intervalRounds)
-            }
-        }
-        TimerMode.CUSTOM -> {
-            val blocks = s.customBlocks.filter { b -> b.repeats > 0 && b.intervals.any { it.seconds > 0 } }
-            blocks.forEachIndexed { b, block ->
-                if (b > 0 && s.customRestBetweenBlocksSec > 0) {
-                    segments += Segment(Phase.REST, s.customRestBetweenBlocksSec * 1000L, block = b, totalBlocks = blocks.size)
-                }
-                repeat(block.repeats) { r ->
-                    block.intervals.filter { it.seconds > 0 }.forEach { interval ->
-                        segments += Segment(interval.phase, interval.seconds * 1000L, r + 1, block.repeats, b + 1, blocks.size)
-                    }
-                }
             }
         }
     }

@@ -18,6 +18,17 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.graphicsLayer
+import kotlin.math.abs
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -228,38 +239,108 @@ fun CountStepper(
 
 @Composable
 private fun DurationDialog(title: String, seconds: Int, onDismiss: () -> Unit, onConfirm: (Int) -> Unit) {
-    var min by rememberSaveable { mutableStateOf((seconds / 60).toString()) }
-    var sec by rememberSaveable { mutableStateOf((seconds % 60).toString()) }
+    var min by rememberSaveable { mutableIntStateOf((seconds / 60).coerceAtMost(MAX_MINUTES)) }
+    var sec by rememberSaveable { mutableIntStateOf(seconds % 60) }
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text(title) },
         text = {
-            Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
-                OutlinedTextField(
-                    value = min,
-                    onValueChange = { min = it.filter(Char::isDigit).take(3) },
-                    label = { Text("мин") },
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    modifier = Modifier.weight(1f),
-                )
-                OutlinedTextField(
-                    value = sec,
-                    onValueChange = { sec = it.filter(Char::isDigit).take(2) },
-                    label = { Text("сек") },
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    modifier = Modifier.weight(1f),
-                )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                WheelPicker(count = MAX_MINUTES + 1, selected = min, onSelected = { min = it }, label = "мин")
+                Text(":", style = Digits.copy(fontSize = 32.sp), modifier = Modifier.padding(horizontal = 8.dp))
+                WheelPicker(count = 60, selected = sec, onSelected = { sec = it }, label = "сек")
             }
         },
         confirmButton = {
-            TextButton(onClick = {
-                onConfirm((min.toIntOrNull() ?: 0) * 60 + (sec.toIntOrNull() ?: 0).coerceAtMost(59))
-            }) { Text("Готово") }
+            TextButton(onClick = { onConfirm(min * 60 + sec) }) { Text("Готово") }
         },
         dismissButton = { TextButton(onClick = onDismiss) { Text("Отмена") } },
     )
+}
+
+private const val MAX_MINUTES = 180
+private val WheelItemHeight = 52.dp
+private const val WheelVisibleItems = 5
+
+/**
+ * Барабан выбора числа: прокрутка вверх-вниз с доводкой к центру,
+ * числа по краям уменьшаются и бледнеют.
+ */
+@Composable
+fun WheelPicker(
+    count: Int,
+    selected: Int,
+    onSelected: (Int) -> Unit,
+    modifier: Modifier = Modifier,
+    label: String? = null,
+) {
+    val state = rememberLazyListState(initialFirstVisibleItemIndex = selected.coerceIn(0, count - 1))
+    val fling = rememberSnapFlingBehavior(lazyListState = state)
+    val accent = MaterialTheme.colorScheme.primary
+    val style = LocalTempoStyle.current
+
+    // Выбранным считается элемент, ближайший к центру барабана.
+    val centered by remember {
+        derivedStateOf {
+            val info = state.layoutInfo
+            val center = (info.viewportStartOffset + info.viewportEndOffset) / 2f
+            info.visibleItemsInfo.minByOrNull { abs(it.offset + it.size / 2f - center) }?.index ?: selected
+        }
+    }
+    LaunchedEffect(centered) { onSelected(centered) }
+
+    Column(modifier, horizontalAlignment = Alignment.CenterHorizontally) {
+        Box(Modifier.width(84.dp).height(WheelItemHeight * WheelVisibleItems), contentAlignment = Alignment.Center) {
+            // Рамка выбранного значения.
+            Box(
+                Modifier
+                    .fillMaxWidth()
+                    .height(WheelItemHeight)
+                    .border(1.5.dp, accent.copy(alpha = 0.6f), style.tileShape),
+            )
+            LazyColumn(
+                state = state,
+                flingBehavior = fling,
+                contentPadding = PaddingValues(vertical = WheelItemHeight * (WheelVisibleItems / 2)),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxSize(),
+            ) {
+                items(count) { i ->
+                    Box(
+                        Modifier
+                            .height(WheelItemHeight)
+                            .fillMaxWidth()
+                            .graphicsLayer {
+                                val info = state.layoutInfo
+                                val item = info.visibleItemsInfo.firstOrNull { it.index == i } ?: return@graphicsLayer
+                                val center = (info.viewportStartOffset + info.viewportEndOffset) / 2f
+                                val distance = (item.offset + item.size / 2f - center) / item.size
+                                val d = abs(distance)
+                                alpha = (1f - 0.32f * d).coerceIn(0.15f, 1f)
+                                scaleX = (1f - 0.12f * d).coerceIn(0.7f, 1f)
+                                scaleY = scaleX
+                                // Лёгкий наклон, как у настоящего барабана.
+                                rotationX = (distance * 18f).coerceIn(-60f, 60f)
+                            },
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Text(
+                            "%02d".format(i),
+                            style = Digits.copy(fontSize = 30.sp),
+                            color = if (i == centered) accent else MaterialTheme.colorScheme.onSurface,
+                        )
+                    }
+                }
+            }
+        }
+        if (label != null) {
+            Text(label, style = MaterialTheme.typography.labelMedium, color = style.muted)
+        }
+    }
 }
 
 /** Заглушка раздела, который появится на следующих этапах. */

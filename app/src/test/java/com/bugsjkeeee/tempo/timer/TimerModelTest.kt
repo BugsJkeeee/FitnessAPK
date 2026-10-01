@@ -29,24 +29,6 @@ class TimerModelTest {
     }
 
     @Test
-    fun customPlanInsertsRestBetweenBlocks() {
-        val s = settings.copy(
-            customBlocks = listOf(
-                Block(listOf(Interval(Phase.WORK, 300)), 1),
-                Block(listOf(Interval(Phase.WORK, 40), Interval(Phase.REST, 20)), 2),
-            ),
-            customRestBetweenBlocksSec = 120,
-        )
-        val plan = buildPlan(TimerMode.CUSTOM, s, 0)
-        assertEquals(
-            listOf(300, 120, 40, 20, 40, 20),
-            plan.segments.map { (it.durationMs!! / 1000).toInt() },
-        )
-        assertEquals(2, plan.segments[2].block)
-        assertEquals(2, plan.segments[2].totalBlocks)
-    }
-
-    @Test
     fun positionFindsSegmentAndFinish() {
         val plan = buildPlan(TimerMode.EMOM, settings, prepSec = 10)
         assertEquals(Position(0, 5_000, false), plan.positionAt(5_000))
@@ -123,9 +105,12 @@ class TimerModelTest {
     }
 
     @Test
-    fun blockCodecRoundTrips() {
-        val blocks = TimerSettings.DEFAULT_CUSTOM
-        assertEquals(blocks, BlockCodec.decode(BlockCodec.encode(blocks)))
-        assertNull(BlockCodec.decode("мусор"))
+    fun amrapRoundsAreRecordedAsSplitsAfterPrep() {
+        val plan = buildPlan(TimerMode.AMRAP, settings.copy(amrapSec = 600), prepSec = 10)
+        val run = TimerRun(plan, 0)
+        run.lap(5_000) // во время подготовки раунд не засчитывается
+        run.lap(70_000)
+        run.lap(135_000)
+        assertEquals(listOf(60_000L, 125_000L), run.laps)
     }
 }

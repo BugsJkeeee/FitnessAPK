@@ -11,9 +11,8 @@ class TimerRun(val plan: TimerPlan, startedAt: Long) {
     /** Прошедшее время на момент последнего опроса — от него считаются события. */
     private var lastElapsedMs = 0L
 
+    /** Отметки кругов (секундомер) или раундов (AMRAP): общее время без подготовки на момент нажатия. */
     val laps = mutableListOf<Long>()
-    var amrapRounds = 0
-        private set
 
     /** Время ручного финиша (For Time, секундомер) или null. */
     var manualFinishMs: Long? = null
@@ -66,10 +65,6 @@ class TimerRun(val plan: TimerPlan, startedAt: Long) {
         if (isPaused || isFinished) return
         val t = elapsed(now) - plan.prepMs
         if (t > 0) laps += t
-    }
-
-    fun addRound() {
-        if (!isFinished) amrapRounds++
     }
 
     /** Ручная остановка: фиксирует время, после этого таймер считается завершённым. */
