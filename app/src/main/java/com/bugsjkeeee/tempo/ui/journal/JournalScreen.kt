@@ -4,7 +4,7 @@ import com.bugsjkeeee.tempo.ui.components.RoundIconButton
 import com.bugsjkeeee.tempo.ui.components.SegmentedControl
 import com.bugsjkeeee.tempo.ui.components.AddFab
 import com.bugsjkeeee.tempo.ui.components.StatTile
-com.bugsjkeeee.tempo.ui.icons.TempoIcons
+import com.bugsjkeeee.tempo.ui.icons.TempoIcons
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
