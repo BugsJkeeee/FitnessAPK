@@ -27,7 +27,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
@@ -192,17 +191,6 @@ fun TimerSetupScreen(onOpenRunning: () -> Unit, onStarted: () -> Unit, contentPa
                 Spacer(Modifier.width(8.dp))
                 Text("Старт", style = MaterialTheme.typography.titleLarge)
             }
-        }
-
-        item {
-            val version = remember { context.packageManager.getPackageInfo(context.packageName, 0).versionName }
-            Text(
-                "Tempo $version",
-                style = MaterialTheme.typography.bodySmall,
-                color = style.muted,
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Center,
-            )
         }
     }
 }

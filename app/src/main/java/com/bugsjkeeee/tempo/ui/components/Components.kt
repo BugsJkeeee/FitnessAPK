@@ -8,9 +8,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -83,8 +83,10 @@ fun TileLabel(text: String, icon: ImageVector? = null, modifier: Modifier = Modi
     }
 }
 
-/** Сегментные кнопки выбора: активная выделена акцентным цветом. */
-@OptIn(ExperimentalLayoutApi::class)
+/**
+ * Сегментные кнопки выбора: сетка ячеек одинаковой ширины, активная выделена акцентным цветом.
+ * По умолчанию не больше трёх ячеек в ряд, чтобы подписи помещались целиком.
+ */
 @Composable
 fun <T> SegmentedSelector(
     options: List<T>,
@@ -92,31 +94,39 @@ fun <T> SegmentedSelector(
     label: (T) -> String,
     onSelect: (T) -> Unit,
     modifier: Modifier = Modifier,
+    columns: Int = minOf(options.size, 3),
 ) {
     val style = LocalTempoStyle.current
-    FlowRow(
-        modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(6.dp),
-        verticalArrangement = Arrangement.spacedBy(6.dp),
-    ) {
-        options.forEach { option ->
-            val isSelected = option == selected
-            Box(
-                modifier = Modifier
-                    .defaultMinSize(minHeight = 44.dp)
-                    .background(
-                        if (isSelected) MaterialTheme.colorScheme.primary else style.segmentIdle,
-                        style.tileShape,
-                    )
-                    .clickable { onSelect(option) }
-                    .padding(horizontal = 14.dp, vertical = 10.dp),
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(
-                    label(option),
-                    color = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface,
-                    style = MaterialTheme.typography.labelLarge,
-                )
+    Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        options.chunked(columns).forEach { row ->
+            Row(Modifier.fillMaxWidth().height(IntrinsicSize.Min), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                row.forEach { option ->
+                    val isSelected = option == selected
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight()
+                            .defaultMinSize(minHeight = 48.dp)
+                            .background(
+                                if (isSelected) MaterialTheme.colorScheme.primary else style.segmentIdle,
+                                style.tileShape,
+                            )
+                            .clickable { onSelect(option) }
+                            .padding(horizontal = 6.dp, vertical = 10.dp),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Text(
+                            label(option),
+                            color = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface,
+                            // 13sp: «Секундомер» целиком помещается в треть ширины узкого экрана.
+                            style = MaterialTheme.typography.labelLarge.copy(fontSize = 13.sp),
+                            textAlign = TextAlign.Center,
+                            maxLines = 1,
+                        )
+                    }
+                }
+                // Неполный последний ряд добивается пустыми ячейками, чтобы ширина совпадала с верхними.
+                repeat(columns - row.size) { Spacer(Modifier.weight(1f)) }
             }
         }
     }
