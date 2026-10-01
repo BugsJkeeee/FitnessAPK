@@ -32,9 +32,9 @@ class FiltersTest {
     @Test
     fun durationFormatAndFavorites() {
         val long = w("l", emptyList(), minutes = 40)
-        assertTrue(long.matches(WorkoutFilters(duration = DurationRange.LONG), WorkoutFlags()))
-        assertFalse(long.matches(WorkoutFilters(duration = DurationRange.SHORT), WorkoutFlags()))
-        assertFalse(long.matches(WorkoutFilters(format = WorkoutFormat.EMOM), WorkoutFlags()))
+        assertTrue(long.matches(WorkoutFilters(durations = setOf(DurationRange.LONG)), WorkoutFlags()))
+        assertFalse(long.matches(WorkoutFilters(durations = setOf(DurationRange.SHORT)), WorkoutFlags()))
+        assertFalse(long.matches(WorkoutFilters(formats = setOf(WorkoutFormat.EMOM)), WorkoutFlags()))
         assertFalse(long.matches(WorkoutFilters(onlyFavorites = true), WorkoutFlags()))
         assertTrue(long.matches(WorkoutFilters(onlyFavorites = true), WorkoutFlags(favorite = true)))
     }
@@ -61,5 +61,31 @@ class FiltersTest {
         assertEquals(WorkoutType.STRENGTH, w.type)
         assertEquals(20, w.durationMin)
         assertTrue(w.custom)
+    }
+
+    @Test
+    fun multiSelectMatchesAnyOfValues() {
+        val cardio = Workout("c", "Кардио", WorkoutType.CARDIO, WorkoutFormat.INTERVALS, 2, 30, listOf(Muscle.LEGS), listOf(Equipment.BIKE), emptyList())
+        val func = w("f", emptyList(), minutes = 30)
+        val strength = w("s", emptyList(), format = WorkoutFormat.SETS, minutes = 30)
+        val f = WorkoutFilters(types = setOf(WorkoutType.CARDIO, WorkoutType.FUNCTIONAL), durations = setOf(DurationRange.MEDIUM))
+        assertTrue(cardio.matches(f, WorkoutFlags()))
+        assertTrue(func.matches(f, WorkoutFlags()))
+        assertFalse(strength.matches(f, WorkoutFlags()))
+        assertTrue(cardio.matches(WorkoutFilters(muscles = setOf(Muscle.BACK, Muscle.LEGS)), WorkoutFlags()))
+        assertFalse(cardio.matches(WorkoutFilters(muscles = setOf(Muscle.BACK)), WorkoutFlags()))
+    }
+
+    @Test
+    fun customWorkoutOnCardioMachinesIsCardio() {
+        val ex = mapOf(
+            "bike" to Exercise("bike", "Велотренажёр", listOf(Muscle.LEGS), listOf(Equipment.BIKE)),
+            "row_erg" to Exercise("row_erg", "Гребля", listOf(Muscle.FULL), listOf(Equipment.ROWER)),
+        )
+        val w = deriveWorkout("u2", "Своё кардио", WorkoutFormat.STEADY, 1,
+            listOf(WorkoutItem("bike", dose = "20 мин"), WorkoutItem("row_erg", dose = "10 мин")),
+            TimerSpec(com.bugsjkeeee.tempo.timer.TimerMode.COUNTDOWN, durationSec = 1800), "", ex)
+        assertEquals(WorkoutType.CARDIO, w.type)
+        assertEquals(30, w.durationMin)
     }
 }

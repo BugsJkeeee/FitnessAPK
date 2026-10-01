@@ -5160,5 +5160,759 @@
   ],
   "timer": null,
   "description": ""
+ },
+ {
+  "id": "c001",
+  "name": "Спринты на дорожке 30/30",
+  "type": "cardio",
+  "format": "INTERVALS",
+  "level": 2,
+  "durationMin": 12,
+  "muscles": [
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "treadmill"
+  ],
+  "items": [
+   {
+    "exercise": "treadmill_run",
+    "dose": "30 с спринт 14–16 км/ч, 30 с ходьба 5 км/ч"
+   }
+  ],
+  "timer": {
+   "mode": "INTERVALS",
+   "workSec": 30,
+   "restSec": 30,
+   "rounds": 12
+  },
+  "description": "Перед стартом 5 минут лёгкого бега. На отдыхе переходите на шаг, с дорожки не сходите."
+ },
+ {
+  "id": "c002",
+  "name": "Дорожка 1/1",
+  "type": "cardio",
+  "format": "INTERVALS",
+  "level": 2,
+  "durationMin": 20,
+  "muscles": [
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "treadmill"
+  ],
+  "items": [
+   {
+    "exercise": "treadmill_run",
+    "dose": "1 мин бег 11–13 км/ч, 1 мин ходьба 6 км/ч"
+   }
+  ],
+  "timer": {
+   "mode": "INTERVALS",
+   "workSec": 60,
+   "restSec": 60,
+   "rounds": 10
+  },
+  "description": "Классические интервалы для выносливости. Темп бега — тяжело, но ровно на всю минуту."
+ },
+ {
+  "id": "c003",
+  "name": "Норвежские 4×4",
+  "type": "cardio",
+  "format": "INTERVALS",
+  "level": 3,
+  "durationMin": 28,
+  "muscles": [
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "treadmill"
+  ],
+  "items": [
+   {
+    "exercise": "treadmill_run",
+    "dose": "4 мин бег в горку 85–95 % пульса, 3 мин лёгкая ходьба"
+   }
+  ],
+  "timer": {
+   "mode": "INTERVALS",
+   "workSec": 240,
+   "restSec": 180,
+   "rounds": 4
+  },
+  "description": "Протокол 4×4 для роста МПК. Наклон 3–5 %, скорость подберите так, чтобы к концу отрезка было тяжело говорить."
+ },
+ {
+  "id": "c004",
+  "name": "Подъёмы в горку",
+  "type": "cardio",
+  "format": "INTERVALS",
+  "level": 2,
+  "durationMin": 24,
+  "muscles": [
+   "legs"
+  ],
+  "equipment": [
+   "treadmill"
+  ],
+  "items": [
+   {
+    "exercise": "treadmill_walk",
+    "dose": "2 мин быстрый шаг, наклон 12–15 %; 1 мин наклон 0 %"
+   }
+  ],
+  "timer": {
+   "mode": "INTERVALS",
+   "workSec": 120,
+   "restSec": 60,
+   "rounds": 8
+  },
+  "description": "Нагрузка на ягодицы и икры без ударной нагрузки бега."
+ },
+ {
+  "id": "c005",
+  "name": "Табата на велотренажёре",
+  "type": "cardio",
+  "format": "TABATA",
+  "level": 3,
+  "durationMin": 4,
+  "muscles": [
+   "legs"
+  ],
+  "equipment": [
+   "bike"
+  ],
+  "items": [
+   {
+    "exercise": "bike",
+    "dose": "20 с максимальный спринт, 10 с медленно"
+   }
+  ],
+  "timer": {
+   "mode": "INTERVALS",
+   "workSec": 20,
+   "restSec": 10,
+   "rounds": 8
+  },
+  "description": "8 раундов на пределе. Сопротивление — среднее, чтобы ноги не «проваливались»."
+ },
+ {
+  "id": "c006",
+  "name": "Велотренажёр 40/20",
+  "type": "cardio",
+  "format": "INTERVALS",
+  "level": 2,
+  "durationMin": 15,
+  "muscles": [
+   "legs"
+  ],
+  "equipment": [
+   "bike"
+  ],
+  "items": [
+   {
+    "exercise": "bike",
+    "dose": "40 с высокий каденс 100+ об/мин, 20 с легко"
+   }
+  ],
+  "timer": {
+   "mode": "INTERVALS",
+   "workSec": 40,
+   "restSec": 20,
+   "rounds": 15
+  },
+  "description": "15 раундов. На отдыхе крутите педали без сопротивления."
+ },
+ {
+  "id": "c007",
+  "name": "Велоспринты 15/45",
+  "type": "cardio",
+  "format": "INTERVALS",
+  "level": 2,
+  "durationMin": 12,
+  "muscles": [
+   "legs"
+  ],
+  "equipment": [
+   "bike"
+  ],
+  "items": [
+   {
+    "exercise": "bike",
+    "dose": "15 с спринт с высоким сопротивлением, 45 с легко"
+   }
+  ],
+  "timer": {
+   "mode": "INTERVALS",
+   "workSec": 15,
+   "restSec": 45,
+   "rounds": 12
+  },
+  "description": "Короткие взрывные отрезки, полное восстановление между ними."
+ },
+ {
+  "id": "c008",
+  "name": "Велотренажёр 3/2",
+  "type": "cardio",
+  "format": "INTERVALS",
+  "level": 1,
+  "durationMin": 30,
+  "muscles": [
+   "legs"
+  ],
+  "equipment": [
+   "bike"
+  ],
+  "items": [
+   {
+    "exercise": "bike",
+    "dose": "3 мин в темпе, 2 мин легко"
+   }
+  ],
+  "timer": {
+   "mode": "INTERVALS",
+   "workSec": 180,
+   "restSec": 120,
+   "rounds": 6
+  },
+  "description": "Мягкие длинные интервалы — хороший вход в кардио."
+ },
+ {
+  "id": "c009",
+  "name": "Гребля 1/1",
+  "type": "cardio",
+  "format": "INTERVALS",
+  "level": 2,
+  "durationMin": 20,
+  "muscles": [
+   "full"
+  ],
+  "equipment": [
+   "rower"
+  ],
+  "items": [
+   {
+    "exercise": "row_erg",
+    "dose": "1 мин мощно 26–28 гребков/мин, 1 мин легко"
+   }
+  ],
+  "timer": {
+   "mode": "INTERVALS",
+   "workSec": 60,
+   "restSec": 60,
+   "rounds": 10
+  },
+  "description": "Считайте метры за рабочую минуту — старайтесь держать их ровными."
+ },
+ {
+  "id": "c010",
+  "name": "Табата на гребле",
+  "type": "cardio",
+  "format": "TABATA",
+  "level": 3,
+  "durationMin": 4,
+  "muscles": [
+   "full"
+  ],
+  "equipment": [
+   "rower"
+  ],
+  "items": [
+   {
+    "exercise": "row_erg",
+    "dose": "20 с максимально, 10 с отдых"
+   }
+  ],
+  "timer": {
+   "mode": "INTERVALS",
+   "workSec": 20,
+   "restSec": 10,
+   "rounds": 8
+  },
+  "description": "8 раундов. Результат — сумма метров за все рабочие отрезки."
+ },
+ {
+  "id": "c011",
+  "name": "Эллипс 1/1",
+  "type": "cardio",
+  "format": "INTERVALS",
+  "level": 1,
+  "durationMin": 24,
+  "muscles": [
+   "full"
+  ],
+  "equipment": [
+   "elliptical"
+  ],
+  "items": [
+   {
+    "exercise": "elliptical",
+    "dose": "1 мин высокое сопротивление, 1 мин легко"
+   }
+  ],
+  "timer": {
+   "mode": "INTERVALS",
+   "workSec": 60,
+   "restSec": 60,
+   "rounds": 12
+  },
+  "description": "Щадящие интервалы без ударной нагрузки на суставы."
+ },
+ {
+  "id": "c012",
+  "name": "Эллипс 30/30",
+  "type": "cardio",
+  "format": "INTERVALS",
+  "level": 2,
+  "durationMin": 16,
+  "muscles": [
+   "full"
+  ],
+  "equipment": [
+   "elliptical"
+  ],
+  "items": [
+   {
+    "exercise": "elliptical",
+    "dose": "30 с максимальный темп, 30 с легко"
+   }
+  ],
+  "timer": {
+   "mode": "INTERVALS",
+   "workSec": 30,
+   "restSec": 30,
+   "rounds": 16
+  },
+  "description": "16 раундов. На быстрых отрезках активно работайте руками."
+ },
+ {
+  "id": "c013",
+  "name": "Степпер 2/1",
+  "type": "cardio",
+  "format": "INTERVALS",
+  "level": 2,
+  "durationMin": 24,
+  "muscles": [
+   "legs"
+  ],
+  "equipment": [
+   "stepper"
+  ],
+  "items": [
+   {
+    "exercise": "stepper",
+    "dose": "2 мин быстрый темп, 1 мин медленно"
+   }
+  ],
+  "timer": {
+   "mode": "INTERVALS",
+   "workSec": 120,
+   "restSec": 60,
+   "rounds": 8
+  },
+  "description": "Без опоры на поручни."
+ },
+ {
+  "id": "c014",
+  "name": "Степпер 45/15",
+  "type": "cardio",
+  "format": "INTERVALS",
+  "level": 3,
+  "durationMin": 12,
+  "muscles": [
+   "legs"
+  ],
+  "equipment": [
+   "stepper"
+  ],
+  "items": [
+   {
+    "exercise": "stepper",
+    "dose": "45 с быстро, 15 с медленно"
+   }
+  ],
+  "timer": {
+   "mode": "INTERVALS",
+   "workSec": 45,
+   "restSec": 15,
+   "rounds": 12
+  },
+  "description": "12 раундов с коротким отдыхом — тяжело для ног и дыхания."
+ },
+ {
+  "id": "c015",
+  "name": "Круг по тренажёрам",
+  "type": "cardio",
+  "format": "INTERVALS",
+  "level": 2,
+  "durationMin": 25,
+  "muscles": [
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "bike",
+   "elliptical",
+   "rower",
+   "stepper",
+   "treadmill"
+  ],
+  "items": [
+   {
+    "exercise": "treadmill_run",
+    "dose": "4 мин"
+   },
+   {
+    "exercise": "bike",
+    "dose": "4 мин"
+   },
+   {
+    "exercise": "row_erg",
+    "dose": "4 мин"
+   },
+   {
+    "exercise": "elliptical",
+    "dose": "4 мин"
+   },
+   {
+    "exercise": "stepper",
+    "dose": "4 мин"
+   }
+  ],
+  "timer": {
+   "mode": "INTERVALS",
+   "workSec": 240,
+   "restSec": 60,
+   "rounds": 5
+  },
+  "description": "Каждый раунд — новый тренажёр в указанном порядке, минута отдыха — на переход."
+ },
+ {
+  "id": "c016",
+  "name": "Ровный бег 30 минут",
+  "type": "cardio",
+  "format": "STEADY",
+  "level": 2,
+  "durationMin": 30,
+  "muscles": [
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "treadmill"
+  ],
+  "items": [
+   {
+    "exercise": "treadmill_run",
+    "dose": "30 мин, 2-я пульсовая зона"
+   }
+  ],
+  "timer": {
+   "mode": "COUNTDOWN",
+   "durationSec": 1800
+  },
+  "description": "Темп, в котором можно разговаривать. Базовая аэробная выносливость."
+ },
+ {
+  "id": "c017",
+  "name": "12-3-30",
+  "type": "cardio",
+  "format": "STEADY",
+  "level": 1,
+  "durationMin": 30,
+  "muscles": [
+   "legs"
+  ],
+  "equipment": [
+   "treadmill"
+  ],
+  "items": [
+   {
+    "exercise": "treadmill_walk",
+    "dose": "30 мин, наклон 12 %, скорость 4,8 км/ч"
+   }
+  ],
+  "timer": {
+   "mode": "COUNTDOWN",
+   "durationSec": 1800
+  },
+  "description": "Популярная ходьба в горку: 12 % наклона, 3 мили в час, 30 минут."
+ },
+ {
+  "id": "c018",
+  "name": "Пирамида на дорожке",
+  "type": "cardio",
+  "format": "STEADY",
+  "level": 2,
+  "durationMin": 30,
+  "muscles": [
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "treadmill"
+  ],
+  "items": [
+   {
+    "exercise": "treadmill_run",
+    "dose": "Скорость 9–10–11–12–11–10–9 км/ч, по 4 мин"
+   }
+  ],
+  "timer": {
+   "mode": "COUNTDOWN",
+   "durationSec": 1800
+  },
+  "description": "Каждые 4 минуты меняйте скорость по пирамиде, в начале и в конце 1 минута ходьбы."
+ },
+ {
+  "id": "c019",
+  "name": "Велотренажёр 45 минут",
+  "type": "cardio",
+  "format": "STEADY",
+  "level": 1,
+  "durationMin": 45,
+  "muscles": [
+   "legs"
+  ],
+  "equipment": [
+   "bike"
+  ],
+  "items": [
+   {
+    "exercise": "bike",
+    "dose": "45 мин, 2-я пульсовая зона, 80–90 об/мин"
+   }
+  ],
+  "timer": {
+   "mode": "COUNTDOWN",
+   "durationSec": 2700
+  },
+  "description": "Длинная спокойная работа для выносливости и восстановления."
+ },
+ {
+  "id": "c020",
+  "name": "Эллипс 40 минут",
+  "type": "cardio",
+  "format": "STEADY",
+  "level": 1,
+  "durationMin": 40,
+  "muscles": [
+   "full"
+  ],
+  "equipment": [
+   "elliptical"
+  ],
+  "items": [
+   {
+    "exercise": "elliptical",
+    "dose": "40 мин, умеренный темп"
+   }
+  ],
+  "timer": {
+   "mode": "COUNTDOWN",
+   "durationSec": 2400
+  },
+  "description": "Ровный темп без ударной нагрузки."
+ },
+ {
+  "id": "c021",
+  "name": "Степпер 20 минут",
+  "type": "cardio",
+  "format": "STEADY",
+  "level": 2,
+  "durationMin": 20,
+  "muscles": [
+   "legs"
+  ],
+  "equipment": [
+   "stepper"
+  ],
+  "items": [
+   {
+    "exercise": "stepper",
+    "dose": "20 мин в ровном темпе"
+   }
+  ],
+  "timer": {
+   "mode": "COUNTDOWN",
+   "durationSec": 1200
+  },
+  "description": "Короткая, но плотная работа на ноги."
+ },
+ {
+  "id": "c022",
+  "name": "Гребля 30 минут",
+  "type": "cardio",
+  "format": "STEADY",
+  "level": 2,
+  "durationMin": 30,
+  "muscles": [
+   "full"
+  ],
+  "equipment": [
+   "rower"
+  ],
+  "items": [
+   {
+    "exercise": "row_erg",
+    "dose": "30 мин, 20–22 гребка/мин"
+   }
+  ],
+  "timer": {
+   "mode": "COUNTDOWN",
+   "durationSec": 1800
+  },
+  "description": "Ровная гребля с длинным мощным толчком ногами."
+ },
+ {
+  "id": "c023",
+  "name": "Кардиомикс 45",
+  "type": "cardio",
+  "format": "STEADY",
+  "level": 1,
+  "durationMin": 45,
+  "muscles": [
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "bike",
+   "elliptical",
+   "treadmill"
+  ],
+  "items": [
+   {
+    "exercise": "treadmill_walk",
+    "dose": "15 мин"
+   },
+   {
+    "exercise": "bike",
+    "dose": "15 мин"
+   },
+   {
+    "exercise": "elliptical",
+    "dose": "15 мин"
+   }
+  ],
+  "timer": {
+   "mode": "COUNTDOWN",
+   "durationSec": 2700
+  },
+  "description": "Три тренажёра по 15 минут без отдыха между ними."
+ },
+ {
+  "id": "c024",
+  "name": "5 км на дорожке",
+  "type": "cardio",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 40,
+  "muscles": [
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "treadmill"
+  ],
+  "items": [
+   {
+    "exercise": "treadmill_run",
+    "dose": "5 км"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 2400
+  },
+  "description": "Пробегите 5 км как можно быстрее. Наклон 1 %."
+ },
+ {
+  "id": "c025",
+  "name": "10 км на велотренажёре",
+  "type": "cardio",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 30,
+  "muscles": [
+   "legs"
+  ],
+  "equipment": [
+   "bike"
+  ],
+  "items": [
+   {
+    "exercise": "bike",
+    "dose": "10 км"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 1800
+  },
+  "description": "10 км на время, сопротивление — среднее."
+ },
+ {
+  "id": "c026",
+  "name": "Тройной кардиочиппер",
+  "type": "cardio",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 45,
+  "muscles": [
+   "full",
+   "legs"
+  ],
+  "equipment": [
+   "bike",
+   "rower",
+   "treadmill"
+  ],
+  "items": [
+   {
+    "exercise": "row_erg",
+    "dose": "500 м"
+   },
+   {
+    "exercise": "bike",
+    "dose": "2 км"
+   },
+   {
+    "exercise": "treadmill_run",
+    "dose": "800 м"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 2700
+  },
+  "description": "3 раунда без отдыха, переходы между тренажёрами — бегом."
+ },
+ {
+  "id": "c027",
+  "name": "100 этажей",
+  "type": "cardio",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 30,
+  "muscles": [
+   "legs"
+  ],
+  "equipment": [
+   "stepper"
+  ],
+  "items": [
+   {
+    "exercise": "stepper",
+    "dose": "100 этажей"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 1800
+  },
+  "description": "100 этажей на лестничном степпере на время."
  }
 ]

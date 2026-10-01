@@ -62,7 +62,14 @@ fun WorkoutCard(workout: Workout, favorite: Boolean, onClick: () -> Unit, modifi
     val style = LocalTempoStyle.current
     Tile(modifier.fillMaxWidth(), onClick = onClick) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            IconBox(if (workout.type == WorkoutType.STRENGTH) TempoIcons.Dumbbell else TempoIcons.Flame, 44.dp)
+            IconBox(
+                when (workout.type) {
+                    WorkoutType.STRENGTH -> TempoIcons.Dumbbell
+                    WorkoutType.CARDIO -> TempoIcons.Heart
+                    WorkoutType.FUNCTIONAL -> TempoIcons.Flame
+                },
+                44.dp,
+            )
             Spacer(Modifier.width(12.dp))
             Column(Modifier.weight(1f)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -133,21 +140,27 @@ fun <T> MultiSelector(options: List<T>, selected: Set<T>, label: (T) -> String, 
     }
 }
 
-/** Карточка одного фильтра: подпись с иконкой и чипы с вариантом «Любой/Любая». */
+/** Карточка одного фильтра: «Любой/Любая» сбрасывает выбор, остальные чипы отмечаются по несколько. */
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun <T : Any> FilterCard(
     title: String,
     icon: ImageVector,
     anyLabel: String,
     options: List<T>,
-    selected: T?,
+    selected: Set<T>,
     label: (T) -> String,
-    onSelect: (T?) -> Unit,
+    onChange: (Set<T>) -> Unit,
 ) {
     Tile(Modifier.fillMaxWidth()) {
         TileLabel(title, icon)
         Spacer(Modifier.height(8.dp))
-        SegmentedSelector(listOf<T?>(null) + options, selected, { it?.let(label) ?: anyLabel }, onSelect, flow = true)
+        FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(7.dp), verticalArrangement = Arrangement.spacedBy(7.dp)) {
+            Chip(anyLabel, selected.isEmpty(), { onChange(emptySet()) })
+            options.forEach { option ->
+                Chip(label(option), option in selected, { onChange(if (option in selected) selected - option else selected + option) })
+            }
+        }
     }
 }
 
@@ -164,7 +177,7 @@ fun FilterPanel(
 ) {
     var expanded by rememberSaveable { mutableStateOf(initiallyExpanded) }
     val style = LocalTempoStyle.current
-    val active = listOfNotNull(filters.type, filters.muscle, filters.duration, filters.format, filters.level).size +
+    val active = listOf(filters.types, filters.muscles, filters.durations, filters.formats, filters.levels).count { it.isNotEmpty() } +
         (if (filters.equipment.isNotEmpty()) 1 else 0) + (if (filters.onlyFavorites) 1 else 0)
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Row(
@@ -190,11 +203,11 @@ fun FilterPanel(
             Icon(if (expanded) TempoIcons.ChevronUp else TempoIcons.ChevronDown, contentDescription = null, tint = style.muted, modifier = Modifier.size(18.dp))
         }
         if (expanded) {
-            FilterCard("Тип", TempoIcons.Format, "Любой", WorkoutType.entries, filters.type, { it.title }) { onChange(filters.copy(type = it)) }
-            FilterCard("Группа мышц", TempoIcons.Muscle, "Любая", Muscle.entries, filters.muscle, { it.title }) { onChange(filters.copy(muscle = it)) }
-            FilterCard("Длительность", TempoIcons.Timer, "Любая", DurationRange.entries, filters.duration, { it.title }) { onChange(filters.copy(duration = it)) }
-            FilterCard("Формат", TempoIcons.Clipboard, "Любой", WorkoutFormat.entries, filters.format, { it.title }) { onChange(filters.copy(format = it)) }
-            FilterCard("Сложность", TempoIcons.Flame, "Любая", Level.entries, filters.level, { it.title }) { onChange(filters.copy(level = it)) }
+            FilterCard("Тип", TempoIcons.Format, "Любой", WorkoutType.entries, filters.types, { it.title }) { onChange(filters.copy(types = it)) }
+            FilterCard("Группа мышц", TempoIcons.Muscle, "Любая", Muscle.entries, filters.muscles, { it.title }) { onChange(filters.copy(muscles = it)) }
+            FilterCard("Длительность", TempoIcons.Timer, "Любая", DurationRange.entries, filters.durations, { it.title }) { onChange(filters.copy(durations = it)) }
+            FilterCard("Формат", TempoIcons.Clipboard, "Любой", WorkoutFormat.entries, filters.formats, { it.title }) { onChange(filters.copy(formats = it)) }
+            FilterCard("Сложность", TempoIcons.Flame, "Любая", Level.entries, filters.levels, { it.title }) { onChange(filters.copy(levels = it)) }
             Tile(Modifier.fillMaxWidth()) {
                 TileLabel("Оборудование", TempoIcons.Dumbbell)
                 Spacer(Modifier.height(8.dp))

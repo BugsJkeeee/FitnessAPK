@@ -16,15 +16,16 @@ import sys
 ROOT = os.path.join(os.path.dirname(__file__), "..")
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "content"))
 from exercises import EXERCISES  # noqa: E402
-from workouts import FUNCTIONAL, STRENGTH  # noqa: E402
+from workouts import CARDIO, FUNCTIONAL, STRENGTH  # noqa: E402
 
 MUSCLES = {"chest": "Грудь", "back": "Спина", "legs": "Ноги", "shoulders": "Плечи", "arms": "Руки", "abs": "Пресс", "full": "Всё тело"}
 EQUIPMENT = {
     "bodyweight": "Собственный вес", "barbell": "Штанга", "dumbbell": "Гантели", "kettlebell": "Гиря",
     "pullup_bar": "Турник", "dip_bars": "Брусья", "box": "Ящик", "rower": "Гребной тренажёр",
     "machine": "Тренажёры и блоки", "bench": "Скамья",
+    "treadmill": "Беговая дорожка", "bike": "Велотренажёр", "elliptical": "Эллипс", "stepper": "Степпер",
 }
-FORMATS = {"FOR_TIME": "For Time", "AMRAP": "AMRAP", "EMOM": "EMOM", "TABATA": "Табата", "SETS": "Подходы"}
+FORMATS = {"FOR_TIME": "For Time", "AMRAP": "AMRAP", "EMOM": "EMOM", "TABATA": "Табата", "INTERVALS": "Интервалы", "STEADY": "Непрерывно", "SETS": "Подходы"}
 
 
 def build(source_db):
@@ -54,7 +55,7 @@ def build(source_db):
 
     workouts = []
 
-    def add(prefix, n, w):
+    def add(prefix, n, w, cardio=False):
         items = w["items"]
         ex_ids = [i[0] for i in items]
         for e in ex_ids:
@@ -73,14 +74,16 @@ def build(source_db):
             items_json = [dict(exercise=i[0], sets=i[1], reps=i[2]) for i in items]
             timer = None
         else:
-            kind = "functional"
-            if "full" not in muscles:
+            kind = "cardio" if cardio else "functional"
+            if kind == "functional" and "full" not in muscles:
                 muscles.append("full")
             items_json = [dict(exercise=i[0], dose=i[1]) for i in items]
             if fmt == "FOR_TIME":
                 duration, timer = t["cap"], dict(mode="FOR_TIME", capSec=t["cap"] * 60)
             elif fmt == "AMRAP":
                 duration, timer = t["minutes"], dict(mode="AMRAP", durationSec=t["minutes"] * 60)
+            elif fmt == "STEADY":
+                duration, timer = t["minutes"], dict(mode="COUNTDOWN", durationSec=t["minutes"] * 60)
             elif fmt == "EMOM":
                 duration = int(math.ceil(t["interval"] * t["rounds"] / 60))
                 timer = dict(mode="EMOM", intervalSec=t["interval"], rounds=t["rounds"])
@@ -96,6 +99,8 @@ def build(source_db):
         add("f", n, w)
     for n, w in enumerate(STRENGTH, 1):
         add("s", n, w)
+    for n, w in enumerate(CARDIO, 1):
+        add("c", n, w, cardio=True)
     names = [w["name"] for w in workouts]
     assert len(names) == len(set(names)), "повторяются названия"
 
@@ -111,7 +116,7 @@ def write_doc(workouts, by_id):
     level = {1: "лёгкая", 2: "средняя", 3: "тяжёлая"}
     lines = ["# База тренировок Tempo", "",
              "Перечень стартовой базы. Правки — списком в чат: что убрать, что поменять, что добавить.", ""]
-    for kind, title in (("functional", "Функциональные комплексы"), ("strength", "Силовые тренировки")):
+    for kind, title in (("functional", "Функциональные комплексы"), ("strength", "Силовые тренировки"), ("cardio", "Кардио")):
         group = [w for w in workouts if w["type"] == kind]
         lines += [f"## {title} ({len(group)})", ""]
         for w in group:

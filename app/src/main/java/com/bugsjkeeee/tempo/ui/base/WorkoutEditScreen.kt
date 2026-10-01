@@ -73,6 +73,7 @@ data class WorkoutDraft(
     val workSec: Int = 20,
     val restSec: Int = 10,
     val tabataRounds: Int = 8,
+    val steadySec: Int = 30 * 60,
     val items: List<WorkoutItem> = emptyList(),
     val description: String = "",
     val exercises: Map<String, Exercise> = emptyMap(),
@@ -81,7 +82,8 @@ data class WorkoutDraft(
         WorkoutFormat.FOR_TIME -> TimerSpec(TimerMode.FOR_TIME, capSec = capSec)
         WorkoutFormat.AMRAP -> TimerSpec(TimerMode.AMRAP, durationSec = amrapSec)
         WorkoutFormat.EMOM -> TimerSpec(TimerMode.EMOM, intervalSec = emomIntervalSec, rounds = emomRounds)
-        WorkoutFormat.TABATA -> TimerSpec(TimerMode.INTERVALS, workSec = workSec, restSec = restSec, rounds = tabataRounds)
+        WorkoutFormat.TABATA, WorkoutFormat.INTERVALS -> TimerSpec(TimerMode.INTERVALS, workSec = workSec, restSec = restSec, rounds = tabataRounds)
+        WorkoutFormat.STEADY -> TimerSpec(TimerMode.COUNTDOWN, durationSec = steadySec)
         WorkoutFormat.SETS -> null
     }
 }
@@ -110,6 +112,7 @@ class WorkoutEditViewModel(private val app: TempoApp, private val id: String?) :
                     workSec = t?.workSec ?: 20,
                     restSec = t?.restSec ?: 10,
                     tabataRounds = t?.rounds ?: 8,
+                    steadySec = t?.durationSec ?: 30 * 60,
                     items = w.items,
                     description = w.description,
                     exercises = exercises,
@@ -196,7 +199,8 @@ fun WorkoutEditScreen(
                                 DurationStepper("Интервал", d.emomIntervalSec, { v -> vm.update { it.copy(emomIntervalSec = v) } })
                                 CountStepper("Раунды", d.emomRounds, { v -> vm.update { it.copy(emomRounds = v) } })
                             }
-                            WorkoutFormat.TABATA -> {
+                            WorkoutFormat.STEADY -> DurationStepper("Длительность", d.steadySec, { v -> vm.update { it.copy(steadySec = v) } }, min = 60)
+                            WorkoutFormat.TABATA, WorkoutFormat.INTERVALS -> {
                                 DurationStepper("Работа", d.workSec, { v -> vm.update { it.copy(workSec = v) } })
                                 DurationStepper("Отдых", d.restSec, { v -> vm.update { it.copy(restSec = v) } }, min = 0, zeroText = "нет")
                                 CountStepper("Раунды", d.tabataRounds, { v -> vm.update { it.copy(tabataRounds = v) } })

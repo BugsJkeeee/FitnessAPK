@@ -28,12 +28,20 @@ enum class Equipment(val title: String) {
     @SerialName("rower") ROWER("Гребной тренажёр"),
     @SerialName("machine") MACHINE("Тренажёры и блоки"),
     @SerialName("bench") BENCH("Скамья"),
+    @SerialName("treadmill") TREADMILL("Беговая дорожка"),
+    @SerialName("bike") BIKE("Велотренажёр"),
+    @SerialName("elliptical") ELLIPTICAL("Эллипс"),
+    @SerialName("stepper") STEPPER("Степпер"),
 }
+
+/** Кардиотренажёры: тренировка только на них считается кардио. */
+val CardioEquipment = setOf(Equipment.ROWER, Equipment.TREADMILL, Equipment.BIKE, Equipment.ELLIPTICAL, Equipment.STEPPER)
 
 @Serializable
 enum class WorkoutType(val title: String) {
     @SerialName("functional") FUNCTIONAL("Функциональная"),
     @SerialName("strength") STRENGTH("Силовая"),
+    @SerialName("cardio") CARDIO("Кардио"),
 }
 
 @Serializable
@@ -42,6 +50,8 @@ enum class WorkoutFormat(val title: String) {
     AMRAP("AMRAP"),
     EMOM("EMOM"),
     TABATA("Табата"),
+    INTERVALS("Интервалы"),
+    STEADY("Непрерывно"),
     SETS("Подходы"),
 }
 
