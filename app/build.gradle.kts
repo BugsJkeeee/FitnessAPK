@@ -12,8 +12,10 @@ android {
         applicationId = "com.bugsjkeeee.tempo"
         minSdk = 26
         targetSdk = 35
-        versionCode = 1
-        versionName = "0.1.0"
+        // Номер сборки CI попадает в версию, чтобы на телефоне было видно, какая сборка установлена.
+        val build = System.getenv("GITHUB_RUN_NUMBER")?.toIntOrNull() ?: 1
+        versionCode = build
+        versionName = "0.1.$build"
     }
 
     signingConfigs {

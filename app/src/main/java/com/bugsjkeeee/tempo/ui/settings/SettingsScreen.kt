@@ -34,6 +34,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -83,6 +85,8 @@ fun SettingsScreen(onBack: () -> Unit) {
     val settings by vm.settings.collectAsStateWithLifecycle()
     var choosing by rememberSaveable { mutableStateOf<SoundEvent?>(null) }
     val style = LocalTempoStyle.current
+    val context = LocalContext.current
+    val version = remember { context.packageManager.getPackageInfo(context.packageName, 0).versionName }
 
     Scaffold(
         topBar = {
@@ -138,6 +142,14 @@ fun SettingsScreen(onBack: () -> Unit) {
                     Spacer(Modifier.height(10.dp))
                     SegmentedSelector(prepOptions, s.prepSec, { if (it == 0) "нет" else "$it с" }, vm::setPrep)
                 }
+            }
+            item {
+                Text(
+                    "Версия $version",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = style.muted,
+                    modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                )
             }
         }
     }
