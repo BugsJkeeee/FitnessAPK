@@ -356,6 +356,85 @@
   "technique": "Носки на возвышении, вес на плечах. Поднимайтесь на носки максимально высоко и опускайте пятки ниже уровня опоры."
  },
  {
+  "id": "stiff_leg_dl",
+  "name": "Тяга на прямых ногах",
+  "muscles": [
+   "legs",
+   "back"
+  ],
+  "equipment": [
+   "barbell"
+  ],
+  "images": [
+   "exercises/stiff_leg_dl/0.jpg",
+   "exercises/stiff_leg_dl/1.jpg"
+  ],
+  "technique": "Ноги прямые или чуть согнуты, спина ровная. Наклоняйтесь, опуская штангу вдоль ног до растяжения задней поверхности бедра, и выпрямляйтесь за счёт ягодиц и бицепса бедра."
+ },
+ {
+  "id": "barbell_pullover",
+  "name": "Пуловер со штангой лёжа",
+  "muscles": [
+   "chest",
+   "back"
+  ],
+  "equipment": [
+   "barbell",
+   "bench"
+  ],
+  "images": [
+   "exercises/barbell_pullover/0.jpg",
+   "exercises/barbell_pullover/1.jpg"
+  ],
+  "technique": "Лёжа на скамье, штанга над грудью на слегка согнутых руках. Опускайте её за голову по дуге до растяжения груди и широчайших и возвращайте тем же путём."
+ },
+ {
+  "id": "upright_row",
+  "name": "Тяга штанги к подбородку",
+  "muscles": [
+   "shoulders"
+  ],
+  "equipment": [
+   "barbell"
+  ],
+  "images": [
+   "exercises/upright_row/0.jpg",
+   "exercises/upright_row/1.jpg"
+  ],
+  "technique": "Хват чуть уже плеч. Тяните штангу вдоль корпуса до уровня груди, локти ведите вверх и в стороны выше кистей, опускайте под контролем."
+ },
+ {
+  "id": "seated_french_press",
+  "name": "Французский жим со штангой сидя",
+  "muscles": [
+   "arms"
+  ],
+  "equipment": [
+   "barbell",
+   "bench"
+  ],
+  "images": [
+   "exercises/seated_french_press/0.jpg",
+   "exercises/seated_french_press/1.jpg"
+  ],
+  "technique": "Сидя, штанга над головой на прямых руках. Сгибайте только локти, опуская штангу за голову, плечи неподвижны и направлены вверх, затем разгибайте руки."
+ },
+ {
+  "id": "decline_leg_raise",
+  "name": "Подъём ног лёжа на наклонной скамье",
+  "muscles": [
+   "abs"
+  ],
+  "equipment": [
+   "bench"
+  ],
+  "images": [
+   "exercises/decline_leg_raise/0.jpg",
+   "exercises/decline_leg_raise/1.jpg"
+  ],
+  "technique": "Лёжа головой вверх на наклонной скамье, держитесь за неё руками. Поднимайте прямые ноги до вертикали, слегка отрывая таз, и медленно опускайте, не касаясь скамьи."
+ },
+ {
   "id": "db_bench_press",
   "name": "Жим гантелей лёжа",
   "muscles": [
@@ -530,6 +609,22 @@
    "exercises/renegade_row/1.jpg"
   ],
   "technique": "Упор лёжа на гантелях. Поочерёдно тяните гантели к поясу, удерживая корпус ровным и не разворачивая таз."
+ },
+ {
+  "id": "seated_db_curl",
+  "name": "Сгибание рук с гантелями сидя",
+  "muscles": [
+   "arms"
+  ],
+  "equipment": [
+   "dumbbell",
+   "bench"
+  ],
+  "images": [
+   "exercises/seated_db_curl/0.jpg",
+   "exercises/seated_db_curl/1.jpg"
+  ],
+  "technique": "Сидя, гантели в опущенных руках, локти прижаты. Сгибайте руки, разворачивая ладони вверх, без раскачки, и медленно опускайте."
  },
  {
   "id": "db_lunge",
@@ -1050,6 +1145,21 @@
    "exercises/muscle_up/1.jpg"
   ],
   "technique": "Мощно подтянитесь к поясу, перекиньте корпус над перекладиной и выжмите себя в упор на прямые руки."
+ },
+ {
+  "id": "hanging_leg_raise",
+  "name": "Подъём ног в висе на турнике",
+  "muscles": [
+   "abs"
+  ],
+  "equipment": [
+   "pullup_bar"
+  ],
+  "images": [
+   "exercises/hanging_leg_raise/0.jpg",
+   "exercises/hanging_leg_raise/1.jpg"
+  ],
+  "technique": "Вис на турнике, корпус неподвижен. Поднимайте ноги до параллели с полом или выше без раскачки и медленно опускайте."
  },
  {
   "id": "dip",

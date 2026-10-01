@@ -5554,6 +5554,509 @@
   "description": ""
  },
  {
+  "id": "s059",
+  "name": "Сплит 4: ноги",
+  "type": "strength",
+  "format": "SETS",
+  "level": 2,
+  "durationMin": 40,
+  "muscles": [
+   "legs",
+   "back"
+  ],
+  "equipment": [
+   "barbell",
+   "dumbbell"
+  ],
+  "items": [
+   {
+    "exercise": "back_squat",
+    "sets": 4,
+    "reps": 8
+   },
+   {
+    "exercise": "stiff_leg_dl",
+    "sets": 4,
+    "reps": 10
+   },
+   {
+    "exercise": "db_lunge",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "calf_raise",
+    "sets": 4,
+    "reps": 15
+   }
+  ],
+  "timer": null,
+  "description": "Четырёхдневный сплит, день 1 из 4."
+ },
+ {
+  "id": "s060",
+  "name": "Сплит 4: грудь и трицепс",
+  "type": "strength",
+  "format": "SETS",
+  "level": 2,
+  "durationMin": 35,
+  "muscles": [
+   "chest",
+   "arms"
+  ],
+  "equipment": [
+   "barbell",
+   "bench",
+   "dip_bars",
+   "dumbbell"
+  ],
+  "items": [
+   {
+    "exercise": "bench_press",
+    "sets": 4,
+    "reps": 8
+   },
+   {
+    "exercise": "db_fly",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "dip",
+    "sets": 3,
+    "reps": 10
+   },
+   {
+    "exercise": "seated_french_press",
+    "sets": 3,
+    "reps": 12
+   }
+  ],
+  "timer": null,
+  "description": "Четырёхдневный сплит, день 2 из 4."
+ },
+ {
+  "id": "s061",
+  "name": "Сплит 4: спина и бицепс",
+  "type": "strength",
+  "format": "SETS",
+  "level": 2,
+  "durationMin": 35,
+  "muscles": [
+   "back",
+   "legs",
+   "arms"
+  ],
+  "equipment": [
+   "barbell"
+  ],
+  "items": [
+   {
+    "exercise": "barbell_row",
+    "sets": 4,
+    "reps": 8
+   },
+   {
+    "exercise": "good_morning",
+    "sets": 3,
+    "reps": 10
+   },
+   {
+    "exercise": "barbell_shrug",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "barbell_curl",
+    "sets": 3,
+    "reps": 10
+   }
+  ],
+  "timer": null,
+  "description": "Четырёхдневный сплит, день 3 из 4."
+ },
+ {
+  "id": "s062",
+  "name": "Сплит 4: плечи и пресс",
+  "type": "strength",
+  "format": "SETS",
+  "level": 2,
+  "durationMin": 35,
+  "muscles": [
+   "shoulders",
+   "arms",
+   "abs"
+  ],
+  "equipment": [
+   "barbell",
+   "dumbbell",
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "overhead_press",
+    "sets": 4,
+    "reps": 8
+   },
+   {
+    "exercise": "lateral_raise",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "situp",
+    "sets": 3,
+    "reps": 15
+   },
+   {
+    "exercise": "hanging_leg_raise",
+    "sets": 3,
+    "reps": 12
+   }
+  ],
+  "timer": null,
+  "description": "Четырёхдневный сплит, день 4 из 4."
+ },
+ {
+  "id": "s063",
+  "name": "Сплит антагонисты: грудь и спина",
+  "type": "strength",
+  "format": "SETS",
+  "level": 3,
+  "durationMin": 60,
+  "muscles": [
+   "chest",
+   "arms",
+   "back",
+   "shoulders"
+  ],
+  "equipment": [
+   "barbell",
+   "bench",
+   "dumbbell",
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "bench_press",
+    "sets": 4,
+    "reps": 8
+   },
+   {
+    "exercise": "pullup",
+    "sets": 4,
+    "reps": 8
+   },
+   {
+    "exercise": "incline_bench_press",
+    "sets": 3,
+    "reps": 10
+   },
+   {
+    "exercise": "barbell_row",
+    "sets": 3,
+    "reps": 10
+   },
+   {
+    "exercise": "db_fly",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "db_row",
+    "sets": 3,
+    "reps": 10
+   },
+   {
+    "exercise": "barbell_pullover",
+    "sets": 3,
+    "reps": 12
+   }
+  ],
+  "timer": null,
+  "description": "Трёхдневный сплит по мышцам-антагонистам, день 1 из 3. Упражнения на грудь и спину можно чередовать суперсетами."
+ },
+ {
+  "id": "s064",
+  "name": "Сплит антагонисты: ноги",
+  "type": "strength",
+  "format": "SETS",
+  "level": 3,
+  "durationMin": 55,
+  "muscles": [
+   "legs",
+   "back"
+  ],
+  "equipment": [
+   "barbell",
+   "machine"
+  ],
+  "items": [
+   {
+    "exercise": "back_squat",
+    "sets": 4,
+    "reps": 8
+   },
+   {
+    "exercise": "stiff_leg_dl",
+    "sets": 4,
+    "reps": 10
+   },
+   {
+    "exercise": "leg_curl",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "leg_extension",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "barbell_lunge",
+    "sets": 3,
+    "reps": 10
+   },
+   {
+    "exercise": "calf_raise",
+    "sets": 4,
+    "reps": 15
+   }
+  ],
+  "timer": null,
+  "description": "Трёхдневный сплит по мышцам-антагонистам, день 2 из 3."
+ },
+ {
+  "id": "s065",
+  "name": "Сплит антагонисты: руки и дельты",
+  "type": "strength",
+  "format": "SETS",
+  "level": 2,
+  "durationMin": 50,
+  "muscles": [
+   "arms",
+   "shoulders"
+  ],
+  "equipment": [
+   "barbell",
+   "bench",
+   "dip_bars",
+   "dumbbell"
+  ],
+  "items": [
+   {
+    "exercise": "barbell_curl",
+    "sets": 3,
+    "reps": 10
+   },
+   {
+    "exercise": "dip_triceps",
+    "sets": 3,
+    "reps": 10
+   },
+   {
+    "exercise": "upright_row",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "seated_db_curl",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "skull_crusher",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "overhead_press",
+    "sets": 4,
+    "reps": 8
+   }
+  ],
+  "timer": null,
+  "description": "Трёхдневный сплит по мышцам-антагонистам, день 3 из 3. Бицепс и трицепс можно чередовать суперсетами."
+ },
+ {
+  "id": "s066",
+  "name": "Сплит синергисты: грудь и бицепс",
+  "type": "strength",
+  "format": "SETS",
+  "level": 2,
+  "durationMin": 50,
+  "muscles": [
+   "chest",
+   "shoulders",
+   "arms",
+   "back",
+   "abs"
+  ],
+  "equipment": [
+   "barbell",
+   "bench",
+   "dumbbell"
+  ],
+  "items": [
+   {
+    "exercise": "db_incline_press",
+    "sets": 4,
+    "reps": 10
+   },
+   {
+    "exercise": "bench_press",
+    "sets": 4,
+    "reps": 8
+   },
+   {
+    "exercise": "barbell_pullover",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "barbell_curl",
+    "sets": 3,
+    "reps": 10
+   },
+   {
+    "exercise": "hammer_curl",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "decline_leg_raise",
+    "sets": 3,
+    "reps": 15
+   }
+  ],
+  "timer": null,
+  "description": "Трёхдневный сплит по мышцам-синергистам, день 1 из 3."
+ },
+ {
+  "id": "s067",
+  "name": "Сплит синергисты: ноги и плечи",
+  "type": "strength",
+  "format": "SETS",
+  "level": 3,
+  "durationMin": 70,
+  "muscles": [
+   "legs",
+   "back",
+   "shoulders",
+   "arms",
+   "abs"
+  ],
+  "equipment": [
+   "barbell",
+   "bench",
+   "dumbbell"
+  ],
+  "items": [
+   {
+    "exercise": "back_squat",
+    "sets": 4,
+    "reps": 8
+   },
+   {
+    "exercise": "stiff_leg_dl",
+    "sets": 4,
+    "reps": 10
+   },
+   {
+    "exercise": "calf_raise",
+    "sets": 4,
+    "reps": 15
+   },
+   {
+    "exercise": "db_lunge",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "overhead_press",
+    "sets": 4,
+    "reps": 8
+   },
+   {
+    "exercise": "db_shoulder_press",
+    "sets": 3,
+    "reps": 10
+   },
+   {
+    "exercise": "rear_delt_raise",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "situp",
+    "sets": 3,
+    "reps": 15
+   }
+  ],
+  "timer": null,
+  "description": "Трёхдневный сплит по мышцам-синергистам, день 2 из 3."
+ },
+ {
+  "id": "s068",
+  "name": "Сплит синергисты: спина и трицепс",
+  "type": "strength",
+  "format": "SETS",
+  "level": 3,
+  "durationMin": 55,
+  "muscles": [
+   "back",
+   "legs",
+   "arms",
+   "chest",
+   "abs"
+  ],
+  "equipment": [
+   "barbell",
+   "bench",
+   "dumbbell",
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "db_row",
+    "sets": 3,
+    "reps": 10
+   },
+   {
+    "exercise": "deadlift",
+    "sets": 4,
+    "reps": 6
+   },
+   {
+    "exercise": "barbell_row",
+    "sets": 3,
+    "reps": 10
+   },
+   {
+    "exercise": "barbell_shrug",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "close_grip_bench",
+    "sets": 3,
+    "reps": 10
+   },
+   {
+    "exercise": "seated_french_press",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "hanging_leg_raise",
+    "sets": 3,
+    "reps": 12
+   }
+  ],
+  "timer": null,
+  "description": "Трёхдневный сплит по мышцам-синергистам, день 3 из 3."
+ },
+ {
   "id": "c001",
   "name": "Спринты на дорожке 30/30",
   "type": "cardio",
