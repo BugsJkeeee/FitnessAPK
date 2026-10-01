@@ -153,8 +153,8 @@ fun TimerPlan.eventsBetween(fromMs: Long, toMs: Long): List<TimerEvent> {
         val boundary = segStart + d
         for (k in 3 downTo 1) {
             val t = boundary - k * 1000L
-            // Отсчёт звучит только внутри своего отрезка: короткие отрезки не «пищат» из предыдущего.
-            if (t >= segStart && t > fromMs && t <= toMs) events += t to TimerEvent.Countdown(k)
+            // Отсчёт звучит только внутри своего отрезка и не совпадает с сигналом его начала.
+            if (t > segStart && t > fromMs && t <= toMs) events += t to TimerEvent.Countdown(k)
         }
         if (boundary > fromMs && boundary <= toMs) {
             events += boundary to if (i == segments.lastIndex) TimerEvent.Finish else startEvent(i + 1)

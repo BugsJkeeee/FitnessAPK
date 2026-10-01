@@ -83,9 +83,10 @@ class TimerModelTest {
     fun shortSegmentsDoNotCountDownFromPreviousSegment() {
         val s = settings.copy(workSec = 2, restSec = 2, intervalRounds = 2)
         val plan = buildPlan(TimerMode.INTERVALS, s, prepSec = 0)
-        // Отрезок 2 с: отсчёт только «2» и «1» внутри него.
+        // Отрезок 2 с: «2» совпало бы с сигналом начала, поэтому звучит только «1»,
+        // а отсчёт следующего отрезка не начинается одновременно с его стартом.
         val countdowns = plan.eventsBetween(-1, 2_000).filterIsInstance<TimerEvent.Countdown>()
-        assertEquals(listOf(2, 1), countdowns.map { it.secondsLeft })
+        assertEquals(listOf(1), countdowns.map { it.secondsLeft })
     }
 
     @Test
