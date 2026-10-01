@@ -12,3 +12,4 @@ build/
 *.jks
 *.keystore
 !debug.keystore
+__pycache__/
