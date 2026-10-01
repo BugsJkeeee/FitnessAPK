@@ -1,5 +1,6 @@
 package com.bugsjkeeee.tempo.ui.journal
 
+import com.bugsjkeeee.tempo.ui.icons.TempoIcons
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -10,9 +11,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -72,8 +70,8 @@ fun EntryScreen(id: Long, onBack: () -> Unit, onEdit: (Long) -> Unit) {
 
     Scaffold(topBar = {
         BackTopBar(entry?.title ?: "", onBack) {
-            IconButton(onClick = { onEdit(id) }) { Icon(Icons.Filled.Edit, contentDescription = "Редактировать") }
-            IconButton(onClick = { confirmDelete = true }) { Icon(Icons.Filled.Delete, contentDescription = "Удалить") }
+            IconButton(onClick = { onEdit(id) }) { Icon(TempoIcons.Edit, contentDescription = "Редактировать") }
+            IconButton(onClick = { confirmDelete = true }) { Icon(TempoIcons.Trash, contentDescription = "Удалить") }
         }
     }) { padding ->
         val e = entry ?: return@Scaffold

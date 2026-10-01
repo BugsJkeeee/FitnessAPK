@@ -1,6 +1,9 @@
 package com.bugsjkeeee.tempo.ui.random
 
+import com.bugsjkeeee.tempo.ui.icons.TempoIcons
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,20 +12,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Block
-import androidx.compose.material.icons.filled.Casino
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -39,6 +32,9 @@ import com.bugsjkeeee.tempo.content.pickRandom
 import com.bugsjkeeee.tempo.content.randomCandidates
 import com.bugsjkeeee.tempo.ui.appViewModel
 import com.bugsjkeeee.tempo.ui.components.FilterPanel
+import com.bugsjkeeee.tempo.ui.components.Note
+import com.bugsjkeeee.tempo.ui.components.PrimaryButton
+import com.bugsjkeeee.tempo.ui.components.SecondaryButton
 import com.bugsjkeeee.tempo.ui.components.Tile
 import com.bugsjkeeee.tempo.ui.components.TileLabel
 import com.bugsjkeeee.tempo.ui.components.WorkoutDetails
@@ -115,7 +111,15 @@ class RandomViewModel(private val app: TempoApp) : ViewModel() {
         currentId.value = pickRandom(state.value.candidates.filter { it.id != w.id }, w.id)?.id
     }
 
-    /** По ТЗ фильтры сбрасываются при каждом открытии раздела. */
+    private var handledReset = 0
+
+    /** По ТЗ фильтры сбрасываются при каждом открытии раздела; [key] растёт при переходе на вкладку. */
+    fun resetIfNew(key: Int) {
+        if (key == handledReset) return
+        handledReset = key
+        reset()
+    }
+
     fun reset() {
         filters.value = WorkoutFilters()
         currentId.value = null
@@ -126,97 +130,69 @@ class RandomViewModel(private val app: TempoApp) : ViewModel() {
 }
 
 @Composable
-fun RandomScreen(contentPadding: PaddingValues, onNavigate: (String) -> Unit, onExercise: (String) -> Unit) {
+fun RandomScreen(contentPadding: PaddingValues, resetKey: Int, onNavigate: (String) -> Unit, onExercise: (String) -> Unit) {
     val vm = appViewModel { RandomViewModel(it) }
     val state by vm.state.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()
-    val style = LocalTempoStyle.current
-    DisposableEffect(Unit) { onDispose { vm.reset() } }
+    // Сброс только при новом открытии вкладки, а не после возврата с экрана упражнения.
+    LaunchedEffect(resetKey) { vm.resetIfNew(resetKey) }
     if (!state.loaded) return
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(
             start = 16.dp, end = 16.dp,
-            top = contentPadding.calculateTopPadding() + 8.dp,
+            top = contentPadding.calculateTopPadding(),
             bottom = contentPadding.calculateBottomPadding() + 16.dp,
         ),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        item { FilterPanel(state.filters, vm::setFilters) }
+        item { FilterPanel(state.filters, vm::setFilters, initiallyExpanded = !state.rolled) }
         item {
-            Button(
+            PrimaryButton(
+                if (state.rolled) "Ещё рандом" else "Рандом",
                 onClick = vm::roll,
+                icon = TempoIcons.Random,
                 enabled = state.candidates.isNotEmpty(),
-                modifier = Modifier.fillMaxWidth().height(72.dp),
-                shape = style.tileShape,
-            ) {
-                Icon(Icons.Filled.Casino, contentDescription = null)
-                Spacer(Modifier.width(10.dp))
-                Text(if (state.rolled) "Ещё рандом" else "Рандом", style = MaterialTheme.typography.headlineMedium)
-            }
+                height = 58.dp,
+            )
         }
         item {
-            Text(
+            Note(
                 if (state.candidates.isEmpty()) {
                     "Под фильтры ничего не подошло — ослабьте фильтры. Тренировки за последние 14 дней и скрытые не предлагаются."
                 } else {
                     "Подходит: " + plural(state.candidates.size, "тренировка", "тренировки", "тренировок")
                 },
-                style = MaterialTheme.typography.bodySmall,
-                color = style.muted,
+                Modifier.padding(horizontal = 4.dp),
             )
         }
         val w = state.current
         if (w != null) {
             item {
-                Tile(Modifier.fillMaxWidth()) {
-                    TileLabel(w.type.title)
-                    Text(w.name, style = MaterialTheme.typography.headlineMedium)
+                Column(Modifier.padding(horizontal = 4.dp, vertical = 4.dp)) {
+                    TileLabel("Ваша тренировка · " + w.type.title, TempoIcons.Random)
+                    Text(w.name, style = MaterialTheme.typography.headlineLarge, color = MaterialTheme.colorScheme.onBackground)
                 }
             }
             item { WorkoutDetails(w, state.exercises) { onExercise(it.id) } }
             item {
-                Button(
-                    onClick = { scope.launch { onNavigate(vm.launch(w)) } },
-                    modifier = Modifier.fillMaxWidth().height(60.dp),
-                    shape = style.tileShape,
-                ) {
-                    Icon(Icons.Filled.PlayArrow, contentDescription = null)
-                    Spacer(Modifier.width(8.dp))
-                    Text("Начать", style = MaterialTheme.typography.titleLarge)
-                }
+                PrimaryButton("Начать", onClick = { scope.launch { onNavigate(vm.launch(w)) } }, icon = TempoIcons.Play)
             }
             item {
+                val fav = state.flags[w.id]?.favorite == true
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    OutlinedButton(onClick = vm::roll, modifier = Modifier.weight(1f)) {
-                        Icon(Icons.Filled.Refresh, contentDescription = null)
-                        Spacer(Modifier.width(4.dp))
-                        Text("Другой")
-                    }
-                    val fav = state.flags[w.id]?.favorite == true
-                    OutlinedButton(onClick = { vm.toggleFavorite(w) }, modifier = Modifier.weight(1f)) {
-                        Icon(if (fav) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder, contentDescription = null)
-                        Spacer(Modifier.width(4.dp))
-                        Text(if (fav) "В избранном" else "В избранное")
-                    }
+                    SecondaryButton("Другой", vm::roll, Modifier.weight(1f), TempoIcons.Refresh)
+                    SecondaryButton(
+                        if (fav) "В избранном" else "В избранное",
+                        { vm.toggleFavorite(w) },
+                        Modifier.weight(1f),
+                        if (fav) TempoIcons.HeartFilled else TempoIcons.Heart,
+                        color = if (fav) MaterialTheme.colorScheme.primary else null,
+                    )
                 }
             }
-            item {
-                OutlinedButton(onClick = { vm.hide(w) }, modifier = Modifier.fillMaxWidth()) {
-                    Icon(Icons.Filled.Block, contentDescription = null)
-                    Spacer(Modifier.width(4.dp))
-                    Text("Больше не предлагать")
-                }
-            }
-        } else if (!state.rolled) {
-            item {
-                Text(
-                    "Выберите фильтры или просто нажмите «Рандом» — приложение подберёт тренировку из базы.",
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = style.muted,
-                )
-            }
+            item { SecondaryButton("Больше не предлагать", { vm.hide(w) }, Modifier.fillMaxWidth(), TempoIcons.Ban) }
         }
     }
 }

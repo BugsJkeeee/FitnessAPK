@@ -1,5 +1,6 @@
 package com.bugsjkeeee.tempo.ui.base
 
+import com.bugsjkeeee.tempo.ui.icons.TempoIcons
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -13,10 +14,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -222,7 +219,7 @@ fun WorkoutEditScreen(
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(d.exercises[item.exercise]?.name ?: item.exercise, style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
                         IconButton(onClick = { vm.update { it.copy(items = it.items.filterIndexed { i, _ -> i != index }) } }) {
-                            Icon(Icons.Filled.Close, contentDescription = "Убрать")
+                            Icon(TempoIcons.Close, contentDescription = "Убрать")
                         }
                     }
                     fun set(new: WorkoutItem) = vm.update { it.copy(items = it.items.toMutableList().also { l -> l[index] = new }) }
@@ -244,7 +241,7 @@ fun WorkoutEditScreen(
             }
             item {
                 OutlinedButton(onClick = onPickExercise, modifier = Modifier.fillMaxWidth()) {
-                    Icon(Icons.Filled.Add, contentDescription = null)
+                    Icon(TempoIcons.Add, contentDescription = null)
                     Spacer(Modifier.width(4.dp))
                     Text("Упражнение")
                 }
@@ -291,7 +288,7 @@ fun WorkoutPickerScreen(onPicked: (String) -> Unit, onBack: () -> Unit) {
                     value = query,
                     onValueChange = { query = it },
                     placeholder = { Text("Поиск по названию") },
-                    leadingIcon = { Icon(Icons.Filled.Search, contentDescription = null) },
+                    leadingIcon = { Icon(TempoIcons.Search, contentDescription = null) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                 )

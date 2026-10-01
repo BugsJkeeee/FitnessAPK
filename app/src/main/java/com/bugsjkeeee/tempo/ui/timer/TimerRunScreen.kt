@@ -5,8 +5,11 @@ import android.view.WindowManager
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -20,42 +23,39 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Flag
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.Pause
-import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.SkipNext
-import androidx.compose.material.icons.filled.Stop
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.produceState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -65,16 +65,20 @@ import com.bugsjkeeee.tempo.timer.Phase
 import com.bugsjkeeee.tempo.timer.RunStatus
 import com.bugsjkeeee.tempo.timer.TimerController
 import com.bugsjkeeee.tempo.timer.TimerMode
-import com.bugsjkeeee.tempo.timer.TimerService
 import com.bugsjkeeee.tempo.timer.TimerSnapshot
+import com.bugsjkeeee.tempo.ui.components.InfoTile
+import com.bugsjkeeee.tempo.ui.components.PrimaryButton
+import com.bugsjkeeee.tempo.ui.components.SecondaryButton
 import com.bugsjkeeee.tempo.ui.components.Tile
 import com.bugsjkeeee.tempo.ui.components.TileLabel
 import com.bugsjkeeee.tempo.ui.components.formatClock
 import com.bugsjkeeee.tempo.ui.components.formatPrecise
 import com.bugsjkeeee.tempo.ui.components.formatRemaining
+import com.bugsjkeeee.tempo.ui.icons.TempoIcons
 import com.bugsjkeeee.tempo.ui.theme.Digits
+import com.bugsjkeeee.tempo.ui.theme.Inter
 import com.bugsjkeeee.tempo.ui.theme.LocalTempoStyle
-import com.bugsjkeeee.tempo.ui.theme.PhaseColors
+import com.bugsjkeeee.tempo.ui.theme.PhasePalette
 
 @Composable
 fun TimerRunScreen(onClose: () -> Unit, onSaveToJournal: () -> Unit) {
@@ -105,57 +109,119 @@ private fun KeepScreenOn() {
     }
 }
 
-private fun phaseColor(phase: Phase) = when (phase) {
-    Phase.PREP -> PhaseColors.Prep
-    Phase.WORK -> PhaseColors.Work
-    Phase.REST -> PhaseColors.Rest
+private fun PhasePalette.background(phase: Phase) = when (phase) {
+    Phase.PREP -> prep
+    Phase.WORK -> work
+    Phase.REST -> rest
 }
 
-private fun onPhaseColor(phase: Phase) = when (phase) {
-    Phase.PREP -> PhaseColors.OnPrep
-    Phase.WORK -> PhaseColors.OnWork
-    Phase.REST -> PhaseColors.OnRest
+private fun PhasePalette.content(phase: Phase) = when (phase) {
+    Phase.PREP -> onPrep
+    Phase.WORK -> onWork
+    Phase.REST -> onRest
 }
+
+private fun phaseName(phase: Phase) = when (phase) {
+    Phase.PREP -> "Приготовьтесь"
+    Phase.WORK -> "Работа"
+    Phase.REST -> "Отдых"
+}
+
+private fun phaseShort(phase: Phase) = when (phase) {
+    Phase.PREP -> "Подготовка"
+    Phase.WORK -> "Работа"
+    Phase.REST -> "Отдых"
+}
+
+/** Действие кнопки-молнии: «+1 раунд» в AMRAP, «круг» в секундомере, «финиш» в For Time. */
+private fun boltAction(s: TimerSnapshot, c: TimerController): (() -> Unit)? = when {
+    s.phase != Phase.WORK -> null
+    s.mode == TimerMode.AMRAP || s.mode == TimerMode.STOPWATCH -> c::lap
+    s.mode == TimerMode.FOR_TIME -> c::stop
+    else -> null
+}
+
+private fun boltHint(s: TimerSnapshot): String? = when {
+    s.phase != Phase.WORK -> null
+    s.mode == TimerMode.AMRAP -> "Молния — +1 раунд"
+    s.mode == TimerMode.STOPWATCH -> "Молния — отметить круг"
+    s.mode == TimerMode.FOR_TIME -> "Молния — финиш"
+    else -> null
+}
+
+/** Подпись под цифрами: раунд, число раундов AMRAP или кругов. */
+private fun counterText(s: TimerSnapshot): String? = when {
+    s.mode == TimerMode.AMRAP -> "Раундов: ${s.laps.size}"
+    s.mode == TimerMode.STOPWATCH -> "Кругов: ${s.laps.size}"
+    s.totalRounds > 1 -> "Раунд ${s.round} / ${s.totalRounds}"
+    else -> null
+}
+
+private fun totalText(s: TimerSnapshot): String =
+    "Общее " + formatClock(s.totalElapsedMs) + (s.totalDurationMs?.let { " / " + formatClock(it) } ?: "")
+
+/** Оформление кнопок и колец для текущей фазы. */
+private data class RunColors(val content: Color, val track: Color, val control: Color, val controlBorder: Color, val shadow: Boolean, val muted: Color)
 
 @Composable
 private fun ActiveView(s: TimerSnapshot, controller: TimerController, onMinimize: () -> Unit) {
-    val background by animateColorAsState(phaseColor(s.phase), tween(400), label = "phase")
-    val content = onPhaseColor(s.phase)
+    val style = LocalTempoStyle.current
+    val palette = style.phases
+    val background by animateColorAsState(palette.background(s.phase), tween(400), label = "phase")
+    val content by animateColorAsState(palette.content(s.phase), tween(400), label = "content")
+    val work = s.phase == Phase.WORK
+    val colors = RunColors(
+        content = content,
+        track = if (work) palette.workTrack else content.copy(alpha = 0.18f),
+        control = when {
+            work -> palette.workControl
+            else -> Color.White.copy(alpha = if (s.phase == Phase.PREP) 0.22f else 0.45f)
+        },
+        controlBorder = when {
+            work && style.dark -> content.copy(alpha = 0.35f)
+            work -> Color(0xFFE8E8E8)
+            else -> Color.Transparent
+        },
+        shadow = work && !style.dark,
+        muted = content.copy(alpha = 0.55f),
+    )
     var confirmStop by rememberSaveable { mutableStateOf(false) }
 
     BoxWithConstraints(Modifier.fillMaxSize().background(background).systemBarsPadding()) {
-        val width = maxWidth
-        val height = maxHeight
-        val landscape = width > height
-        if (landscape) {
-            Row(Modifier.fillMaxSize().padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
+        val w = maxWidth
+        val h = maxHeight
+        if (w > h) {
+            Row(Modifier.fillMaxSize().padding(horizontal = 24.dp, vertical = 12.dp), verticalAlignment = Alignment.CenterVertically) {
                 Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
-                    Dial(s, content, minOf(height - 32.dp, width * 0.55f))
+                    Dial(s, colors, minOf(h - 24.dp, w * 0.5f))
                 }
-                Column(
-                    Modifier.weight(1f).padding(start = 16.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp),
-                ) {
-                    Header(s, content, onMinimize)
-                    Info(s, content)
-                    Controls(s, controller, content, onStop = { confirmStop = true })
+                Column(Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(14.dp)) {
+                    Title(s, colors)
+                    Bolt(s, controller, colors)
+                    Controls(s, controller, colors) { confirmStop = true }
                 }
             }
         } else {
             Column(
-                Modifier.fillMaxSize().padding(horizontal = 16.dp, vertical = 8.dp),
+                Modifier.fillMaxSize().padding(horizontal = 30.dp).padding(top = 36.dp, bottom = 24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Header(s, content, onMinimize)
-                Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
-                    Dial(s, content, minOf(width - 16.dp, height * 0.5f))
-                }
-                Info(s, content)
-                Spacer(Modifier.height(16.dp))
-                Controls(s, controller, content, onStop = { confirmStop = true })
-                Spacer(Modifier.height(8.dp))
+                Title(s, colors)
+                Spacer(Modifier.weight(1f))
+                Dial(s, colors, minOf(300.dp, w - 60.dp, h * 0.42f))
+                Spacer(Modifier.weight(1f))
+                Bolt(s, controller, colors)
+                Spacer(Modifier.weight(1f))
+                Controls(s, controller, colors) { confirmStop = true }
             }
         }
+        // Свернуть экран: таймер продолжит работать в фоне.
+        Icon(
+            TempoIcons.ChevronDown,
+            contentDescription = "Свернуть",
+            tint = colors.muted,
+            modifier = Modifier.padding(12.dp).size(40.dp).clip(CircleShape).clickable(onClick = onMinimize).padding(8.dp),
+        )
     }
 
     if (confirmStop) {
@@ -163,150 +229,139 @@ private fun ActiveView(s: TimerSnapshot, controller: TimerController, onMinimize
             onDismissRequest = { confirmStop = false },
             title = { Text("Остановить таймер?") },
             text = { Text("Тренировка завершится, откроется экран итога.") },
-            confirmButton = {
-                TextButton(onClick = {
-                    confirmStop = false
-                    controller.stop()
-                }) { Text("Стоп") }
-            },
+            confirmButton = { TextButton(onClick = { confirmStop = false; controller.stop() }) { Text("Стоп") } },
             dismissButton = { TextButton(onClick = { confirmStop = false }) { Text("Продолжить") } },
         )
     }
 }
 
+private val Thin = TextStyle(fontFamily = Inter)
+
 @Composable
-private fun Header(s: TimerSnapshot, content: Color, onMinimize: () -> Unit) {
-    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-        IconButton(onClick = onMinimize) {
-            Icon(Icons.Filled.KeyboardArrowDown, contentDescription = "Свернуть", tint = content)
-        }
-        Column(Modifier.weight(1f)) {
+private fun Title(s: TimerSnapshot, c: RunColors) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Text(
+            phaseName(s.phase).uppercase(),
+            style = Thin.copy(fontSize = 32.sp, fontWeight = FontWeight.Light, letterSpacing = 12.sp),
+            color = c.content,
+            textAlign = TextAlign.Center,
+            maxLines = 1,
+        )
+        Spacer(Modifier.height(6.dp))
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+            Box(Modifier.width(60.dp).height(1.dp).background(c.content.copy(alpha = 0.2f)))
             Text(
-                TimerService.phaseTitle(s.phase).uppercase(),
-                color = content,
-                style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold, letterSpacing = 2.sp),
+                (s.mode.title + if (s.status == RunStatus.PAUSED) " · ПАУЗА" else "").uppercase(),
+                style = Thin.copy(fontSize = 14.sp, letterSpacing = 8.sp),
+                color = c.content,
             )
-            Text(
-                s.mode.title + if (s.status == RunStatus.PAUSED) " · пауза" else "",
-                color = content.copy(alpha = 0.75f),
-                style = MaterialTheme.typography.bodyMedium,
-            )
+            Box(Modifier.width(60.dp).height(1.dp).background(c.content.copy(alpha = 0.2f)))
         }
     }
 }
 
-/** Крупный циферблат: цифры текущего интервала и круговой индикатор вокруг них. */
+/** Круг с цифрами: дорожка 3 dp и дуга прогресса 6 dp, как в макете. */
 @Composable
-private fun Dial(s: TimerSnapshot, content: Color, size: Dp) {
+private fun Dial(s: TimerSnapshot, c: RunColors, size: Dp) {
     val remaining = s.segmentRemainingMs
     val text = if (remaining != null) formatRemaining(remaining) else formatClock(s.segmentElapsedMs)
     val progress = when {
-        remaining != null && s.segmentDurationMs != null && s.segmentDurationMs > 0 ->
-            remaining.toFloat() / s.segmentDurationMs
+        remaining != null && s.segmentDurationMs != null && s.segmentDurationMs > 0 -> remaining.toFloat() / s.segmentDurationMs
         else -> (s.segmentElapsedMs % 60_000) / 60_000f
     }
-    val density = LocalDensity.current
-    // Ширина «00:00» примерно 2,8 высоты шрифта; цифры занимают ~3/4 диаметра круга.
-    val fontScale = if (text.length > 5) 0.2f else 0.27f
-    val fontSize = with(density) { (size * fontScale).toSp() }
-
+    val scale = size / 300.dp
     Box(Modifier.size(size), contentAlignment = Alignment.Center) {
         Canvas(Modifier.fillMaxSize()) {
-            val stroke = this.size.minDimension * 0.045f
-            val inset = stroke / 2
-            val arcSize = Size(this.size.width - stroke, this.size.height - stroke)
-            drawArc(content.copy(alpha = 0.22f), 0f, 360f, false, Offset(inset, inset), arcSize, style = Stroke(stroke))
-            drawArc(
-                content, -90f, 360f * progress.coerceIn(0f, 1f), false, Offset(inset, inset), arcSize,
-                style = Stroke(stroke, cap = StrokeCap.Round),
+            val track = 3.dp.toPx()
+            val bar = 6.dp.toPx()
+            val inset = bar / 2
+            val arc = Size(this.size.width - bar, this.size.height - bar)
+            drawArc(c.track, 0f, 360f, false, Offset(inset, inset), arc, style = Stroke(track))
+            drawArc(c.content, -90f, 360f * progress.coerceIn(0f, 1f), false, Offset(inset, inset), arc, style = Stroke(bar, cap = StrokeCap.Round))
+        }
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(
+                text,
+                style = Digits.copy(fontSize = (if (text.length > 5) 54 else 72).sp * scale, fontWeight = FontWeight.Normal, letterSpacing = (-2).sp),
+                color = c.content,
+            )
+            Spacer(Modifier.height(12.dp * scale))
+            Text(if (remaining != null) "ОСТАЛОСЬ" else "ПРОШЛО", style = Thin.copy(fontSize = 13.sp, letterSpacing = 6.sp), color = c.content)
+            Spacer(Modifier.height(12.dp * scale))
+            Box(Modifier.width(40.dp).height(1.dp).background(c.content.copy(alpha = 0.2f)))
+            Spacer(Modifier.height(12.dp * scale))
+            Text(
+                (counterText(s) ?: "Секунд").uppercase(),
+                style = Thin.copy(fontSize = 12.sp, letterSpacing = 4.sp),
+                color = c.content,
             )
         }
-        Text(text, color = content, style = Digits.copy(fontSize = fontSize, fontWeight = FontWeight.SemiBold))
     }
 }
 
+/** Круглая кнопка с молнией и подписи фазы под ней. */
 @Composable
-private fun Info(s: TimerSnapshot, content: Color) {
-    val big = MaterialTheme.typography.headlineMedium.merge(Digits)
-    val small = MaterialTheme.typography.titleMedium.merge(Digits)
-    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
-        val roundText = when {
-            s.mode == TimerMode.AMRAP -> "Раунды: ${s.laps.size}"
-            s.mode == TimerMode.STOPWATCH -> "Круги: ${s.laps.size}"
-            s.totalRounds > 1 -> "Раунд ${s.round} / ${s.totalRounds}"
-            else -> null
-        }
-        if (roundText != null) Text(roundText, color = content, style = big)
-        val total = "Общее " + formatClock(s.totalElapsedMs) + (s.totalDurationMs?.let { " / " + formatClock(it) } ?: "")
-        Text(total, color = content.copy(alpha = 0.8f), style = small)
-        if (s.mode.hasSplits && s.laps.isNotEmpty()) {
-            Spacer(Modifier.height(8.dp))
-            val laps = s.laps.mapIndexed { i, t -> Triple(i + 1, t - (s.laps.getOrNull(i - 1) ?: 0L), t) }
-            laps.takeLast(4).reversed().forEach { (n, lap, total) ->
-                Text(
-                    "${s.mode.splitTitle} $n   ${formatPrecise(lap)}   ${formatPrecise(total)}",
-                    color = content.copy(alpha = 0.85f),
-                    style = MaterialTheme.typography.bodyLarge.merge(Digits),
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun Controls(s: TimerSnapshot, controller: TimerController, content: Color, onStop: () -> Unit) {
-    val background = phaseColor(s.phase)
-    val primaryColors = ButtonDefaults.buttonColors(containerColor = content, contentColor = background)
+private fun Bolt(s: TimerSnapshot, controller: TimerController, c: RunColors) {
+    val action = boltAction(s, controller)
     val paused = s.status == RunStatus.PAUSED
-    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-        when (s.mode) {
-            TimerMode.AMRAP -> if (s.phase == Phase.WORK) {
-                Button(onClick = controller::lap, colors = primaryColors, modifier = Modifier.fillMaxWidth().height(72.dp), enabled = !paused) {
-                    Text("+1 раунд", style = MaterialTheme.typography.headlineMedium)
-                }
-            }
-            TimerMode.STOPWATCH -> if (s.phase == Phase.WORK) {
-                Button(onClick = controller::lap, colors = primaryColors, modifier = Modifier.fillMaxWidth().height(64.dp), enabled = !paused) {
-                    Icon(Icons.Filled.Flag, contentDescription = null)
-                    Spacer(Modifier.width(8.dp))
-                    Text("Круг", style = MaterialTheme.typography.titleLarge)
-                }
-            }
-            TimerMode.FOR_TIME -> if (s.phase == Phase.WORK) {
-                Button(onClick = controller::stop, colors = primaryColors, modifier = Modifier.fillMaxWidth().height(64.dp)) {
-                    Text("Финиш", style = MaterialTheme.typography.titleLarge)
-                }
-            }
-            else -> Unit
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Box(
+            Modifier
+                .size(64.dp)
+                .then(if (c.shadow) Modifier.shadow(8.dp, CircleShape, ambientColor = Color(0x22000000), spotColor = Color(0x22000000)) else Modifier)
+                .background(c.control, CircleShape)
+                .border(1.dp, c.controlBorder, CircleShape)
+                .clip(CircleShape)
+                .clickable(enabled = action != null && !paused) { action?.invoke() },
+            contentAlignment = Alignment.Center,
+        ) {
+            Icon(TempoIcons.Bolt, contentDescription = boltHint(s), tint = c.content, modifier = Modifier.size(28.dp))
         }
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp), modifier = Modifier.fillMaxWidth()) {
-            OutlinedButton(
-                onClick = onStop,
-                modifier = Modifier.weight(1f).height(56.dp),
-                colors = ButtonDefaults.outlinedButtonColors(contentColor = content),
-                border = androidx.compose.foundation.BorderStroke(1.5.dp, content.copy(alpha = 0.6f)),
-            ) {
-                Icon(Icons.Filled.Stop, contentDescription = "Стоп")
+        Spacer(Modifier.height(20.dp))
+        Text("ФАЗА: ${phaseShort(s.phase).uppercase()}", style = Thin.copy(fontSize = 13.sp, letterSpacing = 2.sp, fontWeight = FontWeight.Medium), color = c.content)
+        Spacer(Modifier.height(6.dp))
+        Text(totalText(s), style = Digits.copy(fontSize = 14.sp, fontWeight = FontWeight.Normal), color = c.muted, textAlign = TextAlign.Center)
+        val last = s.laps.lastOrNull()
+        val extra = when {
+            last != null && (s.mode == TimerMode.AMRAP || s.mode == TimerMode.STOPWATCH) -> {
+                val lap = last - (s.laps.getOrNull(s.laps.size - 2) ?: 0L)
+                (if (s.mode == TimerMode.AMRAP) "Последний раунд " else "Последний круг ") + formatPrecise(lap)
             }
-            Button(
-                onClick = controller::togglePause,
-                colors = primaryColors,
-                modifier = Modifier.weight(1.6f).height(56.dp),
-            ) {
-                Icon(if (paused) Icons.Filled.PlayArrow else Icons.Filled.Pause, contentDescription = null)
-                Spacer(Modifier.width(6.dp))
-                Text(if (paused) "Продолжить" else "Пауза", style = MaterialTheme.typography.titleMedium)
-            }
-            OutlinedButton(
-                onClick = controller::skip,
-                enabled = s.segmentDurationMs != null,
-                modifier = Modifier.weight(1f).height(56.dp),
-                colors = ButtonDefaults.outlinedButtonColors(contentColor = content, disabledContentColor = content.copy(alpha = 0.3f)),
-                border = androidx.compose.foundation.BorderStroke(1.5.dp, content.copy(alpha = 0.6f)),
-            ) {
-                Icon(Icons.Filled.SkipNext, contentDescription = "Пропустить интервал")
-            }
+            else -> boltHint(s)
         }
+        if (extra != null) Text(extra, style = Digits.copy(fontSize = 13.sp, fontWeight = FontWeight.Normal), color = c.muted, textAlign = TextAlign.Center)
+    }
+}
+
+@Composable
+private fun Controls(s: TimerSnapshot, controller: TimerController, c: RunColors, onStop: () -> Unit) {
+    val paused = s.status == RunStatus.PAUSED
+    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterHorizontally)) {
+        ControlCard(if (paused) TempoIcons.Play else TempoIcons.Pause, if (paused) "Дальше" else "Пауза", c, Modifier.weight(1f), onClick = controller::togglePause)
+        ControlCard(TempoIcons.Stop, "Стоп", c, Modifier.weight(1f), onClick = onStop)
+        ControlCard(TempoIcons.Skip, "Пропуск", c, Modifier.weight(1f), enabled = s.segmentDurationMs != null, onClick = controller::skip)
+    }
+}
+
+/** Карточка управления: иконка и подпись разрядкой, скругление 20 dp. */
+@Composable
+private fun ControlCard(icon: ImageVector, label: String, c: RunColors, modifier: Modifier, enabled: Boolean = true, onClick: () -> Unit) {
+    val shape = RoundedCornerShape(20.dp)
+    Column(
+        modifier
+            .widthIn(max = 100.dp)
+            .alpha(if (enabled) 1f else 0.4f)
+            .then(if (c.shadow) Modifier.shadow(6.dp, shape, ambientColor = Color(0x18000000), spotColor = Color(0x18000000)) else Modifier)
+            .background(c.control, shape)
+            .border(BorderStroke(1.dp, c.controlBorder), shape)
+            .clip(shape)
+            .clickable(enabled = enabled, onClick = onClick)
+            .padding(top = 16.dp, bottom = 12.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Icon(icon, contentDescription = label, tint = c.content, modifier = Modifier.size(24.dp))
+        Spacer(Modifier.height(6.dp))
+        Text(label.uppercase(), style = Thin.copy(fontSize = 10.sp, letterSpacing = 1.5.sp, fontWeight = FontWeight.Medium), color = c.content, maxLines = 1)
     }
 }
 
@@ -322,24 +377,19 @@ private fun ResultView(s: TimerSnapshot, onClose: () -> Unit, onSave: () -> Unit
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Spacer(Modifier.height(16.dp))
-        TileLabel("Итог · ${s.mode.title}")
-        Text("Готово", style = MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.onBackground)
+        Spacer(Modifier.height(12.dp))
+        TileLabel("Итог · ${s.mode.title}", TempoIcons.Flag)
+        Text("Готово", style = MaterialTheme.typography.headlineLarge, color = MaterialTheme.colorScheme.onBackground)
         s.workout?.let { Text(it.name, style = MaterialTheme.typography.titleMedium, color = style.muted) }
         if (rememberNewRecord(s)) {
-            Text(
-                "Новый рекорд!",
-                style = MaterialTheme.typography.headlineSmall,
-                color = MaterialTheme.colorScheme.primary,
-            )
-        }
-
-        val big = Digits.copy(fontSize = 40.sp)
-        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            Tile(Modifier.weight(1f)) {
-                TileLabel("Общее время")
-                Text(formatPrecise(s.totalElapsedMs), style = big.copy(fontSize = 30.sp), color = MaterialTheme.colorScheme.onSurface)
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(TempoIcons.Trophy, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(22.dp))
+                Spacer(Modifier.width(8.dp))
+                Text("Новый рекорд!", style = MaterialTheme.typography.headlineSmall, color = MaterialTheme.colorScheme.primary)
             }
+        }
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            InfoTile("Общее время", formatPrecise(s.totalElapsedMs), Modifier.weight(1f), TempoIcons.Timer)
             val result: Pair<String, String>? = when (s.mode) {
                 TimerMode.FOR_TIME -> "Время" to formatPrecise(s.totalElapsedMs)
                 TimerMode.AMRAP -> "Раунды" to s.laps.size.toString()
@@ -347,36 +397,25 @@ private fun ResultView(s: TimerSnapshot, onClose: () -> Unit, onSave: () -> Unit
                 TimerMode.EMOM, TimerMode.INTERVALS -> "Раунды" to "${s.round} / ${s.totalRounds}"
                 else -> null
             }
-            if (result != null) {
-                Tile(Modifier.weight(1f)) {
-                    TileLabel(result.first)
-                    Text(result.second, style = big.copy(fontSize = 30.sp), color = MaterialTheme.colorScheme.primary)
-                }
-            }
+            if (result != null) InfoTile(result.first, result.second, Modifier.weight(1f), TempoIcons.Refresh)
         }
-
         if (s.mode.hasSplits && s.laps.isNotEmpty()) {
             Tile(Modifier.fillMaxWidth()) {
-                TileLabel(if (s.mode == TimerMode.AMRAP) "Раунды" else "Круги")
-                Spacer(Modifier.height(8.dp))
+                TileLabel(if (s.mode == TimerMode.AMRAP) "Раунды" else "Круги", TempoIcons.Flag)
+                Spacer(Modifier.height(6.dp))
                 s.laps.forEachIndexed { i, total ->
                     val lap = total - (s.laps.getOrNull(i - 1) ?: 0L)
-                    Row(Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
-                        Text("${s.mode.splitTitle} ${i + 1}", modifier = Modifier.weight(1f), color = style.muted)
-                        Text(formatPrecise(lap), style = Digits, modifier = Modifier.weight(1f), color = MaterialTheme.colorScheme.onSurface)
-                        Text(formatPrecise(total), style = Digits, color = style.muted)
+                    Row(Modifier.fillMaxWidth().padding(vertical = 5.dp)) {
+                        Text("${s.mode.splitTitle} ${i + 1}", modifier = Modifier.weight(1f), color = style.muted, style = MaterialTheme.typography.bodyMedium)
+                        Text(formatPrecise(lap), style = Digits.copy(fontSize = 14.sp), modifier = Modifier.weight(1f), color = MaterialTheme.colorScheme.onSurface)
+                        Text(formatPrecise(total), style = Digits.copy(fontSize = 14.sp, fontWeight = FontWeight.Normal), color = style.muted)
                     }
                 }
             }
         }
-
-        Spacer(Modifier.height(8.dp))
-        OutlinedButton(onClick = onSave, modifier = Modifier.fillMaxWidth().height(56.dp), shape = style.tileShape) {
-            Text("Записать в журнал")
-        }
-        Button(onClick = onClose, modifier = Modifier.fillMaxWidth().height(56.dp), shape = style.tileShape) {
-            Text("Закрыть", style = MaterialTheme.typography.titleMedium)
-        }
+        Spacer(Modifier.height(4.dp))
+        PrimaryButton("Записать в журнал", onSave, icon = TempoIcons.Journal)
+        SecondaryButton("Закрыть", onClose, Modifier.fillMaxWidth())
     }
 }
 

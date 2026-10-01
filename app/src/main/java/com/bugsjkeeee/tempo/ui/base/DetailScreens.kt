@@ -1,5 +1,6 @@
 package com.bugsjkeeee.tempo.ui.base
 
+import com.bugsjkeeee.tempo.ui.icons.TempoIcons
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
@@ -16,16 +17,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Block
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.PlayCircle
-import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -74,7 +65,7 @@ import kotlinx.coroutines.launch
 fun BackTopBar(title: String, onBack: () -> Unit, actions: @Composable androidx.compose.foundation.layout.RowScope.() -> Unit = {}) {
     TopAppBar(
         title = { Text(title, maxLines = 1) },
-        navigationIcon = { IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Назад") } },
+        navigationIcon = { IconButton(onClick = onBack) { Icon(TempoIcons.Back, contentDescription = "Назад") } },
         actions = actions,
         colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.background),
     )
@@ -120,8 +111,8 @@ fun WorkoutDetailScreen(
     Scaffold(topBar = {
         BackTopBar(w?.name ?: "", onBack) {
             if (w?.custom == true) {
-                IconButton(onClick = { onEdit(w.id) }) { Icon(Icons.Filled.Edit, contentDescription = "Редактировать") }
-                IconButton(onClick = { confirmDelete = true }) { Icon(Icons.Filled.Delete, contentDescription = "Удалить") }
+                IconButton(onClick = { onEdit(w.id) }) { Icon(TempoIcons.Edit, contentDescription = "Редактировать") }
+                IconButton(onClick = { confirmDelete = true }) { Icon(TempoIcons.Trash, contentDescription = "Удалить") }
             }
         }
     }) { padding ->
@@ -141,7 +132,7 @@ fun WorkoutDetailScreen(
                     modifier = Modifier.fillMaxWidth().height(60.dp),
                     shape = style.tileShape,
                 ) {
-                    Icon(Icons.Filled.PlayArrow, contentDescription = null)
+                    Icon(TempoIcons.Play, contentDescription = null)
                     Spacer(Modifier.width(8.dp))
                     Text("Начать", style = MaterialTheme.typography.titleLarge)
                 }
@@ -150,13 +141,13 @@ fun WorkoutDetailScreen(
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     val fav = state.flags.favorite
                     OutlinedButton(onClick = { vm.setFlags(state.flags.copy(favorite = !fav)) }, modifier = Modifier.weight(1f)) {
-                        Icon(if (fav) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder, contentDescription = null)
+                        Icon(if (fav) TempoIcons.HeartFilled else TempoIcons.Heart, contentDescription = null)
                         Spacer(Modifier.width(4.dp))
                         Text(if (fav) "В избранном" else "В избранное")
                     }
                     val hidden = state.flags.hidden
                     OutlinedButton(onClick = { vm.setFlags(state.flags.copy(hidden = !hidden)) }, modifier = Modifier.weight(1f)) {
-                        Icon(if (hidden) Icons.Filled.Visibility else Icons.Filled.Block, contentDescription = null)
+                        Icon(if (hidden) TempoIcons.Eye else TempoIcons.Ban, contentDescription = null)
                         Spacer(Modifier.width(4.dp))
                         Text(if (hidden) "Предлагать" else "Не предлагать")
                     }
@@ -223,7 +214,7 @@ fun ExerciseDetailScreen(id: String, onBack: () -> Unit) {
                 },
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                Icon(Icons.Filled.PlayCircle, contentDescription = null)
+                Icon(TempoIcons.Youtube, contentDescription = null)
                 Spacer(Modifier.width(6.dp))
                 Text("Посмотреть на YouTube")
             }

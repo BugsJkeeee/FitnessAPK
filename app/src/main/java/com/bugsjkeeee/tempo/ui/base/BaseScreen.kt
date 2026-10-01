@@ -1,5 +1,6 @@
 package com.bugsjkeeee.tempo.ui.base
 
+import com.bugsjkeeee.tempo.ui.icons.TempoIcons
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,9 +15,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -115,7 +113,7 @@ fun BaseScreen(
                             value = state.filters.query,
                             onValueChange = { vm.setFilters(state.filters.copy(query = it)) },
                             placeholder = { Text("Поиск по названию") },
-                            leadingIcon = { Icon(Icons.Filled.Search, contentDescription = null) },
+                            leadingIcon = { Icon(TempoIcons.Search, contentDescription = null) },
                             singleLine = true,
                             modifier = Modifier.fillMaxWidth(),
                         )
@@ -153,7 +151,7 @@ fun BaseScreen(
                 onClick = onNewWorkout,
                 containerColor = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.align(Alignment.BottomEnd).padding(end = 16.dp, bottom = contentPadding.calculateBottomPadding() + 16.dp),
-            ) { Icon(Icons.Filled.Add, contentDescription = "Своя тренировка") }
+            ) { Icon(TempoIcons.Add, contentDescription = "Своя тренировка") }
         }
     }
 }
@@ -173,7 +171,7 @@ fun ExerciseList(exercises: List<Exercise>, contentPadding: PaddingValues, onCli
                 value = query,
                 onValueChange = { query = it },
                 placeholder = { Text("Поиск упражнения") },
-                leadingIcon = { Icon(Icons.Filled.Search, contentDescription = null) },
+                leadingIcon = { Icon(TempoIcons.Search, contentDescription = null) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
             )

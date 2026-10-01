@@ -1,11 +1,10 @@
 package com.bugsjkeeee.tempo.ui.components
 
+import com.bugsjkeeee.tempo.ui.icons.TempoIcons
 import android.graphics.BitmapFactory
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.FitnessCenter
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -36,7 +35,7 @@ fun ExerciseImage(path: String?, modifier: Modifier = Modifier, contentScale: Co
         if (b != null) {
             Image(b, contentDescription = null, contentScale = contentScale, modifier = Modifier.matchParentSize())
         } else {
-            Icon(Icons.Filled.FitnessCenter, contentDescription = null, tint = style.muted)
+            Icon(TempoIcons.Dumbbell, contentDescription = null, tint = style.muted)
         }
     }
 }

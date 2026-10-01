@@ -1,5 +1,6 @@
 package com.bugsjkeeee.tempo.ui.settings
 
+import com.bugsjkeeee.tempo.ui.icons.TempoIcons
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.text.KeyboardOptions
@@ -21,10 +22,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.VolumeUp
-import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -118,7 +115,7 @@ fun SettingsScreen(onBack: () -> Unit) {
             TopAppBar(
                 title = { Text("Настройки") },
                 navigationIcon = {
-                    IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Назад") }
+                    IconButton(onClick = onBack) { Icon(TempoIcons.Back, contentDescription = "Назад") }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.background),
             )
@@ -132,7 +129,7 @@ fun SettingsScreen(onBack: () -> Unit) {
         ) {
             item {
                 Tile(Modifier.fillMaxWidth()) {
-                    TileLabel("Звуковое сопровождение", Icons.AutoMirrored.Filled.VolumeUp)
+                    TileLabel("Звуковое сопровождение", TempoIcons.Volume)
                     Spacer(Modifier.height(10.dp))
                     SegmentedSelector(SoundMode.entries, s.soundMode, { it.title }, vm::setSoundMode)
                     if (s.soundMode == SoundMode.VOICE) {
@@ -156,7 +153,7 @@ fun SettingsScreen(onBack: () -> Unit) {
                         TileLabel(event.title)
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Text(sound.title, style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
-                            Icon(Icons.Filled.ChevronRight, contentDescription = null, tint = style.muted)
+                            Icon(TempoIcons.ChevronRight, contentDescription = null, tint = style.muted)
                         }
                     }
                 }
@@ -267,7 +264,7 @@ fun SettingsScreen(onBack: () -> Unit) {
                             })
                             Text(sound.title, modifier = Modifier.weight(1f))
                             IconButton(onClick = { vm.preview(sound.key) }) {
-                                Icon(Icons.AutoMirrored.Filled.VolumeUp, contentDescription = "Прослушать")
+                                Icon(TempoIcons.Volume, contentDescription = "Прослушать")
                             }
                         }
                     }

@@ -1,5 +1,6 @@
 package com.bugsjkeeee.tempo.ui.journal
 
+import com.bugsjkeeee.tempo.ui.icons.TempoIcons
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -15,10 +16,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -134,7 +131,7 @@ fun JournalScreen(
             onClick = onAdd,
             containerColor = MaterialTheme.colorScheme.primary,
             modifier = Modifier.align(Alignment.BottomEnd).padding(end = 16.dp, bottom = contentPadding.calculateBottomPadding() + 16.dp),
-        ) { Icon(Icons.Filled.Add, contentDescription = "Добавить вручную") }
+        ) { Icon(TempoIcons.Add, contentDescription = "Добавить вручную") }
     }
 }
 
@@ -189,14 +186,14 @@ private fun CalendarTab(state: JournalState, padding: PaddingValues, onEntry: (L
         item {
             Tile(Modifier.fillMaxWidth()) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    IconButton(onClick = { monthOffset-- }) { Icon(Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = "Предыдущий месяц") }
+                    IconButton(onClick = { monthOffset-- }) { Icon(TempoIcons.ChevronLeft, contentDescription = "Предыдущий месяц") }
                     Text(
                         month.month.getDisplayName(TextStyle.FULL_STANDALONE, Locale("ru")).replaceFirstChar { it.uppercase() } + " " + month.year,
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.weight(1f),
                         textAlign = TextAlign.Center,
                     )
-                    IconButton(onClick = { monthOffset++ }) { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = "Следующий месяц") }
+                    IconButton(onClick = { monthOffset++ }) { Icon(TempoIcons.ChevronRight, contentDescription = "Следующий месяц") }
                 }
                 Row(Modifier.fillMaxWidth()) {
                     listOf("Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс").forEach {

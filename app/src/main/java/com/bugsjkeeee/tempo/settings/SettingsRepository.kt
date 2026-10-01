@@ -19,11 +19,14 @@ import kotlinx.coroutines.flow.map
 
 enum class SoundMode(val title: String) { SIGNALS("Сигналы"), VOICE("Голос") }
 
+enum class ThemeMode(val title: String) { SYSTEM("Как в телефоне"), DARK("Тёмная"), LIGHT("Светлая") }
+
 data class AppSettings(
     val soundMode: SoundMode = SoundMode.SIGNALS,
     val sounds: Map<SoundEvent, String> = SoundCatalog.defaults,
     val prepSec: Int = 10,
     val targetWeight: Double? = null,
+    val themeMode: ThemeMode = ThemeMode.SYSTEM,
 )
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
@@ -33,6 +36,7 @@ class SettingsRepository(private val context: Context) {
         val soundMode = stringPreferencesKey("sound_mode")
         val prepSec = intPreferencesKey("prep_sec")
         val targetWeight = doublePreferencesKey("target_weight")
+        val themeMode = stringPreferencesKey("theme_mode")
         val lastAutoBackup = longPreferencesKey("last_auto_backup")
         fun sound(event: SoundEvent) = stringPreferencesKey("sound_${event.name.lowercase()}")
 
@@ -53,6 +57,7 @@ class SettingsRepository(private val context: Context) {
             sounds = SoundEvent.entries.associateWith { SoundCatalog.resolve(it, p[Keys.sound(it)]).key },
             prepSec = p[Keys.prepSec] ?: 10,
             targetWeight = p[Keys.targetWeight],
+            themeMode = p[Keys.themeMode]?.let { runCatching { ThemeMode.valueOf(it) }.getOrNull() } ?: ThemeMode.SYSTEM,
         )
     }
 
@@ -79,6 +84,8 @@ class SettingsRepository(private val context: Context) {
     suspend fun setSoundMode(mode: SoundMode) = context.dataStore.edit { it[Keys.soundMode] = mode.name }
     suspend fun setSound(event: SoundEvent, key: String) = context.dataStore.edit { it[Keys.sound(event)] = key }
     suspend fun setPrepSec(sec: Int) = context.dataStore.edit { it[Keys.prepSec] = sec }
+    suspend fun setThemeMode(mode: ThemeMode) = context.dataStore.edit { it[Keys.themeMode] = mode.name }
+
     suspend fun setTargetWeight(weight: Double?) = context.dataStore.edit {
         if (weight == null) it.remove(Keys.targetWeight) else it[Keys.targetWeight] = weight
     }

@@ -1,5 +1,6 @@
 package com.bugsjkeeee.tempo.ui.weight
 
+import com.bugsjkeeee.tempo.ui.icons.TempoIcons
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -12,8 +13,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.DatePicker
@@ -135,7 +134,7 @@ fun WeightScreen(contentPadding: PaddingValues) {
                         modifier = Modifier.weight(1f),
                     )
                     OutlinedButton(onClick = { showDate = true }, modifier = Modifier.height(56.dp)) {
-                        Icon(Icons.Filled.CalendarMonth, contentDescription = null)
+                        Icon(TempoIcons.Calendar, contentDescription = null)
                         Spacer(Modifier.width(4.dp))
                         Text(if (day == today) "Сегодня" else LocalDate.ofEpochDay(day).format(shortDay))
                     }

@@ -1,5 +1,6 @@
 package com.bugsjkeeee.tempo.ui.execute
 
+import com.bugsjkeeee.tempo.ui.icons.TempoIcons
 import android.app.Activity
 import android.view.WindowManager
 import androidx.activity.compose.BackHandler
@@ -20,9 +21,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.FilledIconToggleButton
@@ -270,7 +268,7 @@ fun ExecuteScreen(workoutId: String, onClose: () -> Unit) {
                         )
                     }
                     OutlinedButton(onClick = { vm.addSet(b) }, modifier = Modifier.fillMaxWidth().padding(top = 6.dp)) {
-                        Icon(Icons.Filled.Add, contentDescription = null)
+                        Icon(TempoIcons.Add, contentDescription = null)
                         Spacer(Modifier.width(4.dp))
                         Text("Подход")
                     }
@@ -352,7 +350,7 @@ private fun SetRowView(number: Int, row: SetRow, onWeight: (String) -> Unit, onR
             colors = IconButtonDefaults.filledIconToggleButtonColors(
                 checkedContainerColor = LocalTempoStyle.current.positive,
             ),
-        ) { Icon(Icons.Filled.Check, contentDescription = "Подход выполнен") }
+        ) { Icon(TempoIcons.Check, contentDescription = "Подход выполнен") }
     }
 }
 

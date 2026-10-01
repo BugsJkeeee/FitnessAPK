@@ -1,5 +1,6 @@
 package com.bugsjkeeee.tempo.ui.journal
 
+import com.bugsjkeeee.tempo.ui.icons.TempoIcons
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -13,11 +14,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.CalendarMonth
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.FitnessCenter
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.DatePicker
@@ -263,7 +259,7 @@ fun JournalEditScreen(
             if (entryId == 0L && !d.fromTimer && d.workoutId == null) {
                 item {
                     OutlinedButton(onClick = onPickWorkout, modifier = Modifier.fillMaxWidth()) {
-                        Icon(Icons.Filled.FitnessCenter, contentDescription = null)
+                        Icon(TempoIcons.Dumbbell, contentDescription = null)
                         Spacer(Modifier.width(6.dp))
                         Text("Выбрать тренировку из базы")
                     }
@@ -280,7 +276,7 @@ fun JournalEditScreen(
             }
             item {
                 OutlinedButton(onClick = { showDate = true }, modifier = Modifier.fillMaxWidth()) {
-                    Icon(Icons.Filled.CalendarMonth, contentDescription = null)
+                    Icon(TempoIcons.Calendar, contentDescription = null)
                     Spacer(Modifier.width(6.dp))
                     Text("Дата: " + formatDate(d.date))
                 }
@@ -322,18 +318,18 @@ fun JournalEditScreen(
                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                                 modifier = Modifier.weight(1f),
                             )
-                            IconButton(onClick = { vm.removeSet(b, s) }) { Icon(Icons.Filled.Close, contentDescription = "Удалить подход") }
+                            IconButton(onClick = { vm.removeSet(b, s) }) { Icon(TempoIcons.Close, contentDescription = "Удалить подход") }
                         }
                     }
                     TextButton(onClick = { vm.addSet(b) }) {
-                        Icon(Icons.Filled.Add, contentDescription = null)
+                        Icon(TempoIcons.Add, contentDescription = null)
                         Text("Подход")
                     }
                 }
             }
             item {
                 OutlinedButton(onClick = onPickExercise, modifier = Modifier.fillMaxWidth()) {
-                    Icon(Icons.Filled.Add, contentDescription = null)
+                    Icon(TempoIcons.Add, contentDescription = null)
                     Spacer(Modifier.width(4.dp))
                     Text("Упражнение")
                 }

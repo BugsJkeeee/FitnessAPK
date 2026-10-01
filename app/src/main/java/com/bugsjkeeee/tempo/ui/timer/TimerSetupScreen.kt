@@ -13,25 +13,22 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.Timer
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
-import androidx.core.content.ContextCompat
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
@@ -43,11 +40,15 @@ import com.bugsjkeeee.tempo.timer.buildPlan
 import com.bugsjkeeee.tempo.ui.appViewModel
 import com.bugsjkeeee.tempo.ui.components.CountStepper
 import com.bugsjkeeee.tempo.ui.components.DurationStepper
+import com.bugsjkeeee.tempo.ui.components.InfoTile
+import com.bugsjkeeee.tempo.ui.components.Note
+import com.bugsjkeeee.tempo.ui.components.NumberWheelDialog
+import com.bugsjkeeee.tempo.ui.components.PrimaryButton
 import com.bugsjkeeee.tempo.ui.components.SegmentedSelector
 import com.bugsjkeeee.tempo.ui.components.Tile
 import com.bugsjkeeee.tempo.ui.components.TileLabel
 import com.bugsjkeeee.tempo.ui.components.formatClock
-import com.bugsjkeeee.tempo.ui.theme.Digits
+import com.bugsjkeeee.tempo.ui.icons.TempoIcons
 import com.bugsjkeeee.tempo.ui.theme.LocalTempoStyle
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -79,6 +80,10 @@ class TimerSetupViewModel(private val app: TempoApp) : ViewModel() {
         viewModelScope.launch { repo.saveTimerSettings(transform(state.value.settings)) }
     }
 
+    fun setPrep(sec: Int) {
+        viewModelScope.launch { repo.setPrepSec(sec) }
+    }
+
     fun start() {
         val s = state.value
         app.timerController.start(s.mode, s.settings)
@@ -86,10 +91,10 @@ class TimerSetupViewModel(private val app: TempoApp) : ViewModel() {
 }
 
 private val modeHints = mapOf(
-    TimerMode.STOPWATCH to "Счёт от нуля без ограничения, отметка кругов.",
+    TimerMode.STOPWATCH to "Счёт от нуля без ограничения, отметка кругов кнопкой-молнией.",
     TimerMode.COUNTDOWN to "Простой обратный отсчёт со звуком в конце.",
-    TimerMode.FOR_TIME to "Комплекс на время: секундомер до кнопки «Финиш» или до лимита.",
-    TimerMode.AMRAP to "Как можно больше раундов за заданное время. Отмечайте круги кнопкой «+1 раунд».",
+    TimerMode.FOR_TIME to "Комплекс на время: секундомер до финиша (кнопка-молния) или до лимита.",
+    TimerMode.AMRAP to "Как можно больше раундов за заданное время. Каждый раунд отмечайте кнопкой-молнией — увидите время раунда.",
     TimerMode.EMOM to "Сигнал в начале каждого интервала, заданное число раундов.",
     TimerMode.INTERVALS to "Чередование работы и отдыха: Табата, 20/40, 2 минуты × 10 и т.п.",
 )
@@ -99,32 +104,33 @@ fun TimerSetupScreen(onOpenRunning: () -> Unit, onStarted: () -> Unit, contentPa
     val vm = appViewModel { TimerSetupViewModel(it) }
     val state by vm.state.collectAsStateWithLifecycle()
     val running by vm.running.collectAsStateWithLifecycle()
-    if (!state.loaded) return
-    val s = state.settings
-    val style = LocalTempoStyle.current
+    var editPrep by rememberSaveable { mutableStateOf(false) }
     val context = LocalContext.current
     // Android 13+: без разрешения таймер работает, но не виден в шторке.
     val notificationPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { }
+    if (!state.loaded) return
+    val s = state.settings
+    val style = LocalTempoStyle.current
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(
-            start = 16.dp, end = 16.dp, top = contentPadding.calculateTopPadding() + 8.dp,
+            start = 16.dp, end = 16.dp, top = contentPadding.calculateTopPadding(),
             bottom = contentPadding.calculateBottomPadding() + 16.dp,
         ),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        if (running != null) {
+        running?.let { r ->
             item {
                 Tile(Modifier.fillMaxWidth(), onClick = onOpenRunning) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(Icons.Filled.Timer, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+                        Icon(TempoIcons.Timer, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(22.dp))
                         Spacer(Modifier.width(12.dp))
                         Column(Modifier.weight(1f)) {
                             Text("Таймер запущен", style = MaterialTheme.typography.titleMedium)
-                            Text(running!!.mode.title, color = style.muted)
+                            Text(r.mode.title, color = style.muted, style = MaterialTheme.typography.bodySmall)
                         }
-                        Text("Открыть", color = MaterialTheme.colorScheme.primary)
+                        Icon(TempoIcons.ChevronRight, contentDescription = "Открыть", tint = style.muted, modifier = Modifier.size(20.dp))
                     }
                 }
             }
@@ -132,19 +138,18 @@ fun TimerSetupScreen(onOpenRunning: () -> Unit, onStarted: () -> Unit, contentPa
 
         item {
             Tile(Modifier.fillMaxWidth()) {
-                TileLabel("Режим")
-                Spacer(Modifier.height(10.dp))
-                SegmentedSelector(TimerMode.entries, state.mode, { it.title }, { vm.selectMode(it) })
-                Spacer(Modifier.height(10.dp))
-                Text(modeHints.getValue(state.mode), style = MaterialTheme.typography.bodyMedium, color = style.muted)
+                TileLabel("Режим", TempoIcons.Play)
+                Spacer(Modifier.height(8.dp))
+                SegmentedSelector(TimerMode.entries, state.mode, { it.title }, { vm.selectMode(it) }, columns = 3)
+                Spacer(Modifier.height(12.dp))
+                Note(modeHints.getValue(state.mode))
             }
         }
 
-        item {
-            Tile(Modifier.fillMaxWidth()) {
-                TileLabel("Параметры")
-                Spacer(Modifier.height(10.dp))
-                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        if (state.mode != TimerMode.STOPWATCH) {
+            item {
+                Tile(Modifier.fillMaxWidth()) {
+                    TileLabel("Параметры", TempoIcons.Settings)
                     ModeParameters(state.mode, s, vm::update)
                 }
             }
@@ -152,28 +157,21 @@ fun TimerSetupScreen(onOpenRunning: () -> Unit, onStarted: () -> Unit, contentPa
 
         item {
             val plan = buildPlan(state.mode, s, 0)
-            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                Tile(Modifier.weight(1f)) {
-                    TileLabel("Общее время")
-                    Text(
-                        plan.totalMs?.let(::formatClock) ?: "∞",
-                        style = Digits.copy(fontSize = 28.sp),
-                        color = MaterialTheme.colorScheme.onSurface,
-                    )
-                }
-                Tile(Modifier.weight(1f)) {
-                    TileLabel("Подготовка")
-                    Text(
-                        if (state.prepSec > 0) "${state.prepSec} с" else "нет",
-                        style = Digits.copy(fontSize = 28.sp),
-                        color = MaterialTheme.colorScheme.onSurface,
-                    )
-                }
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                InfoTile("Общее время", plan.totalMs?.let(::formatClock) ?: "∞", Modifier.weight(1f), TempoIcons.Timer)
+                InfoTile(
+                    "Подготовка",
+                    if (state.prepSec > 0) "${state.prepSec} с" else "нет",
+                    Modifier.weight(1f),
+                    TempoIcons.Bell,
+                    onClick = { editPrep = true },
+                )
             }
         }
 
         item {
-            Button(
+            PrimaryButton(
+                "Старт",
                 onClick = {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
                         ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
@@ -183,39 +181,40 @@ fun TimerSetupScreen(onOpenRunning: () -> Unit, onStarted: () -> Unit, contentPa
                     vm.start()
                     onStarted()
                 },
+                icon = TempoIcons.Play,
                 enabled = running == null,
-                modifier = Modifier.fillMaxWidth().height(64.dp),
-                shape = style.tileShape,
-            ) {
-                Icon(Icons.Filled.PlayArrow, contentDescription = null)
-                Spacer(Modifier.width(8.dp))
-                Text("Старт", style = MaterialTheme.typography.titleLarge)
-            }
+            )
+        }
+    }
+
+    if (editPrep) {
+        NumberWheelDialog("Подготовка перед стартом", state.prepSec, 0, 60, label = "сек", onDismiss = { editPrep = false }) {
+            editPrep = false
+            vm.setPrep(it)
         }
     }
 }
 
 @Composable
 private fun ModeParameters(mode: TimerMode, s: TimerSettings, update: ((TimerSettings) -> TimerSettings) -> Unit) {
-    when (mode) {
-        TimerMode.STOPWATCH -> Text(
-            "Настраивать нечего — нажмите «Старт».",
-            color = LocalTempoStyle.current.muted,
-        )
-        TimerMode.COUNTDOWN -> DurationStepper("Длительность", s.countdownSec, { v -> update { it.copy(countdownSec = v) } })
-        TimerMode.FOR_TIME -> DurationStepper(
-            "Лимит времени", s.forTimeCapSec, { v -> update { it.copy(forTimeCapSec = v) } },
-            min = 0, zeroText = "нет",
-        )
-        TimerMode.AMRAP -> DurationStepper("Длительность", s.amrapSec, { v -> update { it.copy(amrapSec = v) } })
-        TimerMode.EMOM -> {
-            DurationStepper("Интервал", s.emomIntervalSec, { v -> update { it.copy(emomIntervalSec = v) } })
-            CountStepper("Раунды", s.emomRounds, { v -> update { it.copy(emomRounds = v) } })
-        }
-        TimerMode.INTERVALS -> {
-            DurationStepper("Работа", s.workSec, { v -> update { it.copy(workSec = v) } })
-            DurationStepper("Отдых", s.restSec, { v -> update { it.copy(restSec = v) } }, min = 0, zeroText = "нет")
-            CountStepper("Раунды", s.intervalRounds, { v -> update { it.copy(intervalRounds = v) } })
+    Column {
+        when (mode) {
+            TimerMode.STOPWATCH -> Unit
+            TimerMode.COUNTDOWN -> DurationStepper("Длительность", s.countdownSec, { v -> update { it.copy(countdownSec = v) } }, sub = "Обратный отсчёт")
+            TimerMode.FOR_TIME -> DurationStepper(
+                "Лимит времени", s.forTimeCapSec, { v -> update { it.copy(forTimeCapSec = v) } },
+                min = 0, zeroText = "нет", sub = "Необязательно",
+            )
+            TimerMode.AMRAP -> DurationStepper("Длительность", s.amrapSec, { v -> update { it.copy(amrapSec = v) } }, sub = "Время на раунды")
+            TimerMode.EMOM -> {
+                DurationStepper("Интервал", s.emomIntervalSec, { v -> update { it.copy(emomIntervalSec = v) } }, sub = "Сигнал каждые")
+                CountStepper("Раунды", s.emomRounds, { v -> update { it.copy(emomRounds = v) } }, sub = "Количество кругов")
+            }
+            TimerMode.INTERVALS -> {
+                DurationStepper("Работа", s.workSec, { v -> update { it.copy(workSec = v) } }, icon = TempoIcons.Bolt)
+                DurationStepper("Отдых", s.restSec, { v -> update { it.copy(restSec = v) } }, min = 0, zeroText = "нет")
+                CountStepper("Раунды", s.intervalRounds, { v -> update { it.copy(intervalRounds = v) } }, sub = "Количество кругов")
+            }
         }
     }
 }

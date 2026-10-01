@@ -1,24 +1,45 @@
 package com.bugsjkeeee.tempo.ui
 
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.MenuBook
-import androidx.compose.material.icons.filled.Casino
-import androidx.compose.material.icons.filled.FitnessCenter
-import androidx.compose.material.icons.filled.MonitorWeight
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Timer
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandHorizontally
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkHorizontally
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import com.bugsjkeeee.tempo.ui.components.RoundIconButton
+import com.bugsjkeeee.tempo.ui.components.ScreenHeader
+import com.bugsjkeeee.tempo.ui.icons.TempoIcons
+import com.bugsjkeeee.tempo.ui.theme.LocalTempoStyle
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -90,12 +111,66 @@ object Routes {
 private data class Tab(val route: String, val title: String, val icon: ImageVector)
 
 private val tabs = listOf(
-    Tab(Routes.RANDOM, "Рандом", Icons.Filled.Casino),
-    Tab(Routes.TIMER, "Таймер", Icons.Filled.Timer),
-    Tab(Routes.BASE, "База", Icons.Filled.FitnessCenter),
-    Tab(Routes.JOURNAL, "Журнал", Icons.AutoMirrored.Filled.MenuBook),
-    Tab(Routes.WEIGHT, "Вес", Icons.Filled.MonitorWeight),
+    Tab(Routes.RANDOM, "Рандом", TempoIcons.Random),
+    Tab(Routes.TIMER, "Таймер", TempoIcons.Timer),
+    Tab(Routes.BASE, "База", TempoIcons.Dumbbell),
+    Tab(Routes.JOURNAL, "Журнал", TempoIcons.Journal),
+    Tab(Routes.WEIGHT, "Вес", TempoIcons.Scale),
 )
+
+/**
+ * Нижняя панель: неактивные вкладки — только иконки, активная — оранжевая «таблетка» с подписью.
+ * При переключении подпись прежней вкладки сворачивается, новой — разворачивается.
+ */
+@Composable
+private fun TabBar(current: String?, onSelect: (String) -> Unit) {
+    val style = LocalTempoStyle.current
+    val accent = MaterialTheme.colorScheme.primary
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .background(style.tile.copy(alpha = 0.97f))
+            .navigationBarsPadding(),
+    ) {
+        Box(Modifier.fillMaxWidth().height(1.dp).background(style.outline))
+        Row(
+            Modifier.fillMaxWidth().height(64.dp).padding(horizontal = 8.dp),
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            tabs.forEach { t ->
+                val selected = t.route == current
+                val bg by animateColorAsState(if (selected) accent else Color.Transparent, tween(250), label = "tabBg")
+                val tint by animateColorAsState(if (selected) Color.White else style.muted, tween(250), label = "tabTint")
+                Row(
+                    Modifier
+                        .height(42.dp)
+                        .clip(RoundedCornerShape(50))
+                        .background(bg)
+                        .clickable(interactionSource = remember { MutableInteractionSource() }, indication = null) { onSelect(t.route) }
+                        .animateContentSize(tween(250))
+                        .padding(horizontal = if (selected) 16.dp else 11.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Icon(t.icon, contentDescription = t.title, tint = tint, modifier = Modifier.size(22.dp))
+                    AnimatedVisibility(
+                        visible = selected,
+                        enter = expandHorizontally(tween(250)) + fadeIn(tween(250)),
+                        exit = shrinkHorizontally(tween(250)) + fadeOut(tween(150)),
+                    ) {
+                        Text(
+                            t.title,
+                            color = Color.White,
+                            style = MaterialTheme.typography.labelLarge,
+                            maxLines = 1,
+                            modifier = Modifier.padding(start = 7.dp),
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
 
 /** Значение, возвращённое экраном выбора, и сброс после обработки. */
 @Composable
@@ -104,7 +179,6 @@ private fun NavBackStackEntry.picked(key: String): String? {
     return value
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TempoNavHost(navController: NavHostController = rememberNavController()) {
     val backStack by navController.currentBackStackEntryAsState()
@@ -113,6 +187,8 @@ fun TempoNavHost(navController: NavHostController = rememberNavController()) {
     val controller = (LocalContext.current.applicationContext as TempoApp).timerController
     val go: (String) -> Unit = { navController.navigate(it) }
     val back: () -> Unit = { navController.popBackStack() }
+    // Счётчик возвратов на вкладку «Рандом»: по ТЗ фильтры сбрасываются при каждом открытии раздела.
+    var randomReset by rememberSaveable { mutableIntStateOf(0) }
 
     // Если таймер уже идёт (например, приложение открыли из уведомления), сразу показываем его.
     LaunchedEffect(Unit) {
@@ -123,36 +199,19 @@ fun TempoNavHost(navController: NavHostController = rememberNavController()) {
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
         topBar = {
             if (tab != null) {
-                TopAppBar(
-                    title = { Text(tab.title) },
-                    actions = {
-                        IconButton(onClick = { go(Routes.SETTINGS) }) { Icon(Icons.Filled.Settings, contentDescription = "Настройки") }
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.background),
-                )
+                ScreenHeader(tab.title, Modifier.statusBarsPadding()) {
+                    RoundIconButton(TempoIcons.Settings, "Настройки", onClick = { go(Routes.SETTINGS) })
+                }
             }
         },
         bottomBar = {
             if (tab != null) {
-                NavigationBar(containerColor = MaterialTheme.colorScheme.surfaceContainer) {
-                    tabs.forEach { t ->
-                        NavigationBarItem(
-                            selected = t.route == route,
-                            onClick = {
-                                navController.navigate(t.route) {
-                                    popUpTo(navController.graph.findStartDestination().id) { saveState = true }
-                                    launchSingleTop = true
-                                    restoreState = true
-                                }
-                            },
-                            icon = { Icon(t.icon, contentDescription = null) },
-                            label = { Text(t.title) },
-                            colors = NavigationBarItemDefaults.colors(
-                                selectedIconColor = MaterialTheme.colorScheme.primary,
-                                selectedTextColor = MaterialTheme.colorScheme.primary,
-                                indicatorColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.14f),
-                            ),
-                        )
+                TabBar(route) { r ->
+                    if (r == Routes.RANDOM && route != Routes.RANDOM) randomReset++
+                    navController.navigate(r) {
+                        popUpTo(navController.graph.findStartDestination().id) { saveState = true }
+                        launchSingleTop = true
+                        restoreState = true
                     }
                 }
             }
@@ -160,7 +219,7 @@ fun TempoNavHost(navController: NavHostController = rememberNavController()) {
     ) { padding ->
         NavHost(navController, startDestination = Routes.RANDOM) {
             composable(Routes.RANDOM) {
-                RandomScreen(padding, onNavigate = go, onExercise = { go(Routes.exercise(it)) })
+                RandomScreen(padding, resetKey = randomReset, onNavigate = go, onExercise = { go(Routes.exercise(it)) })
             }
             composable(Routes.TIMER) {
                 TimerSetupScreen(
