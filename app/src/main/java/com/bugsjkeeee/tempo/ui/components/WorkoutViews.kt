@@ -1,5 +1,6 @@
 package com.bugsjkeeee.tempo.ui.components
 
+import androidx.compose.runtime.remember
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -155,10 +156,23 @@ private fun <T : Any> FilterCard(
     Tile(Modifier.fillMaxWidth()) {
         TileLabel(title, icon)
         Spacer(Modifier.height(8.dp))
+        // «Любой» снимает отметки и запоминает их; повторное нажатие возвращает прежний выбор.
+        var stashed by remember { mutableStateOf<Set<T>>(emptySet()) }
         FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(7.dp), verticalArrangement = Arrangement.spacedBy(7.dp)) {
-            Chip(anyLabel, selected.isEmpty(), { onChange(emptySet()) })
+            Chip(anyLabel, selected.isEmpty(), {
+                if (selected.isNotEmpty()) {
+                    stashed = selected
+                    onChange(emptySet())
+                } else if (stashed.isNotEmpty()) {
+                    onChange(stashed)
+                    stashed = emptySet()
+                }
+            })
             options.forEach { option ->
-                Chip(label(option), option in selected, { onChange(if (option in selected) selected - option else selected + option) })
+                Chip(label(option), option in selected, {
+                    stashed = emptySet()
+                    onChange(if (option in selected) selected - option else selected + option)
+                })
             }
         }
     }
