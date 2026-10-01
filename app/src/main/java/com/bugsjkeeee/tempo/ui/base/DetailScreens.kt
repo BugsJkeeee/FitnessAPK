@@ -47,6 +47,12 @@ import com.bugsjkeeee.tempo.content.Workout
 import com.bugsjkeeee.tempo.content.WorkoutFlags
 import com.bugsjkeeee.tempo.ui.appViewModel
 import com.bugsjkeeee.tempo.ui.components.ExerciseImage
+import com.bugsjkeeee.tempo.ui.components.PrimaryButton
+import com.bugsjkeeee.tempo.ui.components.RoundIconButton
+import com.bugsjkeeee.tempo.ui.components.SecondaryButton
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.ui.Alignment
 import com.bugsjkeeee.tempo.ui.components.Tile
 import com.bugsjkeeee.tempo.ui.components.TileLabel
 import com.bugsjkeeee.tempo.ui.components.WorkoutDetails
@@ -63,12 +69,22 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BackTopBar(title: String, onBack: () -> Unit, actions: @Composable androidx.compose.foundation.layout.RowScope.() -> Unit = {}) {
-    TopAppBar(
-        title = { Text(title, maxLines = 1) },
-        navigationIcon = { IconButton(onClick = onBack) { Icon(TempoIcons.Back, contentDescription = "Назад") } },
-        actions = actions,
-        colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.background),
-    )
+    Row(
+        Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.background).statusBarsPadding().padding(start = 12.dp, end = 12.dp, top = 8.dp, bottom = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        RoundIconButton(TempoIcons.Back, "Назад", onBack, tint = MaterialTheme.colorScheme.onBackground)
+        Spacer(Modifier.width(12.dp))
+        Text(
+            title,
+            style = MaterialTheme.typography.headlineSmall,
+            color = MaterialTheme.colorScheme.onBackground,
+            maxLines = 1,
+            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+            modifier = Modifier.weight(1f),
+        )
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically, content = actions)
+    }
 }
 
 data class WorkoutDetailState(
@@ -111,8 +127,8 @@ fun WorkoutDetailScreen(
     Scaffold(topBar = {
         BackTopBar(w?.name ?: "", onBack) {
             if (w?.custom == true) {
-                IconButton(onClick = { onEdit(w.id) }) { Icon(TempoIcons.Edit, contentDescription = "Редактировать") }
-                IconButton(onClick = { confirmDelete = true }) { Icon(TempoIcons.Trash, contentDescription = "Удалить") }
+                RoundIconButton(TempoIcons.Edit, "Редактировать", { onEdit(w.id) })
+                RoundIconButton(TempoIcons.Trash, "Удалить", { confirmDelete = true })
             }
         }
     }) { padding ->
@@ -127,30 +143,25 @@ fun WorkoutDetailScreen(
         ) {
             item { WorkoutDetails(w, state.exercises) { onExercise(it.id) } }
             item {
-                Button(
-                    onClick = { scope.launch { onNavigate(vm.launch(w)) } },
-                    modifier = Modifier.fillMaxWidth().height(60.dp),
-                    shape = style.tileShape,
-                ) {
-                    Icon(TempoIcons.Play, contentDescription = null)
-                    Spacer(Modifier.width(8.dp))
-                    Text("Начать", style = MaterialTheme.typography.titleLarge)
-                }
+                PrimaryButton("Начать", onClick = { scope.launch { onNavigate(vm.launch(w)) } }, icon = TempoIcons.Play)
             }
             item {
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     val fav = state.flags.favorite
-                    OutlinedButton(onClick = { vm.setFlags(state.flags.copy(favorite = !fav)) }, modifier = Modifier.weight(1f)) {
-                        Icon(if (fav) TempoIcons.HeartFilled else TempoIcons.Heart, contentDescription = null)
-                        Spacer(Modifier.width(4.dp))
-                        Text(if (fav) "В избранном" else "В избранное")
-                    }
+                    SecondaryButton(
+                        if (fav) "В избранном" else "В избранное",
+                        { vm.setFlags(state.flags.copy(favorite = !fav)) },
+                        Modifier.weight(1f),
+                        if (fav) TempoIcons.HeartFilled else TempoIcons.Heart,
+                        color = if (fav) MaterialTheme.colorScheme.primary else null,
+                    )
                     val hidden = state.flags.hidden
-                    OutlinedButton(onClick = { vm.setFlags(state.flags.copy(hidden = !hidden)) }, modifier = Modifier.weight(1f)) {
-                        Icon(if (hidden) TempoIcons.Eye else TempoIcons.Ban, contentDescription = null)
-                        Spacer(Modifier.width(4.dp))
-                        Text(if (hidden) "Предлагать" else "Не предлагать")
-                    }
+                    SecondaryButton(
+                        if (hidden) "Предлагать" else "Не предлагать",
+                        { vm.setFlags(state.flags.copy(hidden = !hidden)) },
+                        Modifier.weight(1f),
+                        if (hidden) TempoIcons.Eye else TempoIcons.Ban,
+                    )
                 }
             }
         }
@@ -197,27 +208,25 @@ fun ExerciseDetailScreen(id: String, onBack: () -> Unit) {
                 }
             }
             Tile(Modifier.fillMaxWidth()) {
-                TileLabel("Мышцы")
+                TileLabel("Мышцы", TempoIcons.Muscle)
                 Text(e.muscles.joinToString(", ") { it.title }, style = MaterialTheme.typography.bodyLarge)
                 Spacer(Modifier.height(6.dp))
-                TileLabel("Оборудование")
+                TileLabel("Оборудование", TempoIcons.Dumbbell)
                 Text(e.equipment.joinToString(", ") { it.title }, style = MaterialTheme.typography.bodyLarge)
             }
             Tile(Modifier.fillMaxWidth()) {
-                TileLabel("Техника")
+                TileLabel("Техника", TempoIcons.Clipboard)
                 Text(e.technique, style = MaterialTheme.typography.bodyLarge)
             }
-            OutlinedButton(
-                onClick = {
+            SecondaryButton(
+                "Посмотреть на YouTube",
+                {
                     val uri = Uri.parse("https://www.youtube.com/results?search_query=" + Uri.encode("${e.name} техника"))
                     context.startActivity(Intent(Intent.ACTION_VIEW, uri))
                 },
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                Icon(TempoIcons.Youtube, contentDescription = null)
-                Spacer(Modifier.width(6.dp))
-                Text("Посмотреть на YouTube")
-            }
+                Modifier.fillMaxWidth(),
+                TempoIcons.Youtube,
+            )
         }
     }
 }

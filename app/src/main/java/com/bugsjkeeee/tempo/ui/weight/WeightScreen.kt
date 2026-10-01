@@ -1,6 +1,9 @@
 package com.bugsjkeeee.tempo.ui.weight
 
 import com.bugsjkeeee.tempo.ui.icons.TempoIcons
+import com.bugsjkeeee.tempo.ui.components.TButton
+import com.bugsjkeeee.tempo.ui.components.TOutlinedButton
+import com.bugsjkeeee.tempo.ui.components.TOutlinedTextField
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -14,14 +17,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
@@ -124,7 +124,7 @@ fun WeightScreen(contentPadding: PaddingValues) {
                 TileLabel("Новый замер")
                 Spacer(Modifier.height(8.dp))
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    OutlinedTextField(
+                    TOutlinedTextField(
                         value = input,
                         onValueChange = { input = it.filter { c -> c.isDigit() || c == ',' || c == '.' }.take(6) },
                         label = { Text("Вес, кг") },
@@ -133,14 +133,14 @@ fun WeightScreen(contentPadding: PaddingValues) {
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                         modifier = Modifier.weight(1f),
                     )
-                    OutlinedButton(onClick = { showDate = true }, modifier = Modifier.height(56.dp)) {
+                    TOutlinedButton(onClick = { showDate = true }, modifier = Modifier.height(56.dp)) {
                         Icon(TempoIcons.Calendar, contentDescription = null)
                         Spacer(Modifier.width(4.dp))
                         Text(if (day == today) "Сегодня" else LocalDate.ofEpochDay(day).format(shortDay))
                     }
                 }
                 Spacer(Modifier.height(8.dp))
-                Button(
+                TButton(
                     onClick = {
                         parsed?.let { vm.save(day, Math.round(it * 10) / 10.0) }
                         input = ""
@@ -241,7 +241,7 @@ fun WeightScreen(contentPadding: PaddingValues) {
             onDismissRequest = { editing = null },
             title = { Text(formatEpochDay(editDay)) },
             text = {
-                OutlinedTextField(
+                TOutlinedTextField(
                     value = text,
                     onValueChange = { text = it },
                     label = { Text("Вес, кг") },

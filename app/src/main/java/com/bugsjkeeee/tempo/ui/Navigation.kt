@@ -111,7 +111,7 @@ object Routes {
 private data class Tab(val route: String, val title: String, val icon: ImageVector)
 
 private val tabs = listOf(
-    Tab(Routes.RANDOM, "Рандом", TempoIcons.Random),
+    Tab(Routes.RANDOM, "Генератор", TempoIcons.Random),
     Tab(Routes.TIMER, "Таймер", TempoIcons.Timer),
     Tab(Routes.BASE, "База", TempoIcons.Dumbbell),
     Tab(Routes.JOURNAL, "Журнал", TempoIcons.Journal),
@@ -187,7 +187,7 @@ fun TempoNavHost(navController: NavHostController = rememberNavController()) {
     val controller = (LocalContext.current.applicationContext as TempoApp).timerController
     val go: (String) -> Unit = { navController.navigate(it) }
     val back: () -> Unit = { navController.popBackStack() }
-    // Счётчик возвратов на вкладку «Рандом»: по ТЗ фильтры сбрасываются при каждом открытии раздела.
+    // Счётчик возвратов на вкладку «Генератор»: по ТЗ фильтры сбрасываются при каждом открытии раздела.
     var randomReset by rememberSaveable { mutableIntStateOf(0) }
 
     // Если таймер уже идёт (например, приложение открыли из уведомления), сразу показываем его.

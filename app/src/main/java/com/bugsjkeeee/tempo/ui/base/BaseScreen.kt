@@ -15,12 +15,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -44,7 +40,11 @@ import com.bugsjkeeee.tempo.content.matches
 import com.bugsjkeeee.tempo.ui.appViewModel
 import com.bugsjkeeee.tempo.ui.components.ExerciseImage
 import com.bugsjkeeee.tempo.ui.components.FilterPanel
+import com.bugsjkeeee.tempo.ui.components.AddFab
+import com.bugsjkeeee.tempo.ui.components.SegmentedControl
 import com.bugsjkeeee.tempo.ui.components.SegmentedSelector
+import com.bugsjkeeee.tempo.ui.components.TempoTextField
+import androidx.compose.ui.draw.clip
 import com.bugsjkeeee.tempo.ui.components.WorkoutCard
 import com.bugsjkeeee.tempo.ui.theme.LocalTempoStyle
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -100,21 +100,16 @@ fun BaseScreen(
 
     Box(Modifier.fillMaxSize().padding(top = contentPadding.calculateTopPadding())) {
         Column(Modifier.fillMaxSize()) {
-            TabRow(selectedTabIndex = tab, containerColor = MaterialTheme.colorScheme.background) {
-                baseTabs.forEachIndexed { i, title ->
-                    Tab(selected = tab == i, onClick = { tab = i }, text = { Text(title) })
-                }
-            }
+            SegmentedControl(baseTabs, tab, { tab = it }, Modifier.padding(horizontal = 16.dp))
             val listPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 12.dp, bottom = contentPadding.calculateBottomPadding() + 88.dp)
             when (tab) {
                 0 -> LazyColumn(contentPadding = listPadding, verticalArrangement = Arrangement.spacedBy(10.dp)) {
                     item {
-                        OutlinedTextField(
+                        TempoTextField(
                             value = state.filters.query,
                             onValueChange = { vm.setFilters(state.filters.copy(query = it)) },
-                            placeholder = { Text("Поиск по названию") },
-                            leadingIcon = { Icon(TempoIcons.Search, contentDescription = null) },
-                            singleLine = true,
+                            placeholder = "Поиск по названию",
+                            leadingIcon = TempoIcons.Search,
                             modifier = Modifier.fillMaxWidth(),
                         )
                     }
@@ -147,11 +142,7 @@ fun BaseScreen(
             }
         }
         if (tab == 0) {
-            FloatingActionButton(
-                onClick = onNewWorkout,
-                containerColor = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.align(Alignment.BottomEnd).padding(end = 16.dp, bottom = contentPadding.calculateBottomPadding() + 16.dp),
-            ) { Icon(TempoIcons.Add, contentDescription = "Своя тренировка") }
+            AddFab(onNewWorkout, Modifier.align(Alignment.BottomEnd).padding(end = 20.dp, bottom = contentPadding.calculateBottomPadding() + 16.dp))
         }
     }
 }
@@ -167,12 +158,11 @@ fun ExerciseList(exercises: List<Exercise>, contentPadding: PaddingValues, onCli
     }
     LazyColumn(contentPadding = contentPadding, verticalArrangement = Arrangement.spacedBy(4.dp)) {
         item {
-            OutlinedTextField(
+            TempoTextField(
                 value = query,
                 onValueChange = { query = it },
-                placeholder = { Text("Поиск упражнения") },
-                leadingIcon = { Icon(TempoIcons.Search, contentDescription = null) },
-                singleLine = true,
+                placeholder = "Поиск упражнения",
+                leadingIcon = TempoIcons.Search,
                 modifier = Modifier.fillMaxWidth(),
             )
         }
@@ -182,16 +172,16 @@ fun ExerciseList(exercises: List<Exercise>, contentPadding: PaddingValues, onCli
                 selected = muscle,
                 label = { it?.title ?: "Все" },
                 onSelect = { muscle = it },
-                columns = 4,
+                flow = true,
                 modifier = Modifier.padding(vertical = 8.dp),
             )
         }
         items(shown, key = { it.id }) { ex ->
             Row(
-                Modifier.fillMaxWidth().clickable { onClick(ex.id) }.padding(vertical = 6.dp),
+                Modifier.fillMaxWidth().clip(style.smallShape).clickable { onClick(ex.id) }.padding(vertical = 6.dp, horizontal = 4.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                ExerciseImage(ex.images.firstOrNull(), Modifier.size(56.dp))
+                ExerciseImage(ex.images.firstOrNull(), Modifier.size(52.dp))
                 Spacer(Modifier.width(12.dp))
                 Column(Modifier.weight(1f)) {
                     Text(ex.name, style = MaterialTheme.typography.bodyLarge)

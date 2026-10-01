@@ -1,5 +1,6 @@
 package com.bugsjkeeee.tempo.ui.journal
 
+import com.bugsjkeeee.tempo.ui.components.RoundIconButton
 import com.bugsjkeeee.tempo.ui.icons.TempoIcons
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -70,8 +71,8 @@ fun EntryScreen(id: Long, onBack: () -> Unit, onEdit: (Long) -> Unit) {
 
     Scaffold(topBar = {
         BackTopBar(entry?.title ?: "", onBack) {
-            IconButton(onClick = { onEdit(id) }) { Icon(TempoIcons.Edit, contentDescription = "Редактировать") }
-            IconButton(onClick = { confirmDelete = true }) { Icon(TempoIcons.Trash, contentDescription = "Удалить") }
+            RoundIconButton(TempoIcons.Edit, "Редактировать", { onEdit(id) })
+            RoundIconButton(TempoIcons.Trash, "Удалить", { confirmDelete = true })
         }
     }) { padding ->
         val e = entry ?: return@Scaffold

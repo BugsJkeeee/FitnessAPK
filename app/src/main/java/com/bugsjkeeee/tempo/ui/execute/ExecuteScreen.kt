@@ -1,6 +1,9 @@
 package com.bugsjkeeee.tempo.ui.execute
 
 import com.bugsjkeeee.tempo.ui.icons.TempoIcons
+import com.bugsjkeeee.tempo.ui.components.TButton
+import com.bugsjkeeee.tempo.ui.components.TOutlinedButton
+import com.bugsjkeeee.tempo.ui.components.TOutlinedTextField
 import android.app.Activity
 import android.view.WindowManager
 import androidx.activity.compose.BackHandler
@@ -22,14 +25,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
 import androidx.compose.material3.FilledIconToggleButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -267,7 +267,7 @@ fun ExecuteScreen(workoutId: String, onClose: () -> Unit) {
                             onToggle = { vm.toggleDone(b, s) },
                         )
                     }
-                    OutlinedButton(onClick = { vm.addSet(b) }, modifier = Modifier.fillMaxWidth().padding(top = 6.dp)) {
+                    TOutlinedButton(onClick = { vm.addSet(b) }, modifier = Modifier.fillMaxWidth().padding(top = 6.dp)) {
                         Icon(TempoIcons.Add, contentDescription = null)
                         Spacer(Modifier.width(4.dp))
                         Text("Подход")
@@ -275,7 +275,7 @@ fun ExecuteScreen(workoutId: String, onClose: () -> Unit) {
                 }
             }
             item {
-                Button(
+                TButton(
                     onClick = { confirmFinish = true },
                     modifier = Modifier.fillMaxWidth().height(56.dp),
                     shape = style.tileShape,
@@ -326,7 +326,7 @@ private fun SetRowView(number: Int, row: SetRow, onWeight: (String) -> Unit, onR
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Text("$number", modifier = Modifier.width(24.dp), textAlign = TextAlign.Center, style = MaterialTheme.typography.titleMedium)
-        OutlinedTextField(
+        TOutlinedTextField(
             value = row.weight,
             onValueChange = onWeight,
             label = { Text("кг") },
@@ -335,7 +335,7 @@ private fun SetRowView(number: Int, row: SetRow, onWeight: (String) -> Unit, onR
             textStyle = Digits.copy(fontSize = 18.sp),
             modifier = Modifier.weight(1f),
         )
-        OutlinedTextField(
+        TOutlinedTextField(
             value = row.reps,
             onValueChange = onReps,
             label = { Text("повт.") },

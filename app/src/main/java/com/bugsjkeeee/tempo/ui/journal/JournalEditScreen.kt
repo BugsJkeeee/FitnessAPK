@@ -1,6 +1,9 @@
 package com.bugsjkeeee.tempo.ui.journal
 
 import com.bugsjkeeee.tempo.ui.icons.TempoIcons
+import com.bugsjkeeee.tempo.ui.components.TButton
+import com.bugsjkeeee.tempo.ui.components.TOutlinedButton
+import com.bugsjkeeee.tempo.ui.components.TOutlinedTextField
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -15,15 +18,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -43,6 +43,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import com.bugsjkeeee.tempo.TempoApp
+import com.bugsjkeeee.tempo.content.Equipment
 import com.bugsjkeeee.tempo.content.Exercise
 import com.bugsjkeeee.tempo.content.Workout
 import com.bugsjkeeee.tempo.content.WorkoutFormat
@@ -98,10 +99,23 @@ private fun TimerMode.toFormat(): WorkoutFormat? = when (this) {
     else -> null
 }
 
-/** Подходы по упражнениям тренировки: у силовых — по числу подходов с целевыми повторами, у комплексов — один. */
-private fun Workout.blocks(): List<EditBlock> = items.map { item ->
-    EditBlock(item.exercise, List(item.sets ?: 1) { SetRow(reps = item.reps?.toString().orEmpty()) })
-}
+private val weightedEquipment = setOf(Equipment.BARBELL, Equipment.DUMBBELL, Equipment.KETTLEBELL)
+
+/** Функциональный комплекс: результат — время или раунды, по упражнениям фиксируется только рабочий вес. */
+private fun WorkoutFormat?.isComplex() = this != null && this != WorkoutFormat.SETS
+
+/**
+ * Подходы по упражнениям тренировки: у силовых — по числу подходов с целевыми повторами,
+ * у комплексов — по одной строке веса и только для упражнений со штангой, гантелями или гирей.
+ */
+private fun Workout.blocks(exercises: Map<String, Exercise>): List<EditBlock> =
+    if (format.isComplex()) {
+        items.map { it.exercise }.distinct()
+            .filter { id -> exercises[id]?.equipment.orEmpty().any { it in weightedEquipment } }
+            .map { EditBlock(it, listOf(SetRow())) }
+    } else {
+        items.map { item -> EditBlock(item.exercise, List(item.sets ?: 1) { SetRow(reps = item.reps?.toString().orEmpty()) }) }
+    }
 
 class JournalEditViewModel(
     private val app: TempoApp,
@@ -148,7 +162,7 @@ class JournalEditViewModel(
                         durationSec = ((snap?.totalElapsedMs ?: 0) / 1000).toInt(),
                         resultTimeSec = if (snap?.mode == TimerMode.FOR_TIME) ((snap?.totalElapsedMs ?: 0) / 1000).toInt() else 0,
                         resultRounds = if (snap?.mode == TimerMode.AMRAP) snap?.laps?.size ?: 0 else 0,
-                        blocks = w?.blocks().orEmpty(),
+                        blocks = w?.blocks(exercises).orEmpty(),
                         exercises = exercises,
                         fromTimer = true,
                     )
@@ -165,7 +179,7 @@ class JournalEditViewModel(
         title = w.name,
         format = w.format,
         durationSec = w.durationMin * 60,
-        blocks = w.blocks(),
+        blocks = w.blocks(d.exercises),
     )
 
     fun pickWorkout(id: String) = viewModelScope.launch {
@@ -198,6 +212,7 @@ class JournalEditViewModel(
     /** Сохраняет запись; возвращает, побит ли рекорд. */
     suspend fun save(): Boolean {
         val d = _state.value
+        val complex = d.format.isComplex()
         val entry = JournalEntry(
             id = d.id,
             date = d.date,
@@ -211,7 +226,7 @@ class JournalEditViewModel(
             note = d.note.trim(),
             sets = d.blocks.flatMap { block ->
                 block.sets.filter { it.weight.isNotBlank() || it.reps.isNotBlank() }.mapIndexed { i, row ->
-                    JournalSet(block.exerciseId, i + 1, parseDecimal(row.weight), row.reps.toIntOrNull())
+                    JournalSet(block.exerciseId, i + 1, parseDecimal(row.weight), if (complex) null else row.reps.toIntOrNull())
                 }
             },
         )
@@ -258,7 +273,7 @@ fun JournalEditScreen(
         ) {
             if (entryId == 0L && !d.fromTimer && d.workoutId == null) {
                 item {
-                    OutlinedButton(onClick = onPickWorkout, modifier = Modifier.fillMaxWidth()) {
+                    TOutlinedButton(onClick = onPickWorkout, modifier = Modifier.fillMaxWidth()) {
                         Icon(TempoIcons.Dumbbell, contentDescription = null)
                         Spacer(Modifier.width(6.dp))
                         Text("Выбрать тренировку из базы")
@@ -266,7 +281,7 @@ fun JournalEditScreen(
                 }
             }
             item {
-                OutlinedTextField(
+                TOutlinedTextField(
                     value = d.title,
                     onValueChange = { v -> vm.update { it.copy(title = v) } },
                     label = { Text("Название") },
@@ -275,7 +290,7 @@ fun JournalEditScreen(
                 )
             }
             item {
-                OutlinedButton(onClick = { showDate = true }, modifier = Modifier.fillMaxWidth()) {
+                TOutlinedButton(onClick = { showDate = true }, modifier = Modifier.fillMaxWidth()) {
                     Icon(TempoIcons.Calendar, contentDescription = null)
                     Spacer(Modifier.width(6.dp))
                     Text("Дата: " + formatDate(d.date))
@@ -295,14 +310,15 @@ fun JournalEditScreen(
                     }
                 }
             }
-            if (d.blocks.isNotEmpty()) item { TileLabel("Упражнения и веса") }
+            val complex = d.format.isComplex()
+            if (d.blocks.isNotEmpty()) item { TileLabel(if (complex) "Рабочие веса" else "Упражнения и веса") }
             itemsIndexed(d.blocks) { b, block ->
                 Tile(Modifier.fillMaxWidth()) {
                     Text(d.exercises[block.exerciseId]?.name ?: block.exerciseId, style = MaterialTheme.typography.titleMedium)
                     block.sets.forEachIndexed { s, row ->
                         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            Text("${s + 1}", modifier = Modifier.width(20.dp))
-                            OutlinedTextField(
+                            if (!complex) Text("${s + 1}", modifier = Modifier.width(20.dp))
+                            TOutlinedTextField(
                                 value = row.weight,
                                 onValueChange = { v -> vm.updateSet(b, s) { it.copy(weight = v) } },
                                 label = { Text("кг") },
@@ -310,7 +326,7 @@ fun JournalEditScreen(
                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                                 modifier = Modifier.weight(1f),
                             )
-                            OutlinedTextField(
+                            if (!complex) TOutlinedTextField(
                                 value = row.reps,
                                 onValueChange = { v -> vm.updateSet(b, s) { it.copy(reps = v.filter(Char::isDigit).take(3)) } },
                                 label = { Text("повт.") },
@@ -321,21 +337,21 @@ fun JournalEditScreen(
                             IconButton(onClick = { vm.removeSet(b, s) }) { Icon(TempoIcons.Close, contentDescription = "Удалить подход") }
                         }
                     }
-                    TextButton(onClick = { vm.addSet(b) }) {
+                    if (!complex) TextButton(onClick = { vm.addSet(b) }) {
                         Icon(TempoIcons.Add, contentDescription = null)
                         Text("Подход")
                     }
                 }
             }
             item {
-                OutlinedButton(onClick = onPickExercise, modifier = Modifier.fillMaxWidth()) {
+                TOutlinedButton(onClick = onPickExercise, modifier = Modifier.fillMaxWidth()) {
                     Icon(TempoIcons.Add, contentDescription = null)
                     Spacer(Modifier.width(4.dp))
                     Text("Упражнение")
                 }
             }
             item {
-                OutlinedTextField(
+                TOutlinedTextField(
                     value = d.note,
                     onValueChange = { v -> vm.update { it.copy(note = v) } },
                     label = { Text("Заметка") },
@@ -344,7 +360,7 @@ fun JournalEditScreen(
                 )
             }
             item {
-                Button(
+                TButton(
                     onClick = { scope.launch { record = vm.save() } },
                     modifier = Modifier.fillMaxWidth().height(56.dp),
                     shape = style.tileShape,

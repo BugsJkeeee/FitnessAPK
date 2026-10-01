@@ -55,7 +55,7 @@ data class RandomState(
     val filters: WorkoutFilters = WorkoutFilters(),
     val candidates: List<Workout> = emptyList(),
     val current: Workout? = null,
-    /** Нажимали ли «Рандом» — до этого вместо результата подсказка. */
+    /** Нажимали ли «Новая тренировка» — до этого вместо результата подсказка. */
     val rolled: Boolean = false,
     val flags: Map<String, WorkoutFlags> = emptyMap(),
     val exercises: Map<String, Exercise> = emptyMap(),
@@ -150,7 +150,7 @@ fun RandomScreen(contentPadding: PaddingValues, resetKey: Int, onNavigate: (Stri
         item { FilterPanel(state.filters, vm::setFilters, initiallyExpanded = !state.rolled) }
         item {
             PrimaryButton(
-                if (state.rolled) "Ещё рандом" else "Рандом",
+                "Новая тренировка",
                 onClick = vm::roll,
                 icon = TempoIcons.Random,
                 enabled = state.candidates.isNotEmpty(),

@@ -1,11 +1,12 @@
 package com.bugsjkeeee.tempo.ui.settings
 
 import com.bugsjkeeee.tempo.ui.icons.TempoIcons
+import com.bugsjkeeee.tempo.ui.components.TButton
+import com.bugsjkeeee.tempo.ui.components.TOutlinedButton
+import com.bugsjkeeee.tempo.ui.components.TOutlinedTextField
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.text.input.KeyboardType
 import com.bugsjkeeee.tempo.ui.components.formatWeight
@@ -25,14 +26,11 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -49,6 +47,9 @@ import androidx.lifecycle.viewModelScope
 import com.bugsjkeeee.tempo.TempoApp
 import com.bugsjkeeee.tempo.settings.AppSettings
 import com.bugsjkeeee.tempo.settings.SoundMode
+import com.bugsjkeeee.tempo.settings.ThemeMode
+import com.bugsjkeeee.tempo.ui.base.BackTopBar
+import com.bugsjkeeee.tempo.ui.components.RoundIconButton
 import com.bugsjkeeee.tempo.sound.SoundCatalog
 import com.bugsjkeeee.tempo.sound.SoundEvent
 import com.bugsjkeeee.tempo.ui.appViewModel
@@ -76,6 +77,10 @@ class SettingsViewModel(private val app: TempoApp) : ViewModel() {
     }
 
     fun preview(key: String) = app.audioPlayer.play(key)
+
+    fun setThemeMode(mode: ThemeMode) {
+        viewModelScope.launch { repo.setThemeMode(mode) }
+    }
 
     fun setPrep(sec: Int) {
         viewModelScope.launch { repo.setPrepSec(sec) }
@@ -112,13 +117,7 @@ fun SettingsScreen(onBack: () -> Unit) {
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text("Настройки") },
-                navigationIcon = {
-                    IconButton(onClick = onBack) { Icon(TempoIcons.Back, contentDescription = "Назад") }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.background),
-            )
+            BackTopBar("Настройки", onBack)
         },
     ) { padding ->
         val s = settings ?: return@Scaffold
@@ -127,6 +126,13 @@ fun SettingsScreen(onBack: () -> Unit) {
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
+            item {
+                Tile(Modifier.fillMaxWidth()) {
+                    TileLabel("Тема оформления", TempoIcons.Sun)
+                    Spacer(Modifier.height(10.dp))
+                    SegmentedSelector(ThemeMode.entries, s.themeMode, { it.title }, vm::setThemeMode)
+                }
+            }
             item {
                 Tile(Modifier.fillMaxWidth()) {
                     TileLabel("Звуковое сопровождение", TempoIcons.Volume)
@@ -170,7 +176,7 @@ fun SettingsScreen(onBack: () -> Unit) {
                     TileLabel("Целевой вес")
                     Spacer(Modifier.height(8.dp))
                     var text by rememberSaveable { mutableStateOf(s.targetWeight?.let(::formatWeight).orEmpty()) }
-                    OutlinedTextField(
+                    TOutlinedTextField(
                         value = text,
                         onValueChange = { v ->
                             text = v.filter { it.isDigit() || it == ',' || it == '.' }.take(6)
@@ -189,11 +195,11 @@ fun SettingsScreen(onBack: () -> Unit) {
                 Tile(Modifier.fillMaxWidth()) {
                     TileLabel("Резервная копия")
                     Spacer(Modifier.height(8.dp))
-                    OutlinedButton(
+                    TOutlinedButton(
                         onClick = { scope.launch { context.startActivity(android.content.Intent.createChooser(vm.shareIntent(), "Сохранить копию")) } },
                         modifier = Modifier.fillMaxWidth(),
                     ) { Text("Сохранить копию") }
-                    OutlinedButton(
+                    TOutlinedButton(
                         onClick = { restoreLauncher.launch(arrayOf("application/json", "application/octet-stream", "text/plain")) },
                         modifier = Modifier.fillMaxWidth(),
                     ) { Text("Восстановить из копии") }
@@ -258,14 +264,12 @@ fun SettingsScreen(onBack: () -> Unit) {
                                 .padding(vertical = 4.dp),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
-                            RadioButton(selected = selected, onClick = {
+                            RadioButton(selected = selected, colors = androidx.compose.material3.RadioButtonDefaults.colors(selectedColor = MaterialTheme.colorScheme.primary), onClick = {
                                 vm.setSound(event, sound.key)
                                 vm.preview(sound.key)
                             })
                             Text(sound.title, modifier = Modifier.weight(1f))
-                            IconButton(onClick = { vm.preview(sound.key) }) {
-                                Icon(TempoIcons.Volume, contentDescription = "Прослушать")
-                            }
+                            RoundIconButton(TempoIcons.Volume, "Прослушать", { vm.preview(sound.key) })
                         }
                     }
                 }

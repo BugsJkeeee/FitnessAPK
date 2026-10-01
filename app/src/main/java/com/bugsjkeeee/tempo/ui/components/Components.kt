@@ -577,3 +577,138 @@ fun StatTile(value: String, label: String, modifier: Modifier = Modifier) {
 fun Note(text: String, modifier: Modifier = Modifier) {
     Text(text, style = MaterialTheme.typography.bodySmall, color = LocalTempoStyle.current.muted, modifier = modifier)
 }
+
+/** Поле ввода в стиле карточек: скругление 12 dp, без подчёркивания. */
+@Composable
+fun TempoTextField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    label: String? = null,
+    placeholder: String? = null,
+    leadingIcon: ImageVector? = null,
+    singleLine: Boolean = true,
+    minLines: Int = 1,
+    keyboardOptions: androidx.compose.foundation.text.KeyboardOptions = androidx.compose.foundation.text.KeyboardOptions.Default,
+    keyboardActions: androidx.compose.foundation.text.KeyboardActions = androidx.compose.foundation.text.KeyboardActions.Default,
+    textStyle: androidx.compose.ui.text.TextStyle = MaterialTheme.typography.bodyLarge,
+) {
+    val style = LocalTempoStyle.current
+    androidx.compose.material3.OutlinedTextField(
+        value = value,
+        onValueChange = onValueChange,
+        modifier = modifier,
+        label = label?.let { { Text(it) } },
+        placeholder = placeholder?.let { { Text(it, color = style.muted) } },
+        leadingIcon = leadingIcon?.let { { Icon(it, contentDescription = null, tint = style.muted, modifier = Modifier.size(18.dp)) } },
+        singleLine = singleLine,
+        minLines = minLines,
+        keyboardOptions = keyboardOptions,
+        keyboardActions = keyboardActions,
+        textStyle = textStyle,
+        shape = style.smallShape,
+        colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
+            focusedContainerColor = style.tile,
+            unfocusedContainerColor = style.tile,
+            unfocusedBorderColor = style.outline,
+            focusedBorderColor = MaterialTheme.colorScheme.primary,
+            cursorColor = MaterialTheme.colorScheme.primary,
+            focusedLabelColor = MaterialTheme.colorScheme.primary,
+        ),
+    )
+}
+
+/** Главная кнопка в стиле макета с произвольным содержимым (иконка + текст). */
+@Composable
+fun TButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    @Suppress("UNUSED_PARAMETER") shape: androidx.compose.ui.graphics.Shape? = null,
+    content: @Composable RowScope.() -> Unit,
+) {
+    val style = LocalTempoStyle.current
+    val accent = MaterialTheme.colorScheme.primary
+    val s = style.tileShape
+    Row(
+        modifier
+            .defaultMinSize(minHeight = 52.dp)
+            .then(if (enabled) Modifier.shadow(8.dp, s, ambientColor = accent, spotColor = accent) else Modifier)
+            .background(if (enabled) accent else style.segmentIdle, s)
+            .clickable(enabled = enabled, onClick = onClick)
+            .padding(horizontal = 16.dp, vertical = 10.dp),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        androidx.compose.runtime.CompositionLocalProvider(
+            androidx.compose.material3.LocalContentColor provides if (enabled) Color.White else style.muted,
+            androidx.compose.material3.LocalTextStyle provides MaterialTheme.typography.titleMedium,
+        ) { content() }
+    }
+}
+
+/** Второстепенная кнопка с обводкой и произвольным содержимым. */
+@Composable
+fun TOutlinedButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    content: @Composable RowScope.() -> Unit,
+) {
+    val style = LocalTempoStyle.current
+    Row(
+        modifier
+            .defaultMinSize(minHeight = 46.dp)
+            .background(if (style.dark) Color.Transparent else style.tile, style.smallShape)
+            .border(1.5.dp, style.outline, style.smallShape)
+            .clickable(enabled = enabled, onClick = onClick)
+            .padding(horizontal = 12.dp, vertical = 8.dp),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        androidx.compose.runtime.CompositionLocalProvider(
+            androidx.compose.material3.LocalContentColor provides style.secondaryText,
+            androidx.compose.material3.LocalTextStyle provides MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Medium),
+        ) { content() }
+    }
+}
+
+/** Поле ввода с параметрами OutlinedTextField, оформленное как карточки. */
+@Composable
+fun TOutlinedTextField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    label: @Composable (() -> Unit)? = null,
+    placeholder: @Composable (() -> Unit)? = null,
+    leadingIcon: @Composable (() -> Unit)? = null,
+    singleLine: Boolean = false,
+    minLines: Int = 1,
+    keyboardOptions: androidx.compose.foundation.text.KeyboardOptions = androidx.compose.foundation.text.KeyboardOptions.Default,
+    keyboardActions: androidx.compose.foundation.text.KeyboardActions = androidx.compose.foundation.text.KeyboardActions.Default,
+    textStyle: androidx.compose.ui.text.TextStyle = MaterialTheme.typography.bodyLarge,
+) {
+    val style = LocalTempoStyle.current
+    androidx.compose.material3.OutlinedTextField(
+        value = value,
+        onValueChange = onValueChange,
+        modifier = modifier,
+        label = label,
+        placeholder = placeholder,
+        leadingIcon = leadingIcon,
+        singleLine = singleLine,
+        minLines = minLines,
+        keyboardOptions = keyboardOptions,
+        keyboardActions = keyboardActions,
+        textStyle = textStyle,
+        shape = style.smallShape,
+        colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
+            focusedContainerColor = style.tile,
+            unfocusedContainerColor = style.tile,
+            unfocusedBorderColor = style.outline,
+            focusedBorderColor = MaterialTheme.colorScheme.primary,
+            cursorColor = MaterialTheme.colorScheme.primary,
+            focusedLabelColor = MaterialTheme.colorScheme.primary,
+        ),
+    )
+}

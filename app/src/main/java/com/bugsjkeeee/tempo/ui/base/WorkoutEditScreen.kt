@@ -1,6 +1,9 @@
 package com.bugsjkeeee.tempo.ui.base
 
 import com.bugsjkeeee.tempo.ui.icons.TempoIcons
+import com.bugsjkeeee.tempo.ui.components.TButton
+import com.bugsjkeeee.tempo.ui.components.TOutlinedButton
+import com.bugsjkeeee.tempo.ui.components.TOutlinedTextField
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -14,12 +17,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -174,7 +174,7 @@ fun WorkoutEditScreen(
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             item {
-                OutlinedTextField(
+                TOutlinedTextField(
                     value = d.name,
                     onValueChange = { v -> vm.update { it.copy(name = v) } },
                     label = { Text("Название") },
@@ -229,7 +229,7 @@ fun WorkoutEditScreen(
                             CountStepper("Повторы", item.reps ?: 10, { set(item.copy(reps = it)) }, max = 100)
                         }
                     } else {
-                        OutlinedTextField(
+                        TOutlinedTextField(
                             value = item.dose ?: "",
                             onValueChange = { set(item.copy(dose = it)) },
                             label = { Text("Дозировка, например «15» или «21-15-9, 40 кг»") },
@@ -240,14 +240,14 @@ fun WorkoutEditScreen(
                 }
             }
             item {
-                OutlinedButton(onClick = onPickExercise, modifier = Modifier.fillMaxWidth()) {
+                TOutlinedButton(onClick = onPickExercise, modifier = Modifier.fillMaxWidth()) {
                     Icon(TempoIcons.Add, contentDescription = null)
                     Spacer(Modifier.width(4.dp))
                     Text("Упражнение")
                 }
             }
             item {
-                OutlinedTextField(
+                TOutlinedTextField(
                     value = d.description,
                     onValueChange = { v -> vm.update { it.copy(description = v) } },
                     label = { Text("Описание (необязательно)") },
@@ -256,7 +256,7 @@ fun WorkoutEditScreen(
                 )
             }
             item {
-                Button(
+                TButton(
                     onClick = { scope.launch { vm.save(); onDone() } },
                     enabled = d.name.isNotBlank() && d.items.isNotEmpty(),
                     modifier = Modifier.fillMaxWidth().height(56.dp),
@@ -284,7 +284,7 @@ fun WorkoutPickerScreen(onPicked: (String) -> Unit, onBack: () -> Unit) {
             verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             item {
-                OutlinedTextField(
+                TOutlinedTextField(
                     value = query,
                     onValueChange = { query = it },
                     placeholder = { Text("Поиск по названию") },

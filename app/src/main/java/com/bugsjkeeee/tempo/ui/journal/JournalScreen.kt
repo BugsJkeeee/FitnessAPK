@@ -1,6 +1,10 @@
 package com.bugsjkeeee.tempo.ui.journal
 
-import com.bugsjkeeee.tempo.ui.icons.TempoIcons
+import com.bugsjkeeee.tempo.ui.components.RoundIconButton
+import com.bugsjkeeee.tempo.ui.components.SegmentedControl
+import com.bugsjkeeee.tempo.ui.components.AddFab
+import com.bugsjkeeee.tempo.ui.components.StatTile
+com.bugsjkeeee.tempo.ui.icons.TempoIcons
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -16,12 +20,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -117,9 +117,7 @@ fun JournalScreen(
 
     Box(Modifier.fillMaxSize().padding(top = contentPadding.calculateTopPadding())) {
         Column(Modifier.fillMaxSize()) {
-            TabRow(selectedTabIndex = tab, containerColor = MaterialTheme.colorScheme.background) {
-                journalTabs.forEachIndexed { i, t -> Tab(selected = tab == i, onClick = { tab = i }, text = { Text(t) }) }
-            }
+            SegmentedControl(journalTabs, tab, { tab = it }, Modifier.padding(horizontal = 16.dp))
             val padding = PaddingValues(start = 16.dp, end = 16.dp, top = 12.dp, bottom = contentPadding.calculateBottomPadding() + 88.dp)
             when (tab) {
                 0 -> EntryList(state.entries, padding, onEntry)
@@ -127,11 +125,7 @@ fun JournalScreen(
                 else -> RecordsTab(state, padding, onExerciseRecord, onComplexRecord)
             }
         }
-        FloatingActionButton(
-            onClick = onAdd,
-            containerColor = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.align(Alignment.BottomEnd).padding(end = 16.dp, bottom = contentPadding.calculateBottomPadding() + 16.dp),
-        ) { Icon(TempoIcons.Add, contentDescription = "Добавить вручную") }
+        AddFab(onAdd, Modifier.align(Alignment.BottomEnd).padding(end = 20.dp, bottom = contentPadding.calculateBottomPadding() + 16.dp))
     }
 }
 
@@ -178,22 +172,22 @@ private fun CalendarTab(state: JournalState, padding: PaddingValues, onEntry: (L
     LazyColumn(contentPadding = padding, verticalArrangement = Arrangement.spacedBy(12.dp)) {
         item {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                InfoTile("За неделю", "${state.regularity.week}", Modifier.weight(1f))
-                InfoTile("За месяц", "${state.regularity.month}", Modifier.weight(1f))
-                InfoTile("Серия недель", "${state.regularity.streakWeeks}", Modifier.weight(1f))
+                StatTile("${state.regularity.week}", "за неделю", Modifier.weight(1f))
+                StatTile("${state.regularity.month}", "за месяц", Modifier.weight(1f))
+                StatTile("${state.regularity.streakWeeks}", "недель подряд", Modifier.weight(1f))
             }
         }
         item {
             Tile(Modifier.fillMaxWidth()) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    IconButton(onClick = { monthOffset-- }) { Icon(TempoIcons.ChevronLeft, contentDescription = "Предыдущий месяц") }
+                    RoundIconButton(TempoIcons.ChevronLeft, "Предыдущий месяц", { monthOffset-- })
                     Text(
                         month.month.getDisplayName(TextStyle.FULL_STANDALONE, Locale("ru")).replaceFirstChar { it.uppercase() } + " " + month.year,
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.weight(1f),
                         textAlign = TextAlign.Center,
                     )
-                    IconButton(onClick = { monthOffset++ }) { Icon(TempoIcons.ChevronRight, contentDescription = "Следующий месяц") }
+                    RoundIconButton(TempoIcons.ChevronRight, "Следующий месяц", { monthOffset++ })
                 }
                 Row(Modifier.fillMaxWidth()) {
                     listOf("Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс").forEach {
