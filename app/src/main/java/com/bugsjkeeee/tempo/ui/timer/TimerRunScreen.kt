@@ -123,11 +123,13 @@ private fun ActiveView(s: TimerSnapshot, controller: TimerController, onMinimize
     var confirmStop by rememberSaveable { mutableStateOf(false) }
 
     BoxWithConstraints(Modifier.fillMaxSize().background(background).systemBarsPadding()) {
-        val landscape = maxWidth > maxHeight
+        val width = maxWidth
+        val height = maxHeight
+        val landscape = width > height
         if (landscape) {
             Row(Modifier.fillMaxSize().padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
                 Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
-                    Dial(s, content, minOf(maxHeight - 32.dp, maxWidth * 0.55f))
+                    Dial(s, content, minOf(height - 32.dp, width * 0.55f))
                 }
                 Column(
                     Modifier.weight(1f).padding(start = 16.dp),
@@ -145,7 +147,7 @@ private fun ActiveView(s: TimerSnapshot, controller: TimerController, onMinimize
             ) {
                 Header(s, content, onMinimize)
                 Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
-                    Dial(s, content, minOf(maxWidth - 16.dp, maxHeight * 0.5f))
+                    Dial(s, content, minOf(width - 16.dp, height * 0.5f))
                 }
                 Info(s, content)
                 Spacer(Modifier.height(16.dp))
