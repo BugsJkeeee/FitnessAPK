@@ -3,6 +3,7 @@ package com.bugsjkeeee.tempo.timer
 /** Фаза интервала; от неё зависит цвет экрана таймера и звук начала. */
 enum class Phase { PREP, WORK, REST }
 
+@kotlinx.serialization.Serializable
 enum class TimerMode(val title: String) {
     STOPWATCH("Секундомер"),
     COUNTDOWN("Таймер"),

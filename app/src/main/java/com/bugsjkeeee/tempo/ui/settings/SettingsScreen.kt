@@ -1,5 +1,14 @@
 package com.bugsjkeeee.tempo.ui.settings
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.text.input.KeyboardType
+import com.bugsjkeeee.tempo.ui.components.formatWeight
+import com.bugsjkeeee.tempo.ui.components.parseDecimal
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -74,6 +83,18 @@ class SettingsViewModel(private val app: TempoApp) : ViewModel() {
     fun setPrep(sec: Int) {
         viewModelScope.launch { repo.setPrepSec(sec) }
     }
+
+    fun setTargetWeight(weight: Double?) {
+        viewModelScope.launch { repo.setTargetWeight(weight) }
+    }
+
+    suspend fun shareIntent(): android.content.Intent = app.backupManager.shareIntent()
+
+    /** Восстанавливает данные из файла; возвращает текст ошибки или null при успехе. */
+    suspend fun restore(uri: android.net.Uri): String? = runCatching {
+        val text = app.contentResolver.openInputStream(uri)?.bufferedReader()?.use { it.readText() } ?: error("empty")
+        app.backupManager.restore(text)
+    }.exceptionOrNull()?.let { "Не удалось прочитать файл — это не резервная копия Tempo или файл повреждён." }
 }
 
 private val prepOptions = listOf(0, 5, 10, 15, 20, 30)
@@ -87,6 +108,10 @@ fun SettingsScreen(onBack: () -> Unit) {
     val style = LocalTempoStyle.current
     val context = LocalContext.current
     val version = remember { context.packageManager.getPackageInfo(context.packageName, 0).versionName }
+    val scope = rememberCoroutineScope()
+    var pendingRestore by remember { mutableStateOf<android.net.Uri?>(null) }
+    var message by remember { mutableStateOf<String?>(null) }
+    val restoreLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri -> pendingRestore = uri }
 
     Scaffold(
         topBar = {
@@ -144,6 +169,46 @@ fun SettingsScreen(onBack: () -> Unit) {
                 }
             }
             item {
+                Tile(Modifier.fillMaxWidth()) {
+                    TileLabel("Целевой вес")
+                    Spacer(Modifier.height(8.dp))
+                    var text by rememberSaveable { mutableStateOf(s.targetWeight?.let(::formatWeight).orEmpty()) }
+                    OutlinedTextField(
+                        value = text,
+                        onValueChange = { v ->
+                            text = v.filter { it.isDigit() || it == ',' || it == '.' }.take(6)
+                            vm.setTargetWeight(parseDecimal(text)?.takeIf { it in 20.0..400.0 })
+                        },
+                        label = { Text("кг") },
+                        placeholder = { Text("не задан") },
+                        singleLine = true,
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                    Text("Показывается линией на графике веса.", style = MaterialTheme.typography.bodySmall, color = style.muted)
+                }
+            }
+            item {
+                Tile(Modifier.fillMaxWidth()) {
+                    TileLabel("Резервная копия")
+                    Spacer(Modifier.height(8.dp))
+                    OutlinedButton(
+                        onClick = { scope.launch { context.startActivity(android.content.Intent.createChooser(vm.shareIntent(), "Сохранить копию")) } },
+                        modifier = Modifier.fillMaxWidth(),
+                    ) { Text("Сохранить копию") }
+                    OutlinedButton(
+                        onClick = { restoreLauncher.launch(arrayOf("application/json", "application/octet-stream", "text/plain")) },
+                        modifier = Modifier.fillMaxWidth(),
+                    ) { Text("Восстановить из копии") }
+                    Text(
+                        "Копия — файл со всеми данными: журнал, вес, свои тренировки, избранное и настройки. " +
+                            "Отправьте его на Google Диск или себе в Telegram. Раз в неделю приложение само сохраняет копию в «Загрузки/Tempo» (Android 10 и новее).",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = style.muted,
+                    )
+                }
+            }
+            item {
                 Text(
                     "Версия $version",
                     style = MaterialTheme.typography.bodySmall,
@@ -152,6 +217,28 @@ fun SettingsScreen(onBack: () -> Unit) {
                 )
             }
         }
+    }
+
+    pendingRestore?.let { uri ->
+        AlertDialog(
+            onDismissRequest = { pendingRestore = null },
+            title = { Text("Восстановить из копии?") },
+            text = { Text("Текущие журнал, вес, свои тренировки и настройки будут заменены данными из файла.") },
+            confirmButton = {
+                TextButton(onClick = {
+                    pendingRestore = null
+                    scope.launch { message = vm.restore(uri) ?: "Данные восстановлены." }
+                }) { Text("Восстановить") }
+            },
+            dismissButton = { TextButton(onClick = { pendingRestore = null }) { Text("Отмена") } },
+        )
+    }
+    message?.let {
+        AlertDialog(
+            onDismissRequest = { message = null },
+            text = { Text(it) },
+            confirmButton = { TextButton(onClick = { message = null }) { Text("ОК") } },
+        )
     }
 
     val event = choosing

@@ -2,6 +2,7 @@ package com.bugsjkeeee.tempo.timer
 
 import android.content.Context
 import android.os.SystemClock
+import com.bugsjkeeee.tempo.content.WorkoutRef
 import com.bugsjkeeee.tempo.settings.AppSettings
 import com.bugsjkeeee.tempo.settings.SettingsRepository
 import com.bugsjkeeee.tempo.sound.AudioPlayer
@@ -33,6 +34,8 @@ data class TimerSnapshot(
     val totalDurationMs: Long?,
     /** Отметки кругов секундомера или раундов AMRAP. */
     val laps: List<Long>,
+    /** Тренировка из базы, запущенная в таймере, — для записи результата в журнал. */
+    val workout: WorkoutRef? = null,
 ) {
     val segmentRemainingMs: Long? get() = segmentDurationMs?.let { (it - segmentElapsedMs).coerceAtLeast(0) }
 }
@@ -56,7 +59,10 @@ class TimerController(
 
     private fun now() = SystemClock.elapsedRealtime()
 
-    fun start(mode: TimerMode, timerSettings: TimerSettings) {
+    private var workout: WorkoutRef? = null
+
+    fun start(mode: TimerMode, timerSettings: TimerSettings, workout: WorkoutRef? = null) {
+        this.workout = workout
         scope.launch {
             settings = settingsRepository.current()
             val plan = buildPlan(mode, timerSettings, settings.prepSec)
@@ -155,6 +161,7 @@ class TimerController(
             totalElapsedMs = (elapsed - plan.prepMs).coerceAtLeast(0),
             totalDurationMs = plan.totalMs?.minus(plan.prepMs),
             laps = r.laps.toList(),
+            workout = workout,
         )
     }
 }

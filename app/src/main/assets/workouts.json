@@ -1,0 +1,5164 @@
+[
+ {
+  "id": "f001",
+  "name": "Фрэн",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 10,
+  "muscles": [
+   "full",
+   "back",
+   "arms"
+  ],
+  "equipment": [
+   "barbell",
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "thruster",
+    "dose": "21-15-9, 43/30 кг"
+   },
+   {
+    "exercise": "pullup",
+    "dose": "21-15-9"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 600
+  },
+  "description": "Классический контрольный комплекс: 21-15-9 повторений трастеров и подтягиваний."
+ },
+ {
+  "id": "f002",
+  "name": "Грейс",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 10,
+  "muscles": [
+   "full"
+  ],
+  "equipment": [
+   "barbell"
+  ],
+  "items": [
+   {
+    "exercise": "clean_and_jerk",
+    "dose": "30 повторений, 61/43 кг"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 600
+  },
+  "description": "30 толчков на время."
+ },
+ {
+  "id": "f003",
+  "name": "Изабель",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 10,
+  "muscles": [
+   "full"
+  ],
+  "equipment": [
+   "barbell"
+  ],
+  "items": [
+   {
+    "exercise": "power_snatch",
+    "dose": "30 повторений, 61/43 кг"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 600
+  },
+  "description": "30 рывков на время."
+ },
+ {
+  "id": "f004",
+  "name": "Диана",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 12,
+  "muscles": [
+   "back",
+   "legs",
+   "shoulders",
+   "arms",
+   "full"
+  ],
+  "equipment": [
+   "barbell"
+  ],
+  "items": [
+   {
+    "exercise": "deadlift",
+    "dose": "21-15-9, 102/70 кг"
+   },
+   {
+    "exercise": "handstand_pushup",
+    "dose": "21-15-9"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 720
+  },
+  "description": "21-15-9 становой тяги и отжиманий в стойке на руках."
+ },
+ {
+  "id": "f005",
+  "name": "Элизабет",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 12,
+  "muscles": [
+   "full",
+   "chest",
+   "arms"
+  ],
+  "equipment": [
+   "barbell",
+   "dip_bars"
+  ],
+  "items": [
+   {
+    "exercise": "power_clean",
+    "dose": "21-15-9, 61/43 кг"
+   },
+   {
+    "exercise": "dip",
+    "dose": "21-15-9"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 720
+  },
+  "description": "21-15-9 взятий на грудь и отжиманий на брусьях."
+ },
+ {
+  "id": "f006",
+  "name": "Энджи",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 30,
+  "muscles": [
+   "back",
+   "arms",
+   "chest",
+   "abs",
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "pullup",
+    "dose": "100"
+   },
+   {
+    "exercise": "pushup",
+    "dose": "100"
+   },
+   {
+    "exercise": "situp",
+    "dose": "100"
+   },
+   {
+    "exercise": "air_squat",
+    "dose": "100"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 1800
+  },
+  "description": "Выполните все повторения каждого упражнения по порядку."
+ },
+ {
+  "id": "f007",
+  "name": "Джеки",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 15,
+  "muscles": [
+   "full",
+   "back",
+   "arms"
+  ],
+  "equipment": [
+   "barbell",
+   "pullup_bar",
+   "rower"
+  ],
+  "items": [
+   {
+    "exercise": "row_erg",
+    "dose": "1000 м"
+   },
+   {
+    "exercise": "thruster",
+    "dose": "50, 20/15 кг"
+   },
+   {
+    "exercise": "pullup",
+    "dose": "30"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 900
+  },
+  "description": "Гребля, затем трастеры с пустым грифом, затем подтягивания."
+ },
+ {
+  "id": "f008",
+  "name": "Хелен на гребле",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 15,
+  "muscles": [
+   "full",
+   "back",
+   "arms"
+  ],
+  "equipment": [
+   "kettlebell",
+   "pullup_bar",
+   "rower"
+  ],
+  "items": [
+   {
+    "exercise": "row_erg",
+    "dose": "500 м"
+   },
+   {
+    "exercise": "kb_swing",
+    "dose": "21, 24/16 кг"
+   },
+   {
+    "exercise": "pullup",
+    "dose": "12"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 900
+  },
+  "description": "3 раунда. Бег заменён греблей."
+ },
+ {
+  "id": "f009",
+  "name": "Аманда",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 15,
+  "muscles": [
+   "full"
+  ],
+  "equipment": [
+   "barbell",
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "muscle_up",
+    "dose": "9-7-5"
+   },
+   {
+    "exercise": "power_snatch",
+    "dose": "9-7-5, 61/43 кг"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 900
+  },
+  "description": "9-7-5 выходов силой и рывков."
+ },
+ {
+  "id": "f010",
+  "name": "DT",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 15,
+  "muscles": [
+   "back",
+   "legs",
+   "full",
+   "shoulders"
+  ],
+  "equipment": [
+   "barbell"
+  ],
+  "items": [
+   {
+    "exercise": "deadlift",
+    "dose": "12, 70/47 кг"
+   },
+   {
+    "exercise": "hang_clean",
+    "dose": "9"
+   },
+   {
+    "exercise": "push_press",
+    "dose": "6"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 900
+  },
+  "description": "5 раундов одной штангой."
+ },
+ {
+  "id": "f011",
+  "name": "Мёрф на гребле",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 60,
+  "muscles": [
+   "full",
+   "back",
+   "arms",
+   "chest",
+   "legs"
+  ],
+  "equipment": [
+   "pullup_bar",
+   "rower"
+  ],
+  "items": [
+   {
+    "exercise": "row_erg",
+    "dose": "2000 м"
+   },
+   {
+    "exercise": "pullup",
+    "dose": "100"
+   },
+   {
+    "exercise": "pushup",
+    "dose": "200"
+   },
+   {
+    "exercise": "air_squat",
+    "dose": "300"
+   },
+   {
+    "exercise": "row_erg",
+    "dose": "2000 м"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 3600
+  },
+  "description": "Гребля, затем подтягивания, отжимания и приседания в любом порядке и разбивке, в конце снова гребля."
+ },
+ {
+  "id": "f012",
+  "name": "Лестница бёрпи",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 15,
+  "muscles": [
+   "full",
+   "legs"
+  ],
+  "equipment": [
+   "box"
+  ],
+  "items": [
+   {
+    "exercise": "burpee",
+    "dose": "10-9-8-7-6-5-4-3-2-1"
+   },
+   {
+    "exercise": "box_jump",
+    "dose": "10-9-8-7-6-5-4-3-2-1"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 900
+  },
+  "description": "Убывающая лесенка: на каждой ступени бёрпи и запрыгивания."
+ },
+ {
+  "id": "f013",
+  "name": "Сотня махов",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 1,
+  "durationMin": 10,
+  "muscles": [
+   "full"
+  ],
+  "equipment": [
+   "kettlebell"
+  ],
+  "items": [
+   {
+    "exercise": "kb_swing",
+    "dose": "100, 24/16 кг"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 600
+  },
+  "description": "100 махов гирей с минимумом остановок."
+ },
+ {
+  "id": "f014",
+  "name": "Сотня бёрпи",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 12,
+  "muscles": [
+   "full"
+  ],
+  "equipment": [],
+  "items": [
+   {
+    "exercise": "burpee",
+    "dose": "100"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 720
+  },
+  "description": "100 бёрпи на время."
+ },
+ {
+  "id": "f015",
+  "name": "Гантельный чиппер",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 25,
+  "muscles": [
+   "full",
+   "legs",
+   "back",
+   "abs"
+  ],
+  "equipment": [
+   "dumbbell"
+  ],
+  "items": [
+   {
+    "exercise": "db_snatch",
+    "dose": "50, 22,5/15 кг"
+   },
+   {
+    "exercise": "db_lunge",
+    "dose": "40"
+   },
+   {
+    "exercise": "db_thruster",
+    "dose": "30"
+   },
+   {
+    "exercise": "renegade_row",
+    "dose": "20"
+   },
+   {
+    "exercise": "burpee",
+    "dose": "10"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 1500
+  },
+  "description": "Выполните упражнения по порядку, каждое — полностью."
+ },
+ {
+  "id": "f016",
+  "name": "Гиревой чиппер",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 20,
+  "muscles": [
+   "full",
+   "legs",
+   "shoulders",
+   "arms"
+  ],
+  "equipment": [
+   "kettlebell"
+  ],
+  "items": [
+   {
+    "exercise": "kb_swing",
+    "dose": "50, 24/16 кг"
+   },
+   {
+    "exercise": "kb_goblet_squat",
+    "dose": "40"
+   },
+   {
+    "exercise": "kb_high_pull",
+    "dose": "30"
+   },
+   {
+    "exercise": "kb_press",
+    "dose": "20"
+   },
+   {
+    "exercise": "burpee",
+    "dose": "10"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 1200
+  },
+  "description": "Выполните упражнения по порядку, каждое — полностью."
+ },
+ {
+  "id": "f017",
+  "name": "Гребной марафон 2000",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 12,
+  "muscles": [
+   "full"
+  ],
+  "equipment": [
+   "rower"
+  ],
+  "items": [
+   {
+    "exercise": "row_erg",
+    "dose": "2000 м"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 720
+  },
+  "description": "2000 м на гребном тренажёре на время."
+ },
+ {
+  "id": "f018",
+  "name": "500 и 50",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 18,
+  "muscles": [
+   "full",
+   "legs"
+  ],
+  "equipment": [
+   "rower"
+  ],
+  "items": [
+   {
+    "exercise": "row_erg",
+    "dose": "500 м"
+   },
+   {
+    "exercise": "air_squat",
+    "dose": "50"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 1080
+  },
+  "description": "3 раунда."
+ },
+ {
+  "id": "f019",
+  "name": "Турник и брусья",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 12,
+  "muscles": [
+   "back",
+   "arms",
+   "chest",
+   "full"
+  ],
+  "equipment": [
+   "dip_bars",
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "pullup",
+    "dose": "21-15-9"
+   },
+   {
+    "exercise": "dip",
+    "dose": "21-15-9"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 720
+  },
+  "description": "21-15-9 подтягиваний и отжиманий на брусьях."
+ },
+ {
+  "id": "f020",
+  "name": "Ящик и гантели",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 15,
+  "muscles": [
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "box",
+   "dumbbell"
+  ],
+  "items": [
+   {
+    "exercise": "box_jump",
+    "dose": "15"
+   },
+   {
+    "exercise": "db_thruster",
+    "dose": "12, 15/10 кг"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 900
+  },
+  "description": "5 раундов."
+ },
+ {
+  "id": "f021",
+  "name": "Пресс-чиппер",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 1,
+  "durationMin": 15,
+  "muscles": [
+   "abs",
+   "full"
+  ],
+  "equipment": [],
+  "items": [
+   {
+    "exercise": "situp",
+    "dose": "50"
+   },
+   {
+    "exercise": "russian_twist",
+    "dose": "40"
+   },
+   {
+    "exercise": "v_up",
+    "dose": "30"
+   },
+   {
+    "exercise": "flutter_kicks",
+    "dose": "20 на каждую ногу"
+   },
+   {
+    "exercise": "plank",
+    "dose": "1 мин"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 900
+  },
+  "description": "Выполните по порядку."
+ },
+ {
+  "id": "f022",
+  "name": "Пять раундов штанги",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 20,
+  "muscles": [
+   "legs",
+   "back",
+   "chest",
+   "arms",
+   "full"
+  ],
+  "equipment": [
+   "barbell"
+  ],
+  "items": [
+   {
+    "exercise": "front_squat",
+    "dose": "10, 50/35 кг"
+   },
+   {
+    "exercise": "barbell_row",
+    "dose": "10"
+   },
+   {
+    "exercise": "pushup",
+    "dose": "15"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 1200
+  },
+  "description": "5 раундов."
+ },
+ {
+  "id": "f023",
+  "name": "Штанга 21-15-9",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 15,
+  "muscles": [
+   "full",
+   "legs",
+   "shoulders"
+  ],
+  "equipment": [
+   "barbell"
+  ],
+  "items": [
+   {
+    "exercise": "power_clean",
+    "dose": "21-15-9, 60/40 кг"
+   },
+   {
+    "exercise": "front_squat",
+    "dose": "21-15-9"
+   },
+   {
+    "exercise": "push_press",
+    "dose": "21-15-9"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 900
+  },
+  "description": "Взятие, присед и жимовой швунг одной штангой."
+ },
+ {
+  "id": "f024",
+  "name": "Гребля и бёрпи 10 раундов",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 25,
+  "muscles": [
+   "full"
+  ],
+  "equipment": [
+   "rower"
+  ],
+  "items": [
+   {
+    "exercise": "row_erg",
+    "dose": "250 м"
+   },
+   {
+    "exercise": "burpee",
+    "dose": "10"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 1500
+  },
+  "description": "10 раундов."
+ },
+ {
+  "id": "f025",
+  "name": "Подтягивания 50-40-30",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 30,
+  "muscles": [
+   "back",
+   "arms",
+   "chest",
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "pullup",
+    "dose": "50-40-30"
+   },
+   {
+    "exercise": "pushup",
+    "dose": "50-40-30"
+   },
+   {
+    "exercise": "air_squat",
+    "dose": "50-40-30"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 1800
+  },
+  "description": "Три раунда по убывающей."
+ },
+ {
+  "id": "f026",
+  "name": "Становая и бёрпи",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 12,
+  "muscles": [
+   "back",
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "barbell"
+  ],
+  "items": [
+   {
+    "exercise": "deadlift",
+    "dose": "21-15-9, 100/70 кг"
+   },
+   {
+    "exercise": "burpee",
+    "dose": "21-15-9"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 720
+  },
+  "description": "21-15-9 становой тяги и бёрпи."
+ },
+ {
+  "id": "f027",
+  "name": "Гиря и турник 10 раундов",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 20,
+  "muscles": [
+   "full",
+   "back",
+   "arms",
+   "legs"
+  ],
+  "equipment": [
+   "kettlebell",
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "kb_swing",
+    "dose": "15, 24/16 кг"
+   },
+   {
+    "exercise": "pullup",
+    "dose": "5"
+   },
+   {
+    "exercise": "air_squat",
+    "dose": "10"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 1200
+  },
+  "description": "10 раундов."
+ },
+ {
+  "id": "f028",
+  "name": "Выпады и прыжки",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 1,
+  "durationMin": 15,
+  "muscles": [
+   "legs",
+   "abs",
+   "full"
+  ],
+  "equipment": [],
+  "items": [
+   {
+    "exercise": "walking_lunge",
+    "dose": "20"
+   },
+   {
+    "exercise": "jump_squat",
+    "dose": "15"
+   },
+   {
+    "exercise": "mountain_climber",
+    "dose": "30"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 900
+  },
+  "description": "4 раунда без оборудования."
+ },
+ {
+  "id": "f029",
+  "name": "Тройка гантелей",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 20,
+  "muscles": [
+   "full",
+   "legs",
+   "shoulders",
+   "arms"
+  ],
+  "equipment": [
+   "bench",
+   "box",
+   "dumbbell"
+  ],
+  "items": [
+   {
+    "exercise": "db_clean",
+    "dose": "15, 22,5/15 кг"
+   },
+   {
+    "exercise": "db_step_up",
+    "dose": "20"
+   },
+   {
+    "exercise": "db_shoulder_press",
+    "dose": "15"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 1200
+  },
+  "description": "4 раунда."
+ },
+ {
+  "id": "f030",
+  "name": "Гребля 5×500",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 20,
+  "muscles": [
+   "full"
+  ],
+  "equipment": [
+   "rower"
+  ],
+  "items": [
+   {
+    "exercise": "row_erg",
+    "dose": "500 м"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 1200
+  },
+  "description": "5 отрезков по 500 м, отдых 1 мин между отрезками."
+ },
+ {
+  "id": "f031",
+  "name": "Лесенка подтягиваний",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 20,
+  "muscles": [
+   "back",
+   "arms",
+   "chest",
+   "full"
+  ],
+  "equipment": [
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "pullup",
+    "dose": "1-2-3-…-10"
+   },
+   {
+    "exercise": "pushup",
+    "dose": "2-4-6-…-20"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 1200
+  },
+  "description": "Восходящая лесенка: на каждой ступени N подтягиваний и 2N отжиманий."
+ },
+ {
+  "id": "f032",
+  "name": "Тысяча шагов",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 1,
+  "durationMin": 25,
+  "muscles": [
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "box"
+  ],
+  "items": [
+   {
+    "exercise": "step_up",
+    "dose": "100"
+   },
+   {
+    "exercise": "walking_lunge",
+    "dose": "100"
+   },
+   {
+    "exercise": "air_squat",
+    "dose": "100"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 1500
+  },
+  "description": "Выполните по порядку."
+ },
+ {
+  "id": "f033",
+  "name": "Синди",
+  "type": "functional",
+  "format": "AMRAP",
+  "level": 2,
+  "durationMin": 20,
+  "muscles": [
+   "back",
+   "arms",
+   "chest",
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "pullup",
+    "dose": "5"
+   },
+   {
+    "exercise": "pushup",
+    "dose": "10"
+   },
+   {
+    "exercise": "air_squat",
+    "dose": "15"
+   }
+  ],
+  "timer": {
+   "mode": "AMRAP",
+   "durationSec": 1200
+  },
+  "description": "Как можно больше раундов за 20 минут."
+ },
+ {
+  "id": "f034",
+  "name": "Нейт",
+  "type": "functional",
+  "format": "AMRAP",
+  "level": 3,
+  "durationMin": 20,
+  "muscles": [
+   "full",
+   "shoulders",
+   "arms"
+  ],
+  "equipment": [
+   "kettlebell",
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "muscle_up",
+    "dose": "2"
+   },
+   {
+    "exercise": "handstand_pushup",
+    "dose": "4"
+   },
+   {
+    "exercise": "kb_swing",
+    "dose": "8, 32/24 кг"
+   }
+  ],
+  "timer": {
+   "mode": "AMRAP",
+   "durationSec": 1200
+  },
+  "description": "Как можно больше раундов за 20 минут."
+ },
+ {
+  "id": "f035",
+  "name": "Гиря 12",
+  "type": "functional",
+  "format": "AMRAP",
+  "level": 1,
+  "durationMin": 12,
+  "muscles": [
+   "full",
+   "legs",
+   "chest",
+   "arms"
+  ],
+  "equipment": [
+   "kettlebell"
+  ],
+  "items": [
+   {
+    "exercise": "kb_swing",
+    "dose": "10, 16/12 кг"
+   },
+   {
+    "exercise": "kb_goblet_squat",
+    "dose": "10"
+   },
+   {
+    "exercise": "pushup",
+    "dose": "10"
+   }
+  ],
+  "timer": {
+   "mode": "AMRAP",
+   "durationSec": 720
+  },
+  "description": "Как можно больше раундов за 12 минут."
+ },
+ {
+  "id": "f036",
+  "name": "Гребля и бёрпи",
+  "type": "functional",
+  "format": "AMRAP",
+  "level": 2,
+  "durationMin": 15,
+  "muscles": [
+   "full"
+  ],
+  "equipment": [
+   "rower"
+  ],
+  "items": [
+   {
+    "exercise": "row_erg",
+    "dose": "250 м"
+   },
+   {
+    "exercise": "burpee",
+    "dose": "10"
+   }
+  ],
+  "timer": {
+   "mode": "AMRAP",
+   "durationSec": 900
+  },
+  "description": "За 15 минут."
+ },
+ {
+  "id": "f037",
+  "name": "Штанга 15",
+  "type": "functional",
+  "format": "AMRAP",
+  "level": 3,
+  "durationMin": 15,
+  "muscles": [
+   "full",
+   "legs",
+   "chest",
+   "arms"
+  ],
+  "equipment": [
+   "barbell"
+  ],
+  "items": [
+   {
+    "exercise": "power_clean",
+    "dose": "5, 70/47 кг"
+   },
+   {
+    "exercise": "front_squat",
+    "dose": "10"
+   },
+   {
+    "exercise": "pushup",
+    "dose": "15"
+   }
+  ],
+  "timer": {
+   "mode": "AMRAP",
+   "durationSec": 900
+  },
+  "description": "За 15 минут."
+ },
+ {
+  "id": "f038",
+  "name": "Без оборудования 10",
+  "type": "functional",
+  "format": "AMRAP",
+  "level": 1,
+  "durationMin": 10,
+  "muscles": [
+   "full",
+   "legs",
+   "abs"
+  ],
+  "equipment": [],
+  "items": [
+   {
+    "exercise": "burpee",
+    "dose": "10"
+   },
+   {
+    "exercise": "air_squat",
+    "dose": "20"
+   },
+   {
+    "exercise": "mountain_climber",
+    "dose": "30"
+   }
+  ],
+  "timer": {
+   "mode": "AMRAP",
+   "durationSec": 600
+  },
+  "description": "За 10 минут."
+ },
+ {
+  "id": "f039",
+  "name": "Гантели 16",
+  "type": "functional",
+  "format": "AMRAP",
+  "level": 2,
+  "durationMin": 16,
+  "muscles": [
+   "full",
+   "legs",
+   "back",
+   "abs"
+  ],
+  "equipment": [
+   "dumbbell"
+  ],
+  "items": [
+   {
+    "exercise": "db_snatch",
+    "dose": "8 (4+4)"
+   },
+   {
+    "exercise": "db_lunge",
+    "dose": "8"
+   },
+   {
+    "exercise": "renegade_row",
+    "dose": "8"
+   }
+  ],
+  "timer": {
+   "mode": "AMRAP",
+   "durationSec": 960
+  },
+  "description": "За 16 минут."
+ },
+ {
+  "id": "f040",
+  "name": "Турник 12",
+  "type": "functional",
+  "format": "AMRAP",
+  "level": 2,
+  "durationMin": 12,
+  "muscles": [
+   "back",
+   "arms",
+   "abs",
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "pullup",
+    "dose": "5"
+   },
+   {
+    "exercise": "hanging_knee_raise",
+    "dose": "10"
+   },
+   {
+    "exercise": "jump_squat",
+    "dose": "15"
+   }
+  ],
+  "timer": {
+   "mode": "AMRAP",
+   "durationSec": 720
+  },
+  "description": "За 12 минут."
+ },
+ {
+  "id": "f041",
+  "name": "Брусья и ящик",
+  "type": "functional",
+  "format": "AMRAP",
+  "level": 2,
+  "durationMin": 14,
+  "muscles": [
+   "chest",
+   "arms",
+   "legs",
+   "full",
+   "abs"
+  ],
+  "equipment": [
+   "box",
+   "dip_bars"
+  ],
+  "items": [
+   {
+    "exercise": "dip",
+    "dose": "10"
+   },
+   {
+    "exercise": "box_jump",
+    "dose": "15"
+   },
+   {
+    "exercise": "situp",
+    "dose": "20"
+   }
+  ],
+  "timer": {
+   "mode": "AMRAP",
+   "durationSec": 840
+  },
+  "description": "За 14 минут."
+ },
+ {
+  "id": "f042",
+  "name": "Семёрка",
+  "type": "functional",
+  "format": "AMRAP",
+  "level": 1,
+  "durationMin": 7,
+  "muscles": [
+   "full",
+   "legs"
+  ],
+  "equipment": [
+   "dumbbell",
+   "kettlebell"
+  ],
+  "items": [
+   {
+    "exercise": "burpee",
+    "dose": "7"
+   },
+   {
+    "exercise": "kb_swing",
+    "dose": "7"
+   },
+   {
+    "exercise": "goblet_squat",
+    "dose": "7"
+   }
+  ],
+  "timer": {
+   "mode": "AMRAP",
+   "durationSec": 420
+  },
+  "description": "За 7 минут."
+ },
+ {
+  "id": "f043",
+  "name": "Гиревой комплекс 20",
+  "type": "functional",
+  "format": "AMRAP",
+  "level": 2,
+  "durationMin": 20,
+  "muscles": [
+   "full",
+   "shoulders",
+   "arms",
+   "legs",
+   "back"
+  ],
+  "equipment": [
+   "kettlebell"
+  ],
+  "items": [
+   {
+    "exercise": "kb_clean",
+    "dose": "10, 2×16/12 кг"
+   },
+   {
+    "exercise": "kb_press",
+    "dose": "10"
+   },
+   {
+    "exercise": "kb_goblet_squat",
+    "dose": "10"
+   },
+   {
+    "exercise": "kb_row",
+    "dose": "10"
+   }
+  ],
+  "timer": {
+   "mode": "AMRAP",
+   "durationSec": 1200
+  },
+  "description": "За 20 минут."
+ },
+ {
+  "id": "f044",
+  "name": "Гантельный трастер 10",
+  "type": "functional",
+  "format": "AMRAP",
+  "level": 2,
+  "durationMin": 10,
+  "muscles": [
+   "full"
+  ],
+  "equipment": [
+   "dumbbell"
+  ],
+  "items": [
+   {
+    "exercise": "db_thruster",
+    "dose": "10, 15/10 кг"
+   },
+   {
+    "exercise": "burpee",
+    "dose": "10"
+   }
+  ],
+  "timer": {
+   "mode": "AMRAP",
+   "durationSec": 600
+  },
+  "description": "За 10 минут."
+ },
+ {
+  "id": "f045",
+  "name": "Лесенка 2-4-6",
+  "type": "functional",
+  "format": "AMRAP",
+  "level": 2,
+  "durationMin": 12,
+  "muscles": [
+   "back",
+   "arms",
+   "chest",
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "pullup",
+    "dose": "2-4-6-…"
+   },
+   {
+    "exercise": "pushup",
+    "dose": "2-4-6-…"
+   },
+   {
+    "exercise": "air_squat",
+    "dose": "2-4-6-…"
+   }
+  ],
+  "timer": {
+   "mode": "AMRAP",
+   "durationSec": 720
+  },
+  "description": "Каждый раунд добавляйте по 2 повторения во всех упражнениях. 12 минут."
+ },
+ {
+  "id": "f046",
+  "name": "Гребля-штанга",
+  "type": "functional",
+  "format": "AMRAP",
+  "level": 3,
+  "durationMin": 18,
+  "muscles": [
+   "full",
+   "abs"
+  ],
+  "equipment": [
+   "barbell",
+   "pullup_bar",
+   "rower"
+  ],
+  "items": [
+   {
+    "exercise": "row_erg",
+    "dose": "300 м"
+   },
+   {
+    "exercise": "thruster",
+    "dose": "10, 43/30 кг"
+   },
+   {
+    "exercise": "toes_to_bar",
+    "dose": "10"
+   }
+  ],
+  "timer": {
+   "mode": "AMRAP",
+   "durationSec": 1080
+  },
+  "description": "За 18 минут."
+ },
+ {
+  "id": "f047",
+  "name": "Пресс 8",
+  "type": "functional",
+  "format": "AMRAP",
+  "level": 1,
+  "durationMin": 8,
+  "muscles": [
+   "abs",
+   "full"
+  ],
+  "equipment": [],
+  "items": [
+   {
+    "exercise": "v_up",
+    "dose": "10"
+   },
+   {
+    "exercise": "russian_twist",
+    "dose": "20"
+   },
+   {
+    "exercise": "flutter_kicks",
+    "dose": "30"
+   }
+  ],
+  "timer": {
+   "mode": "AMRAP",
+   "durationSec": 480
+  },
+  "description": "За 8 минут."
+ },
+ {
+  "id": "f048",
+  "name": "Гиря и ящик",
+  "type": "functional",
+  "format": "AMRAP",
+  "level": 2,
+  "durationMin": 15,
+  "muscles": [
+   "full",
+   "legs",
+   "chest",
+   "arms"
+  ],
+  "equipment": [
+   "box",
+   "kettlebell"
+  ],
+  "items": [
+   {
+    "exercise": "kb_swing",
+    "dose": "15, 24/16 кг"
+   },
+   {
+    "exercise": "box_jump",
+    "dose": "10"
+   },
+   {
+    "exercise": "pushup",
+    "dose": "10"
+   }
+  ],
+  "timer": {
+   "mode": "AMRAP",
+   "durationSec": 900
+  },
+  "description": "За 15 минут."
+ },
+ {
+  "id": "f049",
+  "name": "Становая и подтягивания",
+  "type": "functional",
+  "format": "AMRAP",
+  "level": 3,
+  "durationMin": 15,
+  "muscles": [
+   "back",
+   "legs",
+   "arms",
+   "full"
+  ],
+  "equipment": [
+   "barbell",
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "deadlift",
+    "dose": "5, 100/70 кг"
+   },
+   {
+    "exercise": "pullup",
+    "dose": "10"
+   },
+   {
+    "exercise": "burpee",
+    "dose": "5"
+   }
+  ],
+  "timer": {
+   "mode": "AMRAP",
+   "durationSec": 900
+  },
+  "description": "За 15 минут."
+ },
+ {
+  "id": "f050",
+  "name": "Кардио 20",
+  "type": "functional",
+  "format": "AMRAP",
+  "level": 2,
+  "durationMin": 20,
+  "muscles": [
+   "full",
+   "legs",
+   "abs"
+  ],
+  "equipment": [
+   "rower"
+  ],
+  "items": [
+   {
+    "exercise": "row_erg",
+    "dose": "500 м"
+   },
+   {
+    "exercise": "jump_squat",
+    "dose": "15"
+   },
+   {
+    "exercise": "mountain_climber",
+    "dose": "30"
+   },
+   {
+    "exercise": "jumping_jack",
+    "dose": "40"
+   }
+  ],
+  "timer": {
+   "mode": "AMRAP",
+   "durationSec": 1200
+  },
+  "description": "За 20 минут."
+ },
+ {
+  "id": "f051",
+  "name": "Плечи на выносливость",
+  "type": "functional",
+  "format": "AMRAP",
+  "level": 2,
+  "durationMin": 12,
+  "muscles": [
+   "shoulders",
+   "arms",
+   "chest",
+   "full"
+  ],
+  "equipment": [
+   "bench",
+   "dumbbell"
+  ],
+  "items": [
+   {
+    "exercise": "db_shoulder_press",
+    "dose": "10, 15/10 кг"
+   },
+   {
+    "exercise": "lateral_raise",
+    "dose": "10"
+   },
+   {
+    "exercise": "pushup",
+    "dose": "10"
+   }
+  ],
+  "timer": {
+   "mode": "AMRAP",
+   "durationSec": 720
+  },
+  "description": "За 12 минут."
+ },
+ {
+  "id": "f052",
+  "name": "Ноги AMRAP",
+  "type": "functional",
+  "format": "AMRAP",
+  "level": 2,
+  "durationMin": 15,
+  "muscles": [
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "box",
+   "dumbbell"
+  ],
+  "items": [
+   {
+    "exercise": "goblet_squat",
+    "dose": "15, 24/16 кг"
+   },
+   {
+    "exercise": "walking_lunge",
+    "dose": "20"
+   },
+   {
+    "exercise": "box_jump",
+    "dose": "10"
+   }
+  ],
+  "timer": {
+   "mode": "AMRAP",
+   "durationSec": 900
+  },
+  "description": "За 15 минут."
+ },
+ {
+  "id": "f053",
+  "name": "Синди лёгкая",
+  "type": "functional",
+  "format": "AMRAP",
+  "level": 1,
+  "durationMin": 15,
+  "muscles": [
+   "back",
+   "chest",
+   "arms",
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "inverted_row",
+    "dose": "5"
+   },
+   {
+    "exercise": "pushup",
+    "dose": "10"
+   },
+   {
+    "exercise": "air_squat",
+    "dose": "15"
+   }
+  ],
+  "timer": {
+   "mode": "AMRAP",
+   "durationSec": 900
+  },
+  "description": "Облегчённая Синди: австралийские подтягивания вместо обычных. 15 минут."
+ },
+ {
+  "id": "f054",
+  "name": "Штанга и брусья",
+  "type": "functional",
+  "format": "AMRAP",
+  "level": 3,
+  "durationMin": 15,
+  "muscles": [
+   "full",
+   "chest",
+   "arms",
+   "legs"
+  ],
+  "equipment": [
+   "barbell",
+   "dip_bars"
+  ],
+  "items": [
+   {
+    "exercise": "hang_clean",
+    "dose": "6, 60/40 кг"
+   },
+   {
+    "exercise": "dip",
+    "dose": "8"
+   },
+   {
+    "exercise": "front_squat",
+    "dose": "6"
+   }
+  ],
+  "timer": {
+   "mode": "AMRAP",
+   "durationSec": 900
+  },
+  "description": "За 15 минут."
+ },
+ {
+  "id": "f055",
+  "name": "Рывок гири",
+  "type": "functional",
+  "format": "AMRAP",
+  "level": 2,
+  "durationMin": 10,
+  "muscles": [
+   "full"
+  ],
+  "equipment": [
+   "kettlebell"
+  ],
+  "items": [
+   {
+    "exercise": "kb_snatch",
+    "dose": "10 (5+5), 24/16 кг"
+   },
+   {
+    "exercise": "burpee",
+    "dose": "5"
+   }
+  ],
+  "timer": {
+   "mode": "AMRAP",
+   "durationSec": 600
+  },
+  "description": "За 10 минут."
+ },
+ {
+  "id": "f056",
+  "name": "Челси",
+  "type": "functional",
+  "format": "EMOM",
+  "level": 3,
+  "durationMin": 30,
+  "muscles": [
+   "back",
+   "arms",
+   "chest",
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "pullup",
+    "dose": "5"
+   },
+   {
+    "exercise": "pushup",
+    "dose": "10"
+   },
+   {
+    "exercise": "air_squat",
+    "dose": "15"
+   }
+  ],
+  "timer": {
+   "mode": "EMOM",
+   "intervalSec": 60,
+   "rounds": 30
+  },
+  "description": "Каждую минуту в течение 30 минут выполняйте раунд."
+ },
+ {
+  "id": "f057",
+  "name": "Махи EMOM 10",
+  "type": "functional",
+  "format": "EMOM",
+  "level": 1,
+  "durationMin": 10,
+  "muscles": [
+   "full"
+  ],
+  "equipment": [
+   "kettlebell"
+  ],
+  "items": [
+   {
+    "exercise": "kb_swing",
+    "dose": "15, 24/16 кг"
+   }
+  ],
+  "timer": {
+   "mode": "EMOM",
+   "intervalSec": 60,
+   "rounds": 10
+  },
+  "description": "Каждую минуту 15 махов."
+ },
+ {
+  "id": "f058",
+  "name": "Чередование 12",
+  "type": "functional",
+  "format": "EMOM",
+  "level": 2,
+  "durationMin": 12,
+  "muscles": [
+   "full",
+   "legs"
+  ],
+  "equipment": [
+   "kettlebell"
+  ],
+  "items": [
+   {
+    "exercise": "burpee",
+    "dose": "12 — нечётные минуты"
+   },
+   {
+    "exercise": "kb_goblet_squat",
+    "dose": "15 — чётные минуты"
+   }
+  ],
+  "timer": {
+   "mode": "EMOM",
+   "intervalSec": 60,
+   "rounds": 12
+  },
+  "description": "Нечётные минуты — бёрпи, чётные — гоблет-присед."
+ },
+ {
+  "id": "f059",
+  "name": "Четыре станции",
+  "type": "functional",
+  "format": "EMOM",
+  "level": 2,
+  "durationMin": 16,
+  "muscles": [
+   "full",
+   "abs"
+  ],
+  "equipment": [
+   "kettlebell",
+   "rower"
+  ],
+  "items": [
+   {
+    "exercise": "row_erg",
+    "dose": "12 кал — 1-я мин"
+   },
+   {
+    "exercise": "burpee",
+    "dose": "10 — 2-я мин"
+   },
+   {
+    "exercise": "kb_swing",
+    "dose": "15 — 3-я мин"
+   },
+   {
+    "exercise": "plank",
+    "dose": "отдых/планка — 4-я мин"
+   }
+  ],
+  "timer": {
+   "mode": "EMOM",
+   "intervalSec": 60,
+   "rounds": 16
+  },
+  "description": "Циклы по 4 минуты, 4 круга."
+ },
+ {
+  "id": "f060",
+  "name": "Становая EMOM",
+  "type": "functional",
+  "format": "EMOM",
+  "level": 2,
+  "durationMin": 10,
+  "muscles": [
+   "back",
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "barbell"
+  ],
+  "items": [
+   {
+    "exercise": "deadlift",
+    "dose": "5, 70% от максимума"
+   }
+  ],
+  "timer": {
+   "mode": "EMOM",
+   "intervalSec": 60,
+   "rounds": 10
+  },
+  "description": "Каждую минуту 5 становых."
+ },
+ {
+  "id": "f061",
+  "name": "Трастеры и подтягивания",
+  "type": "functional",
+  "format": "EMOM",
+  "level": 3,
+  "durationMin": 20,
+  "muscles": [
+   "full",
+   "back",
+   "arms"
+  ],
+  "equipment": [
+   "barbell",
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "thruster",
+    "dose": "8 — нечётные, 43/30 кг"
+   },
+   {
+    "exercise": "pullup",
+    "dose": "8 — чётные"
+   }
+  ],
+  "timer": {
+   "mode": "EMOM",
+   "intervalSec": 60,
+   "rounds": 20
+  },
+  "description": "Чередование по минутам."
+ },
+ {
+  "id": "f062",
+  "name": "Каждые 2 минуты",
+  "type": "functional",
+  "format": "EMOM",
+  "level": 2,
+  "durationMin": 12,
+  "muscles": [
+   "legs",
+   "back",
+   "arms",
+   "full"
+  ],
+  "equipment": [
+   "barbell",
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "front_squat",
+    "dose": "5, 60/40 кг"
+   },
+   {
+    "exercise": "pullup",
+    "dose": "5"
+   },
+   {
+    "exercise": "burpee",
+    "dose": "5"
+   }
+  ],
+  "timer": {
+   "mode": "EMOM",
+   "intervalSec": 120,
+   "rounds": 6
+  },
+  "description": "Раунд каждые 2 минуты, 6 раундов."
+ },
+ {
+  "id": "f063",
+  "name": "Гантели EMOM",
+  "type": "functional",
+  "format": "EMOM",
+  "level": 2,
+  "durationMin": 14,
+  "muscles": [
+   "full",
+   "legs"
+  ],
+  "equipment": [
+   "dumbbell"
+  ],
+  "items": [
+   {
+    "exercise": "db_snatch",
+    "dose": "10 (5+5) — нечётные"
+   },
+   {
+    "exercise": "db_lunge",
+    "dose": "12 — чётные"
+   }
+  ],
+  "timer": {
+   "mode": "EMOM",
+   "intervalSec": 60,
+   "rounds": 14
+  },
+  "description": "Чередование по минутам."
+ },
+ {
+  "id": "f064",
+  "name": "Отжимания EMOM",
+  "type": "functional",
+  "format": "EMOM",
+  "level": 1,
+  "durationMin": 10,
+  "muscles": [
+   "chest",
+   "arms",
+   "full"
+  ],
+  "equipment": [],
+  "items": [
+   {
+    "exercise": "pushup",
+    "dose": "10"
+   }
+  ],
+  "timer": {
+   "mode": "EMOM",
+   "intervalSec": 60,
+   "rounds": 10
+  },
+  "description": "Каждую минуту 10 отжиманий."
+ },
+ {
+  "id": "f065",
+  "name": "Турецкий подъём EMOM",
+  "type": "functional",
+  "format": "EMOM",
+  "level": 2,
+  "durationMin": 10,
+  "muscles": [
+   "full"
+  ],
+  "equipment": [
+   "kettlebell"
+  ],
+  "items": [
+   {
+    "exercise": "kb_tgu",
+    "dose": "1 на сторону, 16/12 кг"
+   }
+  ],
+  "timer": {
+   "mode": "EMOM",
+   "intervalSec": 60,
+   "rounds": 10
+  },
+  "description": "Каждую минуту по подъёму на каждую сторону."
+ },
+ {
+  "id": "f066",
+  "name": "Гребля EMOM",
+  "type": "functional",
+  "format": "EMOM",
+  "level": 2,
+  "durationMin": 10,
+  "muscles": [
+   "full"
+  ],
+  "equipment": [
+   "rower"
+  ],
+  "items": [
+   {
+    "exercise": "row_erg",
+    "dose": "15 кал"
+   }
+  ],
+  "timer": {
+   "mode": "EMOM",
+   "intervalSec": 60,
+   "rounds": 10
+  },
+  "description": "Каждую минуту 15 калорий."
+ },
+ {
+  "id": "f067",
+  "name": "Жим и присед",
+  "type": "functional",
+  "format": "EMOM",
+  "level": 2,
+  "durationMin": 16,
+  "muscles": [
+   "shoulders",
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "barbell"
+  ],
+  "items": [
+   {
+    "exercise": "push_press",
+    "dose": "6 — нечётные, 50/35 кг"
+   },
+   {
+    "exercise": "back_squat",
+    "dose": "6 — чётные"
+   }
+  ],
+  "timer": {
+   "mode": "EMOM",
+   "intervalSec": 60,
+   "rounds": 16
+  },
+  "description": "Чередование по минутам."
+ },
+ {
+  "id": "f068",
+  "name": "Пресс EMOM",
+  "type": "functional",
+  "format": "EMOM",
+  "level": 1,
+  "durationMin": 9,
+  "muscles": [
+   "abs",
+   "full"
+  ],
+  "equipment": [
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "situp",
+    "dose": "15 — 1-я"
+   },
+   {
+    "exercise": "hanging_knee_raise",
+    "dose": "10 — 2-я"
+   },
+   {
+    "exercise": "plank",
+    "dose": "40 с — 3-я"
+   }
+  ],
+  "timer": {
+   "mode": "EMOM",
+   "intervalSec": 60,
+   "rounds": 9
+  },
+  "description": "3 круга по 3 минуты."
+ },
+ {
+  "id": "f069",
+  "name": "Взятие EMOM",
+  "type": "functional",
+  "format": "EMOM",
+  "level": 3,
+  "durationMin": 12,
+  "muscles": [
+   "full"
+  ],
+  "equipment": [
+   "barbell"
+  ],
+  "items": [
+   {
+    "exercise": "power_clean",
+    "dose": "3, 75% от максимума"
+   }
+  ],
+  "timer": {
+   "mode": "EMOM",
+   "intervalSec": 60,
+   "rounds": 12
+  },
+  "description": "Каждую минуту 3 взятия."
+ },
+ {
+  "id": "f070",
+  "name": "Ящик EMOM",
+  "type": "functional",
+  "format": "EMOM",
+  "level": 1,
+  "durationMin": 12,
+  "muscles": [
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "box"
+  ],
+  "items": [
+   {
+    "exercise": "box_jump",
+    "dose": "10"
+   },
+   {
+    "exercise": "air_squat",
+    "dose": "10"
+   }
+  ],
+  "timer": {
+   "mode": "EMOM",
+   "intervalSec": 60,
+   "rounds": 12
+  },
+  "description": "Каждую минуту."
+ },
+ {
+  "id": "f071",
+  "name": "Выход силой EMOM",
+  "type": "functional",
+  "format": "EMOM",
+  "level": 3,
+  "durationMin": 10,
+  "muscles": [
+   "full",
+   "chest",
+   "arms"
+  ],
+  "equipment": [
+   "dip_bars",
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "muscle_up",
+    "dose": "2"
+   },
+   {
+    "exercise": "dip",
+    "dose": "6"
+   }
+  ],
+  "timer": {
+   "mode": "EMOM",
+   "intervalSec": 60,
+   "rounds": 10
+  },
+  "description": "Каждую минуту."
+ },
+ {
+  "id": "f072",
+  "name": "Табата бёрпи",
+  "type": "functional",
+  "format": "TABATA",
+  "level": 2,
+  "durationMin": 4,
+  "muscles": [
+   "full"
+  ],
+  "equipment": [],
+  "items": [
+   {
+    "exercise": "burpee",
+    "dose": "максимум за 20 с"
+   }
+  ],
+  "timer": {
+   "mode": "INTERVALS",
+   "workSec": 20,
+   "restSec": 10,
+   "rounds": 8
+  },
+  "description": "8 раундов 20/10."
+ },
+ {
+  "id": "f073",
+  "name": "Табата присед",
+  "type": "functional",
+  "format": "TABATA",
+  "level": 1,
+  "durationMin": 4,
+  "muscles": [
+   "legs",
+   "full"
+  ],
+  "equipment": [],
+  "items": [
+   {
+    "exercise": "air_squat",
+    "dose": "максимум за 20 с"
+   }
+  ],
+  "timer": {
+   "mode": "INTERVALS",
+   "workSec": 20,
+   "restSec": 10,
+   "rounds": 8
+  },
+  "description": "8 раундов 20/10."
+ },
+ {
+  "id": "f074",
+  "name": "Табата пресс",
+  "type": "functional",
+  "format": "TABATA",
+  "level": 1,
+  "durationMin": 4,
+  "muscles": [
+   "abs",
+   "full"
+  ],
+  "equipment": [],
+  "items": [
+   {
+    "exercise": "situp",
+    "dose": "раунды 1, 5"
+   },
+   {
+    "exercise": "v_up",
+    "dose": "раунды 2, 6"
+   },
+   {
+    "exercise": "russian_twist",
+    "dose": "раунды 3, 7"
+   },
+   {
+    "exercise": "mountain_climber",
+    "dose": "раунды 4, 8"
+   }
+  ],
+  "timer": {
+   "mode": "INTERVALS",
+   "workSec": 20,
+   "restSec": 10,
+   "rounds": 8
+  },
+  "description": "8 раундов 20/10, упражнения по кругу."
+ },
+ {
+  "id": "f075",
+  "name": "Табата гиря",
+  "type": "functional",
+  "format": "TABATA",
+  "level": 2,
+  "durationMin": 4,
+  "muscles": [
+   "full"
+  ],
+  "equipment": [
+   "kettlebell"
+  ],
+  "items": [
+   {
+    "exercise": "kb_swing",
+    "dose": "максимум за 20 с, 24/16 кг"
+   }
+  ],
+  "timer": {
+   "mode": "INTERVALS",
+   "workSec": 20,
+   "restSec": 10,
+   "rounds": 8
+  },
+  "description": "8 раундов 20/10."
+ },
+ {
+  "id": "f076",
+  "name": "Табата гребля",
+  "type": "functional",
+  "format": "TABATA",
+  "level": 2,
+  "durationMin": 4,
+  "muscles": [
+   "full"
+  ],
+  "equipment": [
+   "rower"
+  ],
+  "items": [
+   {
+    "exercise": "row_erg",
+    "dose": "максимум метров за 20 с"
+   }
+  ],
+  "timer": {
+   "mode": "INTERVALS",
+   "workSec": 20,
+   "restSec": 10,
+   "rounds": 8
+  },
+  "description": "8 раундов 20/10."
+ },
+ {
+  "id": "f077",
+  "name": "Кардио-микс",
+  "type": "functional",
+  "format": "TABATA",
+  "level": 1,
+  "durationMin": 4,
+  "muscles": [
+   "full",
+   "abs",
+   "legs"
+  ],
+  "equipment": [],
+  "items": [
+   {
+    "exercise": "jumping_jack",
+    "dose": "раунды 1, 5"
+   },
+   {
+    "exercise": "mountain_climber",
+    "dose": "раунды 2, 6"
+   },
+   {
+    "exercise": "jump_squat",
+    "dose": "раунды 3, 7"
+   },
+   {
+    "exercise": "burpee",
+    "dose": "раунды 4, 8"
+   }
+  ],
+  "timer": {
+   "mode": "INTERVALS",
+   "workSec": 20,
+   "restSec": 10,
+   "rounds": 8
+  },
+  "description": "8 раундов 20/10, упражнения по кругу."
+ },
+ {
+  "id": "f078",
+  "name": "Двойная табата",
+  "type": "functional",
+  "format": "TABATA",
+  "level": 2,
+  "durationMin": 8,
+  "muscles": [
+   "chest",
+   "arms",
+   "legs",
+   "full"
+  ],
+  "equipment": [],
+  "items": [
+   {
+    "exercise": "pushup",
+    "dose": "нечётные раунды"
+   },
+   {
+    "exercise": "air_squat",
+    "dose": "чётные раунды"
+   }
+  ],
+  "timer": {
+   "mode": "INTERVALS",
+   "workSec": 20,
+   "restSec": 10,
+   "rounds": 16
+  },
+  "description": "16 раундов 20/10."
+ },
+ {
+  "id": "f079",
+  "name": "Интервалы 40/20 гантели",
+  "type": "functional",
+  "format": "TABATA",
+  "level": 2,
+  "durationMin": 10,
+  "muscles": [
+   "full",
+   "back",
+   "abs",
+   "legs",
+   "shoulders",
+   "arms"
+  ],
+  "equipment": [
+   "bench",
+   "dumbbell"
+  ],
+  "items": [
+   {
+    "exercise": "db_thruster",
+    "dose": "раунды 1, 6"
+   },
+   {
+    "exercise": "renegade_row",
+    "dose": "раунды 2, 7"
+   },
+   {
+    "exercise": "db_lunge",
+    "dose": "раунды 3, 8"
+   },
+   {
+    "exercise": "db_shoulder_press",
+    "dose": "раунды 4, 9"
+   },
+   {
+    "exercise": "burpee",
+    "dose": "раунды 5, 10"
+   }
+  ],
+  "timer": {
+   "mode": "INTERVALS",
+   "workSec": 40,
+   "restSec": 20,
+   "rounds": 10
+  },
+  "description": "10 раундов: 40 с работы, 20 с отдыха."
+ },
+ {
+  "id": "f080",
+  "name": "Интервалы 40/20 без оборудования",
+  "type": "functional",
+  "format": "TABATA",
+  "level": 1,
+  "durationMin": 10,
+  "muscles": [
+   "legs",
+   "chest",
+   "arms",
+   "abs",
+   "full"
+  ],
+  "equipment": [],
+  "items": [
+   {
+    "exercise": "jump_squat",
+    "dose": ""
+   },
+   {
+    "exercise": "pushup",
+    "dose": ""
+   },
+   {
+    "exercise": "mountain_climber",
+    "dose": ""
+   },
+   {
+    "exercise": "walking_lunge",
+    "dose": ""
+   },
+   {
+    "exercise": "plank",
+    "dose": ""
+   }
+  ],
+  "timer": {
+   "mode": "INTERVALS",
+   "workSec": 40,
+   "restSec": 20,
+   "rounds": 10
+  },
+  "description": "10 раундов 40/20, упражнения по кругу дважды."
+ },
+ {
+  "id": "f081",
+  "name": "Гребные интервалы",
+  "type": "functional",
+  "format": "TABATA",
+  "level": 2,
+  "durationMin": 16,
+  "muscles": [
+   "full"
+  ],
+  "equipment": [
+   "rower"
+  ],
+  "items": [
+   {
+    "exercise": "row_erg",
+    "dose": "максимальный темп"
+   }
+  ],
+  "timer": {
+   "mode": "INTERVALS",
+   "workSec": 60,
+   "restSec": 60,
+   "rounds": 8
+  },
+  "description": "8 раундов: 1 мин работы, 1 мин отдыха."
+ },
+ {
+  "id": "f082",
+  "name": "Интервалы 30/30 гиря",
+  "type": "functional",
+  "format": "TABATA",
+  "level": 2,
+  "durationMin": 12,
+  "muscles": [
+   "full",
+   "legs"
+  ],
+  "equipment": [
+   "kettlebell"
+  ],
+  "items": [
+   {
+    "exercise": "kb_swing",
+    "dose": "нечётные"
+   },
+   {
+    "exercise": "kb_goblet_squat",
+    "dose": "чётные"
+   }
+  ],
+  "timer": {
+   "mode": "INTERVALS",
+   "workSec": 30,
+   "restSec": 30,
+   "rounds": 12
+  },
+  "description": "12 раундов 30/30."
+ },
+ {
+  "id": "f083",
+  "name": "Табата турник",
+  "type": "functional",
+  "format": "TABATA",
+  "level": 3,
+  "durationMin": 4,
+  "muscles": [
+   "back",
+   "arms",
+   "abs",
+   "full"
+  ],
+  "equipment": [
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "pullup",
+    "dose": "нечётные"
+   },
+   {
+    "exercise": "hanging_knee_raise",
+    "dose": "чётные"
+   }
+  ],
+  "timer": {
+   "mode": "INTERVALS",
+   "workSec": 20,
+   "restSec": 10,
+   "rounds": 8
+  },
+  "description": "8 раундов 20/10."
+ },
+ {
+  "id": "f084",
+  "name": "Раунды по 2 минуты",
+  "type": "functional",
+  "format": "TABATA",
+  "level": 2,
+  "durationMin": 18,
+  "muscles": [
+   "full",
+   "legs"
+  ],
+  "equipment": [
+   "rower"
+  ],
+  "items": [
+   {
+    "exercise": "row_erg",
+    "dose": "200 м"
+   },
+   {
+    "exercise": "burpee",
+    "dose": "10"
+   },
+   {
+    "exercise": "air_squat",
+    "dose": "максимум до конца раунда"
+   }
+  ],
+  "timer": {
+   "mode": "INTERVALS",
+   "workSec": 120,
+   "restSec": 60,
+   "rounds": 6
+  },
+  "description": "6 раундов: 2 мин работы, 1 мин отдыха."
+ },
+ {
+  "id": "s001",
+  "name": "Грудь: штанга",
+  "type": "strength",
+  "format": "SETS",
+  "level": 2,
+  "durationMin": 40,
+  "muscles": [
+   "chest",
+   "arms",
+   "shoulders"
+  ],
+  "equipment": [
+   "barbell",
+   "bench",
+   "dip_bars",
+   "dumbbell"
+  ],
+  "items": [
+   {
+    "exercise": "bench_press",
+    "sets": 5,
+    "reps": 5
+   },
+   {
+    "exercise": "incline_bench_press",
+    "sets": 4,
+    "reps": 8
+   },
+   {
+    "exercise": "db_fly",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "dip",
+    "sets": 3,
+    "reps": 10
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s002",
+  "name": "Грудь: гантели",
+  "type": "strength",
+  "format": "SETS",
+  "level": 2,
+  "durationMin": 35,
+  "muscles": [
+   "chest",
+   "arms",
+   "shoulders",
+   "back"
+  ],
+  "equipment": [
+   "bench",
+   "dumbbell"
+  ],
+  "items": [
+   {
+    "exercise": "db_bench_press",
+    "sets": 4,
+    "reps": 10
+   },
+   {
+    "exercise": "db_incline_press",
+    "sets": 4,
+    "reps": 10
+   },
+   {
+    "exercise": "db_fly",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "db_pullover",
+    "sets": 3,
+    "reps": 12
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s003",
+  "name": "Грудь: тренажёры",
+  "type": "strength",
+  "format": "SETS",
+  "level": 1,
+  "durationMin": 30,
+  "muscles": [
+   "chest",
+   "shoulders"
+  ],
+  "equipment": [
+   "bench",
+   "machine"
+  ],
+  "items": [
+   {
+    "exercise": "cable_crossover",
+    "sets": 4,
+    "reps": 12
+   },
+   {
+    "exercise": "pec_deck",
+    "sets": 4,
+    "reps": 12
+   },
+   {
+    "exercise": "decline_pushup",
+    "sets": 3,
+    "reps": 15
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s004",
+  "name": "Грудь: без штанги дома",
+  "type": "strength",
+  "format": "SETS",
+  "level": 1,
+  "durationMin": 35,
+  "muscles": [
+   "chest",
+   "arms",
+   "shoulders"
+  ],
+  "equipment": [
+   "bench",
+   "dumbbell"
+  ],
+  "items": [
+   {
+    "exercise": "pushup",
+    "sets": 4,
+    "reps": 20
+   },
+   {
+    "exercise": "decline_pushup",
+    "sets": 4,
+    "reps": 12
+   },
+   {
+    "exercise": "close_pushup",
+    "sets": 3,
+    "reps": 15
+   },
+   {
+    "exercise": "db_floor_press",
+    "sets": 3,
+    "reps": 12
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s005",
+  "name": "Грудь и трицепс",
+  "type": "strength",
+  "format": "SETS",
+  "level": 2,
+  "durationMin": 40,
+  "muscles": [
+   "chest",
+   "arms",
+   "shoulders"
+  ],
+  "equipment": [
+   "barbell",
+   "bench",
+   "dumbbell",
+   "machine"
+  ],
+  "items": [
+   {
+    "exercise": "bench_press",
+    "sets": 4,
+    "reps": 8
+   },
+   {
+    "exercise": "db_incline_press",
+    "sets": 3,
+    "reps": 10
+   },
+   {
+    "exercise": "close_grip_bench",
+    "sets": 3,
+    "reps": 10
+   },
+   {
+    "exercise": "skull_crusher",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "triceps_pushdown",
+    "sets": 3,
+    "reps": 15
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s006",
+  "name": "Грудь: тяжёлый день",
+  "type": "strength",
+  "format": "SETS",
+  "level": 3,
+  "durationMin": 35,
+  "muscles": [
+   "chest",
+   "arms",
+   "shoulders"
+  ],
+  "equipment": [
+   "barbell",
+   "bench",
+   "dip_bars"
+  ],
+  "items": [
+   {
+    "exercise": "bench_press",
+    "sets": 5,
+    "reps": 3
+   },
+   {
+    "exercise": "incline_bench_press",
+    "sets": 4,
+    "reps": 6
+   },
+   {
+    "exercise": "dip",
+    "sets": 4,
+    "reps": 8
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s007",
+  "name": "Грудь и плечи",
+  "type": "strength",
+  "format": "SETS",
+  "level": 2,
+  "durationMin": 35,
+  "muscles": [
+   "chest",
+   "shoulders",
+   "arms"
+  ],
+  "equipment": [
+   "barbell",
+   "bench",
+   "dumbbell"
+  ],
+  "items": [
+   {
+    "exercise": "incline_bench_press",
+    "sets": 4,
+    "reps": 8
+   },
+   {
+    "exercise": "db_bench_press",
+    "sets": 3,
+    "reps": 10
+   },
+   {
+    "exercise": "overhead_press",
+    "sets": 4,
+    "reps": 8
+   },
+   {
+    "exercise": "lateral_raise",
+    "sets": 3,
+    "reps": 15
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s008",
+  "name": "Брусья и отжимания",
+  "type": "strength",
+  "format": "SETS",
+  "level": 1,
+  "durationMin": 30,
+  "muscles": [
+   "chest",
+   "arms"
+  ],
+  "equipment": [
+   "dip_bars"
+  ],
+  "items": [
+   {
+    "exercise": "dip",
+    "sets": 4,
+    "reps": 10
+   },
+   {
+    "exercise": "pushup",
+    "sets": 4,
+    "reps": 20
+   },
+   {
+    "exercise": "close_pushup",
+    "sets": 3,
+    "reps": 15
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s009",
+  "name": "Спина: штанга и турник",
+  "type": "strength",
+  "format": "SETS",
+  "level": 2,
+  "durationMin": 40,
+  "muscles": [
+   "back",
+   "legs",
+   "arms"
+  ],
+  "equipment": [
+   "barbell",
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "deadlift",
+    "sets": 4,
+    "reps": 5
+   },
+   {
+    "exercise": "pullup",
+    "sets": 4,
+    "reps": 8
+   },
+   {
+    "exercise": "barbell_row",
+    "sets": 4,
+    "reps": 8
+   },
+   {
+    "exercise": "barbell_shrug",
+    "sets": 3,
+    "reps": 12
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s010",
+  "name": "Спина: тренажёры",
+  "type": "strength",
+  "format": "SETS",
+  "level": 1,
+  "durationMin": 35,
+  "muscles": [
+   "back",
+   "legs"
+  ],
+  "equipment": [
+   "machine"
+  ],
+  "items": [
+   {
+    "exercise": "lat_pulldown",
+    "sets": 4,
+    "reps": 10
+   },
+   {
+    "exercise": "seated_cable_row",
+    "sets": 4,
+    "reps": 10
+   },
+   {
+    "exercise": "straight_arm_pulldown",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "hyperextension",
+    "sets": 3,
+    "reps": 15
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s011",
+  "name": "Спина: гантели",
+  "type": "strength",
+  "format": "SETS",
+  "level": 1,
+  "durationMin": 35,
+  "muscles": [
+   "back",
+   "chest",
+   "shoulders"
+  ],
+  "equipment": [
+   "bench",
+   "dumbbell"
+  ],
+  "items": [
+   {
+    "exercise": "db_row",
+    "sets": 4,
+    "reps": 10
+   },
+   {
+    "exercise": "db_pullover",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "rear_delt_raise",
+    "sets": 3,
+    "reps": 15
+   },
+   {
+    "exercise": "db_shrug",
+    "sets": 3,
+    "reps": 15
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s012",
+  "name": "Спина и бицепс",
+  "type": "strength",
+  "format": "SETS",
+  "level": 2,
+  "durationMin": 45,
+  "muscles": [
+   "back",
+   "arms"
+  ],
+  "equipment": [
+   "barbell",
+   "dumbbell",
+   "machine",
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "pullup",
+    "sets": 4,
+    "reps": 8
+   },
+   {
+    "exercise": "barbell_row",
+    "sets": 4,
+    "reps": 8
+   },
+   {
+    "exercise": "lat_pulldown",
+    "sets": 3,
+    "reps": 10
+   },
+   {
+    "exercise": "barbell_curl",
+    "sets": 3,
+    "reps": 10
+   },
+   {
+    "exercise": "hammer_curl",
+    "sets": 3,
+    "reps": 12
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s013",
+  "name": "Становая: тяжёлый день",
+  "type": "strength",
+  "format": "SETS",
+  "level": 3,
+  "durationMin": 30,
+  "muscles": [
+   "back",
+   "legs"
+  ],
+  "equipment": [
+   "barbell"
+  ],
+  "items": [
+   {
+    "exercise": "deadlift",
+    "sets": 5,
+    "reps": 3
+   },
+   {
+    "exercise": "barbell_row",
+    "sets": 4,
+    "reps": 6
+   },
+   {
+    "exercise": "good_morning",
+    "sets": 3,
+    "reps": 8
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s014",
+  "name": "Турник: объём",
+  "type": "strength",
+  "format": "SETS",
+  "level": 2,
+  "durationMin": 40,
+  "muscles": [
+   "back",
+   "arms",
+   "abs"
+  ],
+  "equipment": [
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "pullup",
+    "sets": 5,
+    "reps": 6
+   },
+   {
+    "exercise": "chin_up",
+    "sets": 4,
+    "reps": 8
+   },
+   {
+    "exercise": "inverted_row",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "toes_to_bar",
+    "sets": 3,
+    "reps": 10
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s015",
+  "name": "Спина: гири",
+  "type": "strength",
+  "format": "SETS",
+  "level": 2,
+  "durationMin": 35,
+  "muscles": [
+   "full",
+   "back",
+   "legs"
+  ],
+  "equipment": [
+   "kettlebell"
+  ],
+  "items": [
+   {
+    "exercise": "kb_swing",
+    "sets": 4,
+    "reps": 15
+   },
+   {
+    "exercise": "kb_row",
+    "sets": 4,
+    "reps": 10
+   },
+   {
+    "exercise": "kb_single_leg_dl",
+    "sets": 3,
+    "reps": 8
+   },
+   {
+    "exercise": "superman",
+    "sets": 3,
+    "reps": 15
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s016",
+  "name": "Спина и задняя дельта",
+  "type": "strength",
+  "format": "SETS",
+  "level": 1,
+  "durationMin": 35,
+  "muscles": [
+   "back",
+   "shoulders"
+  ],
+  "equipment": [
+   "dumbbell",
+   "machine"
+  ],
+  "items": [
+   {
+    "exercise": "seated_cable_row",
+    "sets": 4,
+    "reps": 12
+   },
+   {
+    "exercise": "face_pull",
+    "sets": 4,
+    "reps": 15
+   },
+   {
+    "exercise": "rear_delt_raise",
+    "sets": 3,
+    "reps": 15
+   },
+   {
+    "exercise": "close_pulldown",
+    "sets": 3,
+    "reps": 12
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s017",
+  "name": "Ноги: присед",
+  "type": "strength",
+  "format": "SETS",
+  "level": 2,
+  "durationMin": 40,
+  "muscles": [
+   "legs",
+   "back"
+  ],
+  "equipment": [
+   "barbell"
+  ],
+  "items": [
+   {
+    "exercise": "back_squat",
+    "sets": 5,
+    "reps": 5
+   },
+   {
+    "exercise": "romanian_deadlift",
+    "sets": 4,
+    "reps": 8
+   },
+   {
+    "exercise": "barbell_lunge",
+    "sets": 3,
+    "reps": 10
+   },
+   {
+    "exercise": "calf_raise",
+    "sets": 4,
+    "reps": 15
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s018",
+  "name": "Ноги: тренажёры",
+  "type": "strength",
+  "format": "SETS",
+  "level": 1,
+  "durationMin": 35,
+  "muscles": [
+   "legs"
+  ],
+  "equipment": [
+   "machine"
+  ],
+  "items": [
+   {
+    "exercise": "leg_press",
+    "sets": 4,
+    "reps": 12
+   },
+   {
+    "exercise": "leg_extension",
+    "sets": 3,
+    "reps": 15
+   },
+   {
+    "exercise": "leg_curl",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "seated_calf_raise",
+    "sets": 4,
+    "reps": 15
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s019",
+  "name": "Ноги: гантели",
+  "type": "strength",
+  "format": "SETS",
+  "level": 2,
+  "durationMin": 35,
+  "muscles": [
+   "legs",
+   "back"
+  ],
+  "equipment": [
+   "bench",
+   "box",
+   "dumbbell"
+  ],
+  "items": [
+   {
+    "exercise": "goblet_squat",
+    "sets": 4,
+    "reps": 12
+   },
+   {
+    "exercise": "split_squat",
+    "sets": 3,
+    "reps": 10
+   },
+   {
+    "exercise": "db_rdl",
+    "sets": 4,
+    "reps": 10
+   },
+   {
+    "exercise": "db_step_up",
+    "sets": 3,
+    "reps": 10
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s020",
+  "name": "Ноги: ягодицы",
+  "type": "strength",
+  "format": "SETS",
+  "level": 2,
+  "durationMin": 35,
+  "muscles": [
+   "legs",
+   "back"
+  ],
+  "equipment": [
+   "barbell",
+   "bench",
+   "dumbbell"
+  ],
+  "items": [
+   {
+    "exercise": "hip_thrust",
+    "sets": 4,
+    "reps": 10
+   },
+   {
+    "exercise": "romanian_deadlift",
+    "sets": 4,
+    "reps": 10
+   },
+   {
+    "exercise": "split_squat",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "glute_bridge",
+    "sets": 3,
+    "reps": 20
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s021",
+  "name": "Ноги: фронтальный присед",
+  "type": "strength",
+  "format": "SETS",
+  "level": 3,
+  "durationMin": 30,
+  "muscles": [
+   "legs",
+   "back"
+  ],
+  "equipment": [
+   "barbell"
+  ],
+  "items": [
+   {
+    "exercise": "front_squat",
+    "sets": 5,
+    "reps": 5
+   },
+   {
+    "exercise": "sumo_deadlift",
+    "sets": 4,
+    "reps": 6
+   },
+   {
+    "exercise": "walking_lunge",
+    "sets": 3,
+    "reps": 20
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s022",
+  "name": "Ноги: тяжёлый день",
+  "type": "strength",
+  "format": "SETS",
+  "level": 3,
+  "durationMin": 30,
+  "muscles": [
+   "legs",
+   "back"
+  ],
+  "equipment": [
+   "barbell",
+   "machine"
+  ],
+  "items": [
+   {
+    "exercise": "back_squat",
+    "sets": 5,
+    "reps": 3
+   },
+   {
+    "exercise": "deadlift",
+    "sets": 3,
+    "reps": 3
+   },
+   {
+    "exercise": "leg_press",
+    "sets": 3,
+    "reps": 10
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s023",
+  "name": "Ноги без железа",
+  "type": "strength",
+  "format": "SETS",
+  "level": 1,
+  "durationMin": 35,
+  "muscles": [
+   "legs"
+  ],
+  "equipment": [],
+  "items": [
+   {
+    "exercise": "air_squat",
+    "sets": 4,
+    "reps": 25
+   },
+   {
+    "exercise": "walking_lunge",
+    "sets": 4,
+    "reps": 20
+   },
+   {
+    "exercise": "jump_squat",
+    "sets": 3,
+    "reps": 15
+   },
+   {
+    "exercise": "glute_bridge",
+    "sets": 3,
+    "reps": 20
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s024",
+  "name": "Ноги: Смит и тренажёры",
+  "type": "strength",
+  "format": "SETS",
+  "level": 1,
+  "durationMin": 35,
+  "muscles": [
+   "legs"
+  ],
+  "equipment": [
+   "machine"
+  ],
+  "items": [
+   {
+    "exercise": "smith_squat",
+    "sets": 4,
+    "reps": 10
+   },
+   {
+    "exercise": "leg_press",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "leg_curl",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "leg_extension",
+    "sets": 3,
+    "reps": 12
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s025",
+  "name": "Ноги: гири",
+  "type": "strength",
+  "format": "SETS",
+  "level": 2,
+  "durationMin": 35,
+  "muscles": [
+   "legs",
+   "full",
+   "back"
+  ],
+  "equipment": [
+   "box",
+   "kettlebell"
+  ],
+  "items": [
+   {
+    "exercise": "kb_goblet_squat",
+    "sets": 4,
+    "reps": 12
+   },
+   {
+    "exercise": "kb_swing",
+    "sets": 4,
+    "reps": 15
+   },
+   {
+    "exercise": "kb_single_leg_dl",
+    "sets": 3,
+    "reps": 8
+   },
+   {
+    "exercise": "step_up",
+    "sets": 3,
+    "reps": 12
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s026",
+  "name": "Плечи: штанга",
+  "type": "strength",
+  "format": "SETS",
+  "level": 2,
+  "durationMin": 40,
+  "muscles": [
+   "shoulders",
+   "arms",
+   "legs",
+   "back"
+  ],
+  "equipment": [
+   "barbell",
+   "dumbbell",
+   "machine"
+  ],
+  "items": [
+   {
+    "exercise": "overhead_press",
+    "sets": 5,
+    "reps": 5
+   },
+   {
+    "exercise": "push_press",
+    "sets": 4,
+    "reps": 6
+   },
+   {
+    "exercise": "lateral_raise",
+    "sets": 3,
+    "reps": 15
+   },
+   {
+    "exercise": "face_pull",
+    "sets": 3,
+    "reps": 15
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s027",
+  "name": "Плечи: гантели",
+  "type": "strength",
+  "format": "SETS",
+  "level": 1,
+  "durationMin": 35,
+  "muscles": [
+   "shoulders",
+   "arms",
+   "back"
+  ],
+  "equipment": [
+   "bench",
+   "dumbbell"
+  ],
+  "items": [
+   {
+    "exercise": "db_shoulder_press",
+    "sets": 4,
+    "reps": 10
+   },
+   {
+    "exercise": "arnold_press",
+    "sets": 3,
+    "reps": 10
+   },
+   {
+    "exercise": "lateral_raise",
+    "sets": 4,
+    "reps": 15
+   },
+   {
+    "exercise": "rear_delt_raise",
+    "sets": 3,
+    "reps": 15
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s028",
+  "name": "Плечи: тренажёры",
+  "type": "strength",
+  "format": "SETS",
+  "level": 1,
+  "durationMin": 30,
+  "muscles": [
+   "shoulders",
+   "back"
+  ],
+  "equipment": [
+   "dumbbell",
+   "machine"
+  ],
+  "items": [
+   {
+    "exercise": "machine_shoulder_press",
+    "sets": 4,
+    "reps": 10
+   },
+   {
+    "exercise": "lateral_raise",
+    "sets": 4,
+    "reps": 15
+   },
+   {
+    "exercise": "face_pull",
+    "sets": 4,
+    "reps": 15
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s029",
+  "name": "Плечи: гири",
+  "type": "strength",
+  "format": "SETS",
+  "level": 2,
+  "durationMin": 35,
+  "muscles": [
+   "shoulders",
+   "arms",
+   "abs",
+   "full"
+  ],
+  "equipment": [
+   "kettlebell"
+  ],
+  "items": [
+   {
+    "exercise": "kb_press",
+    "sets": 4,
+    "reps": 8
+   },
+   {
+    "exercise": "kb_push_press",
+    "sets": 3,
+    "reps": 8
+   },
+   {
+    "exercise": "kb_windmill",
+    "sets": 3,
+    "reps": 6
+   },
+   {
+    "exercise": "kb_high_pull",
+    "sets": 3,
+    "reps": 12
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s030",
+  "name": "Плечи и трапеции",
+  "type": "strength",
+  "format": "SETS",
+  "level": 2,
+  "durationMin": 40,
+  "muscles": [
+   "shoulders",
+   "arms",
+   "back"
+  ],
+  "equipment": [
+   "barbell",
+   "dumbbell"
+  ],
+  "items": [
+   {
+    "exercise": "overhead_press",
+    "sets": 4,
+    "reps": 8
+   },
+   {
+    "exercise": "lateral_raise",
+    "sets": 4,
+    "reps": 12
+   },
+   {
+    "exercise": "front_raise",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "barbell_shrug",
+    "sets": 4,
+    "reps": 12
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s031",
+  "name": "Плечи: стойка на руках",
+  "type": "strength",
+  "format": "SETS",
+  "level": 3,
+  "durationMin": 30,
+  "muscles": [
+   "shoulders",
+   "arms"
+  ],
+  "equipment": [
+   "bench",
+   "dumbbell"
+  ],
+  "items": [
+   {
+    "exercise": "handstand_pushup",
+    "sets": 5,
+    "reps": 5
+   },
+   {
+    "exercise": "db_shoulder_press",
+    "sets": 3,
+    "reps": 10
+   },
+   {
+    "exercise": "lateral_raise",
+    "sets": 3,
+    "reps": 15
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s032",
+  "name": "Руки: штанга",
+  "type": "strength",
+  "format": "SETS",
+  "level": 2,
+  "durationMin": 35,
+  "muscles": [
+   "arms",
+   "chest"
+  ],
+  "equipment": [
+   "barbell",
+   "bench",
+   "dumbbell"
+  ],
+  "items": [
+   {
+    "exercise": "barbell_curl",
+    "sets": 4,
+    "reps": 10
+   },
+   {
+    "exercise": "close_grip_bench",
+    "sets": 4,
+    "reps": 8
+   },
+   {
+    "exercise": "skull_crusher",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "hammer_curl",
+    "sets": 3,
+    "reps": 12
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s033",
+  "name": "Руки: гантели",
+  "type": "strength",
+  "format": "SETS",
+  "level": 1,
+  "durationMin": 35,
+  "muscles": [
+   "arms"
+  ],
+  "equipment": [
+   "bench",
+   "dumbbell"
+  ],
+  "items": [
+   {
+    "exercise": "db_curl",
+    "sets": 4,
+    "reps": 12
+   },
+   {
+    "exercise": "hammer_curl",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "db_overhead_ext",
+    "sets": 4,
+    "reps": 12
+   },
+   {
+    "exercise": "db_kickback",
+    "sets": 3,
+    "reps": 15
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s034",
+  "name": "Руки: блоки",
+  "type": "strength",
+  "format": "SETS",
+  "level": 1,
+  "durationMin": 30,
+  "muscles": [
+   "arms"
+  ],
+  "equipment": [
+   "bench",
+   "dumbbell",
+   "machine"
+  ],
+  "items": [
+   {
+    "exercise": "cable_hammer_curl",
+    "sets": 4,
+    "reps": 12
+   },
+   {
+    "exercise": "triceps_pushdown",
+    "sets": 4,
+    "reps": 15
+   },
+   {
+    "exercise": "concentration_curl",
+    "sets": 3,
+    "reps": 12
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s035",
+  "name": "Бицепс",
+  "type": "strength",
+  "format": "SETS",
+  "level": 1,
+  "durationMin": 35,
+  "muscles": [
+   "arms"
+  ],
+  "equipment": [
+   "barbell",
+   "bench",
+   "dumbbell"
+  ],
+  "items": [
+   {
+    "exercise": "barbell_curl",
+    "sets": 4,
+    "reps": 10
+   },
+   {
+    "exercise": "db_curl",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "hammer_curl",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "concentration_curl",
+    "sets": 3,
+    "reps": 12
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s036",
+  "name": "Трицепс",
+  "type": "strength",
+  "format": "SETS",
+  "level": 1,
+  "durationMin": 35,
+  "muscles": [
+   "arms",
+   "chest"
+  ],
+  "equipment": [
+   "barbell",
+   "bench",
+   "dip_bars",
+   "machine"
+  ],
+  "items": [
+   {
+    "exercise": "close_grip_bench",
+    "sets": 4,
+    "reps": 8
+   },
+   {
+    "exercise": "dip_triceps",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "triceps_pushdown",
+    "sets": 3,
+    "reps": 15
+   },
+   {
+    "exercise": "bench_dip",
+    "sets": 3,
+    "reps": 15
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s037",
+  "name": "Руки: суперсеты",
+  "type": "strength",
+  "format": "SETS",
+  "level": 2,
+  "durationMin": 35,
+  "muscles": [
+   "arms"
+  ],
+  "equipment": [
+   "barbell",
+   "bench",
+   "dumbbell",
+   "machine"
+  ],
+  "items": [
+   {
+    "exercise": "barbell_curl",
+    "sets": 4,
+    "reps": 10
+   },
+   {
+    "exercise": "skull_crusher",
+    "sets": 4,
+    "reps": 10
+   },
+   {
+    "exercise": "hammer_curl",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "triceps_pushdown",
+    "sets": 3,
+    "reps": 12
+   }
+  ],
+  "timer": null,
+  "description": "Выполняйте упражнения парами без отдыха между ними."
+ },
+ {
+  "id": "s038",
+  "name": "Пресс: турник",
+  "type": "strength",
+  "format": "SETS",
+  "level": 2,
+  "durationMin": 25,
+  "muscles": [
+   "abs"
+  ],
+  "equipment": [
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "toes_to_bar",
+    "sets": 4,
+    "reps": 10
+   },
+   {
+    "exercise": "hanging_knee_raise",
+    "sets": 3,
+    "reps": 15
+   },
+   {
+    "exercise": "plank",
+    "sets": 3,
+    "reps": 1
+   }
+  ],
+  "timer": null,
+  "description": "Планка — по 1 минуте."
+ },
+ {
+  "id": "s039",
+  "name": "Пресс на полу",
+  "type": "strength",
+  "format": "SETS",
+  "level": 1,
+  "durationMin": 35,
+  "muscles": [
+   "abs"
+  ],
+  "equipment": [],
+  "items": [
+   {
+    "exercise": "crunch",
+    "sets": 4,
+    "reps": 20
+   },
+   {
+    "exercise": "bicycle_crunch",
+    "sets": 3,
+    "reps": 20
+   },
+   {
+    "exercise": "flutter_kicks",
+    "sets": 3,
+    "reps": 30
+   },
+   {
+    "exercise": "side_plank",
+    "sets": 3,
+    "reps": 1
+   }
+  ],
+  "timer": null,
+  "description": "Боковая планка — по 30 с на каждую сторону."
+ },
+ {
+  "id": "s040",
+  "name": "Пресс: блок и гиря",
+  "type": "strength",
+  "format": "SETS",
+  "level": 2,
+  "durationMin": 25,
+  "muscles": [
+   "abs",
+   "shoulders"
+  ],
+  "equipment": [
+   "kettlebell",
+   "machine"
+  ],
+  "items": [
+   {
+    "exercise": "cable_crunch",
+    "sets": 4,
+    "reps": 15
+   },
+   {
+    "exercise": "kb_windmill",
+    "sets": 3,
+    "reps": 6
+   },
+   {
+    "exercise": "russian_twist",
+    "sets": 3,
+    "reps": 20
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s041",
+  "name": "Пресс и поясница",
+  "type": "strength",
+  "format": "SETS",
+  "level": 1,
+  "durationMin": 30,
+  "muscles": [
+   "abs",
+   "back",
+   "legs"
+  ],
+  "equipment": [
+   "machine"
+  ],
+  "items": [
+   {
+    "exercise": "situp",
+    "sets": 3,
+    "reps": 20
+   },
+   {
+    "exercise": "superman",
+    "sets": 3,
+    "reps": 15
+   },
+   {
+    "exercise": "hyperextension",
+    "sets": 3,
+    "reps": 15
+   },
+   {
+    "exercise": "plank",
+    "sets": 3,
+    "reps": 1
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s042",
+  "name": "Всё тело: база",
+  "type": "strength",
+  "format": "SETS",
+  "level": 2,
+  "durationMin": 40,
+  "muscles": [
+   "legs",
+   "chest",
+   "arms",
+   "back",
+   "shoulders"
+  ],
+  "equipment": [
+   "barbell",
+   "bench"
+  ],
+  "items": [
+   {
+    "exercise": "back_squat",
+    "sets": 4,
+    "reps": 6
+   },
+   {
+    "exercise": "bench_press",
+    "sets": 4,
+    "reps": 6
+   },
+   {
+    "exercise": "barbell_row",
+    "sets": 4,
+    "reps": 8
+   },
+   {
+    "exercise": "overhead_press",
+    "sets": 3,
+    "reps": 8
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s043",
+  "name": "Всё тело: гантели",
+  "type": "strength",
+  "format": "SETS",
+  "level": 1,
+  "durationMin": 40,
+  "muscles": [
+   "legs",
+   "chest",
+   "arms",
+   "back",
+   "shoulders"
+  ],
+  "equipment": [
+   "bench",
+   "dumbbell"
+  ],
+  "items": [
+   {
+    "exercise": "goblet_squat",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "db_bench_press",
+    "sets": 3,
+    "reps": 10
+   },
+   {
+    "exercise": "db_row",
+    "sets": 3,
+    "reps": 10
+   },
+   {
+    "exercise": "db_shoulder_press",
+    "sets": 3,
+    "reps": 10
+   },
+   {
+    "exercise": "db_rdl",
+    "sets": 3,
+    "reps": 10
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s044",
+  "name": "Всё тело: гири",
+  "type": "strength",
+  "format": "SETS",
+  "level": 2,
+  "durationMin": 50,
+  "muscles": [
+   "full",
+   "shoulders",
+   "arms",
+   "legs",
+   "back"
+  ],
+  "equipment": [
+   "kettlebell"
+  ],
+  "items": [
+   {
+    "exercise": "kb_clean",
+    "sets": 4,
+    "reps": 8
+   },
+   {
+    "exercise": "kb_press",
+    "sets": 4,
+    "reps": 8
+   },
+   {
+    "exercise": "kb_goblet_squat",
+    "sets": 4,
+    "reps": 10
+   },
+   {
+    "exercise": "kb_row",
+    "sets": 4,
+    "reps": 10
+   },
+   {
+    "exercise": "kb_tgu",
+    "sets": 3,
+    "reps": 2
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s045",
+  "name": "Всё тело: тренажёры",
+  "type": "strength",
+  "format": "SETS",
+  "level": 1,
+  "durationMin": 40,
+  "muscles": [
+   "legs",
+   "back",
+   "shoulders",
+   "abs"
+  ],
+  "equipment": [
+   "machine"
+  ],
+  "items": [
+   {
+    "exercise": "leg_press",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "lat_pulldown",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "machine_shoulder_press",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "seated_cable_row",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "cable_crunch",
+    "sets": 3,
+    "reps": 15
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s046",
+  "name": "Всё тело без оборудования",
+  "type": "strength",
+  "format": "SETS",
+  "level": 1,
+  "durationMin": 45,
+  "muscles": [
+   "chest",
+   "arms",
+   "legs",
+   "back",
+   "abs"
+  ],
+  "equipment": [],
+  "items": [
+   {
+    "exercise": "pushup",
+    "sets": 4,
+    "reps": 15
+   },
+   {
+    "exercise": "air_squat",
+    "sets": 4,
+    "reps": 20
+   },
+   {
+    "exercise": "superman",
+    "sets": 3,
+    "reps": 15
+   },
+   {
+    "exercise": "walking_lunge",
+    "sets": 3,
+    "reps": 20
+   },
+   {
+    "exercise": "plank",
+    "sets": 3,
+    "reps": 1
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s047",
+  "name": "Тяжёлая атлетика: техника",
+  "type": "strength",
+  "format": "SETS",
+  "level": 3,
+  "durationMin": 45,
+  "muscles": [
+   "full",
+   "shoulders",
+   "legs"
+  ],
+  "equipment": [
+   "barbell"
+  ],
+  "items": [
+   {
+    "exercise": "power_clean",
+    "sets": 5,
+    "reps": 3
+   },
+   {
+    "exercise": "power_snatch",
+    "sets": 5,
+    "reps": 3
+   },
+   {
+    "exercise": "push_press",
+    "sets": 4,
+    "reps": 5
+   },
+   {
+    "exercise": "front_squat",
+    "sets": 3,
+    "reps": 5
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s048",
+  "name": "Толчок и рывок",
+  "type": "strength",
+  "format": "SETS",
+  "level": 3,
+  "durationMin": 40,
+  "muscles": [
+   "full",
+   "legs"
+  ],
+  "equipment": [
+   "barbell"
+  ],
+  "items": [
+   {
+    "exercise": "clean_and_jerk",
+    "sets": 6,
+    "reps": 2
+   },
+   {
+    "exercise": "power_snatch",
+    "sets": 6,
+    "reps": 2
+   },
+   {
+    "exercise": "back_squat",
+    "sets": 3,
+    "reps": 5
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s049",
+  "name": "Верх тела",
+  "type": "strength",
+  "format": "SETS",
+  "level": 2,
+  "durationMin": 45,
+  "muscles": [
+   "chest",
+   "arms",
+   "back",
+   "shoulders"
+  ],
+  "equipment": [
+   "barbell",
+   "bench",
+   "dip_bars",
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "bench_press",
+    "sets": 4,
+    "reps": 8
+   },
+   {
+    "exercise": "pullup",
+    "sets": 4,
+    "reps": 8
+   },
+   {
+    "exercise": "overhead_press",
+    "sets": 3,
+    "reps": 8
+   },
+   {
+    "exercise": "barbell_row",
+    "sets": 3,
+    "reps": 10
+   },
+   {
+    "exercise": "dip",
+    "sets": 3,
+    "reps": 10
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s050",
+  "name": "Низ тела",
+  "type": "strength",
+  "format": "SETS",
+  "level": 2,
+  "durationMin": 40,
+  "muscles": [
+   "legs",
+   "back"
+  ],
+  "equipment": [
+   "barbell"
+  ],
+  "items": [
+   {
+    "exercise": "back_squat",
+    "sets": 4,
+    "reps": 8
+   },
+   {
+    "exercise": "romanian_deadlift",
+    "sets": 4,
+    "reps": 8
+   },
+   {
+    "exercise": "walking_lunge",
+    "sets": 3,
+    "reps": 20
+   },
+   {
+    "exercise": "calf_raise",
+    "sets": 4,
+    "reps": 15
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s051",
+  "name": "Тяни-толкай: толкай",
+  "type": "strength",
+  "format": "SETS",
+  "level": 2,
+  "durationMin": 45,
+  "muscles": [
+   "chest",
+   "arms",
+   "shoulders"
+  ],
+  "equipment": [
+   "barbell",
+   "bench",
+   "dumbbell",
+   "machine"
+  ],
+  "items": [
+   {
+    "exercise": "bench_press",
+    "sets": 4,
+    "reps": 8
+   },
+   {
+    "exercise": "overhead_press",
+    "sets": 4,
+    "reps": 8
+   },
+   {
+    "exercise": "db_incline_press",
+    "sets": 3,
+    "reps": 10
+   },
+   {
+    "exercise": "lateral_raise",
+    "sets": 3,
+    "reps": 15
+   },
+   {
+    "exercise": "triceps_pushdown",
+    "sets": 3,
+    "reps": 12
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s052",
+  "name": "Тяни-толкай: тяни",
+  "type": "strength",
+  "format": "SETS",
+  "level": 2,
+  "durationMin": 40,
+  "muscles": [
+   "back",
+   "legs",
+   "arms",
+   "shoulders"
+  ],
+  "equipment": [
+   "barbell",
+   "machine",
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "deadlift",
+    "sets": 3,
+    "reps": 5
+   },
+   {
+    "exercise": "pullup",
+    "sets": 4,
+    "reps": 8
+   },
+   {
+    "exercise": "seated_cable_row",
+    "sets": 3,
+    "reps": 10
+   },
+   {
+    "exercise": "face_pull",
+    "sets": 3,
+    "reps": 15
+   },
+   {
+    "exercise": "barbell_curl",
+    "sets": 3,
+    "reps": 10
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s053",
+  "name": "Силовая выносливость",
+  "type": "strength",
+  "format": "SETS",
+  "level": 2,
+  "durationMin": 30,
+  "muscles": [
+   "legs",
+   "chest",
+   "arms",
+   "back",
+   "shoulders"
+  ],
+  "equipment": [
+   "barbell",
+   "bench",
+   "dumbbell",
+   "machine"
+  ],
+  "items": [
+   {
+    "exercise": "back_squat",
+    "sets": 3,
+    "reps": 15
+   },
+   {
+    "exercise": "bench_press",
+    "sets": 3,
+    "reps": 15
+   },
+   {
+    "exercise": "lat_pulldown",
+    "sets": 3,
+    "reps": 15
+   },
+   {
+    "exercise": "db_shoulder_press",
+    "sets": 3,
+    "reps": 15
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s054",
+  "name": "Пять на пять",
+  "type": "strength",
+  "format": "SETS",
+  "level": 3,
+  "durationMin": 40,
+  "muscles": [
+   "legs",
+   "chest",
+   "arms",
+   "back"
+  ],
+  "equipment": [
+   "barbell",
+   "bench"
+  ],
+  "items": [
+   {
+    "exercise": "back_squat",
+    "sets": 5,
+    "reps": 5
+   },
+   {
+    "exercise": "bench_press",
+    "sets": 5,
+    "reps": 5
+   },
+   {
+    "exercise": "barbell_row",
+    "sets": 5,
+    "reps": 5
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s055",
+  "name": "Гантели: комплекс на всё тело",
+  "type": "strength",
+  "format": "SETS",
+  "level": 2,
+  "durationMin": 35,
+  "muscles": [
+   "full",
+   "back",
+   "abs",
+   "legs"
+  ],
+  "equipment": [
+   "dumbbell"
+  ],
+  "items": [
+   {
+    "exercise": "db_thruster",
+    "sets": 4,
+    "reps": 10
+   },
+   {
+    "exercise": "renegade_row",
+    "sets": 4,
+    "reps": 10
+   },
+   {
+    "exercise": "db_lunge",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "db_clean",
+    "sets": 3,
+    "reps": 10
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s056",
+  "name": "Фермер и тяги",
+  "type": "strength",
+  "format": "SETS",
+  "level": 2,
+  "durationMin": 30,
+  "muscles": [
+   "back",
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "barbell",
+   "dumbbell"
+  ],
+  "items": [
+   {
+    "exercise": "deadlift",
+    "sets": 4,
+    "reps": 6
+   },
+   {
+    "exercise": "farmers_walk",
+    "sets": 4,
+    "reps": 1
+   },
+   {
+    "exercise": "db_shrug",
+    "sets": 3,
+    "reps": 15
+   }
+  ],
+  "timer": null,
+  "description": "Прогулка фермера — 40 м за подход."
+ },
+ {
+  "id": "s057",
+  "name": "Турник и брусья: сила",
+  "type": "strength",
+  "format": "SETS",
+  "level": 2,
+  "durationMin": 40,
+  "muscles": [
+   "back",
+   "arms",
+   "chest",
+   "abs"
+  ],
+  "equipment": [
+   "dip_bars",
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "pullup",
+    "sets": 5,
+    "reps": 5
+   },
+   {
+    "exercise": "dip",
+    "sets": 5,
+    "reps": 8
+   },
+   {
+    "exercise": "chin_up",
+    "sets": 3,
+    "reps": 8
+   },
+   {
+    "exercise": "toes_to_bar",
+    "sets": 3,
+    "reps": 10
+   }
+  ],
+  "timer": null,
+  "description": ""
+ },
+ {
+  "id": "s058",
+  "name": "Лёгкое восстановление",
+  "type": "strength",
+  "format": "SETS",
+  "level": 1,
+  "durationMin": 40,
+  "muscles": [
+   "legs",
+   "chest",
+   "arms",
+   "back",
+   "abs"
+  ],
+  "equipment": [
+   "dumbbell",
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "goblet_squat",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "pushup",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "inverted_row",
+    "sets": 3,
+    "reps": 12
+   },
+   {
+    "exercise": "glute_bridge",
+    "sets": 3,
+    "reps": 15
+   },
+   {
+    "exercise": "plank",
+    "sets": 3,
+    "reps": 1
+   }
+  ],
+  "timer": null,
+  "description": ""
+ }
+]

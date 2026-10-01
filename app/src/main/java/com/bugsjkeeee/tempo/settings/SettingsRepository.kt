@@ -4,7 +4,9 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.doublePreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.bugsjkeeee.tempo.sound.SoundCatalog
@@ -21,6 +23,7 @@ data class AppSettings(
     val soundMode: SoundMode = SoundMode.SIGNALS,
     val sounds: Map<SoundEvent, String> = SoundCatalog.defaults,
     val prepSec: Int = 10,
+    val targetWeight: Double? = null,
 )
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
@@ -29,6 +32,8 @@ class SettingsRepository(private val context: Context) {
     private object Keys {
         val soundMode = stringPreferencesKey("sound_mode")
         val prepSec = intPreferencesKey("prep_sec")
+        val targetWeight = doublePreferencesKey("target_weight")
+        val lastAutoBackup = longPreferencesKey("last_auto_backup")
         fun sound(event: SoundEvent) = stringPreferencesKey("sound_${event.name.lowercase()}")
 
         val lastMode = stringPreferencesKey("timer_last_mode")
@@ -47,6 +52,7 @@ class SettingsRepository(private val context: Context) {
             soundMode = p[Keys.soundMode]?.let { runCatching { SoundMode.valueOf(it) }.getOrNull() } ?: SoundMode.SIGNALS,
             sounds = SoundEvent.entries.associateWith { SoundCatalog.resolve(it, p[Keys.sound(it)]).key },
             prepSec = p[Keys.prepSec] ?: 10,
+            targetWeight = p[Keys.targetWeight],
         )
     }
 
@@ -73,6 +79,21 @@ class SettingsRepository(private val context: Context) {
     suspend fun setSoundMode(mode: SoundMode) = context.dataStore.edit { it[Keys.soundMode] = mode.name }
     suspend fun setSound(event: SoundEvent, key: String) = context.dataStore.edit { it[Keys.sound(event)] = key }
     suspend fun setPrepSec(sec: Int) = context.dataStore.edit { it[Keys.prepSec] = sec }
+    suspend fun setTargetWeight(weight: Double?) = context.dataStore.edit {
+        if (weight == null) it.remove(Keys.targetWeight) else it[Keys.targetWeight] = weight
+    }
+
+    suspend fun lastAutoBackup(): Long = context.dataStore.data.first()[Keys.lastAutoBackup] ?: 0L
+    suspend fun setLastAutoBackup(time: Long) = context.dataStore.edit { it[Keys.lastAutoBackup] = time }
+
+    /** Восстановление настроек из резервной копии. */
+    suspend fun restore(settings: AppSettings) = context.dataStore.edit { p ->
+        p[Keys.soundMode] = settings.soundMode.name
+        p[Keys.prepSec] = settings.prepSec
+        settings.sounds.forEach { (event, key) -> p[Keys.sound(event)] = key }
+        if (settings.targetWeight == null) p.remove(Keys.targetWeight) else p[Keys.targetWeight] = settings.targetWeight
+    }
+
     suspend fun setLastMode(mode: TimerMode) = context.dataStore.edit { it[Keys.lastMode] = mode.name }
 
     suspend fun saveTimerSettings(s: TimerSettings) = context.dataStore.edit { p ->

@@ -42,6 +42,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -76,7 +77,7 @@ import com.bugsjkeeee.tempo.ui.theme.LocalTempoStyle
 import com.bugsjkeeee.tempo.ui.theme.PhaseColors
 
 @Composable
-fun TimerRunScreen(onClose: () -> Unit) {
+fun TimerRunScreen(onClose: () -> Unit, onSaveToJournal: () -> Unit) {
     val controller = (LocalContext.current.applicationContext as TempoApp).timerController
     val snapshot by controller.state.collectAsStateWithLifecycle()
     val s = snapshot
@@ -86,7 +87,7 @@ fun TimerRunScreen(onClose: () -> Unit) {
     }
     if (s.status == RunStatus.FINISHED) {
         BackHandler { controller.dismiss(); onClose() }
-        ResultView(s, onClose = { controller.dismiss(); onClose() })
+        ResultView(s, onClose = { controller.dismiss(); onClose() }, onSave = onSaveToJournal)
     } else {
         KeepScreenOn()
         // «Назад» сворачивает экран, таймер продолжает работать.
@@ -310,7 +311,7 @@ private fun Controls(s: TimerSnapshot, controller: TimerController, content: Col
 }
 
 @Composable
-private fun ResultView(s: TimerSnapshot, onClose: () -> Unit) {
+private fun ResultView(s: TimerSnapshot, onClose: () -> Unit, onSave: () -> Unit) {
     val style = LocalTempoStyle.current
     Column(
         Modifier
@@ -324,6 +325,14 @@ private fun ResultView(s: TimerSnapshot, onClose: () -> Unit) {
         Spacer(Modifier.height(16.dp))
         TileLabel("Итог · ${s.mode.title}")
         Text("Готово", style = MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.onBackground)
+        s.workout?.let { Text(it.name, style = MaterialTheme.typography.titleMedium, color = style.muted) }
+        if (rememberNewRecord(s)) {
+            Text(
+                "Новый рекорд!",
+                style = MaterialTheme.typography.headlineSmall,
+                color = MaterialTheme.colorScheme.primary,
+            )
+        }
 
         val big = Digits.copy(fontSize = 40.sp)
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -362,10 +371,9 @@ private fun ResultView(s: TimerSnapshot, onClose: () -> Unit) {
         }
 
         Spacer(Modifier.height(8.dp))
-        OutlinedButton(onClick = {}, enabled = false, modifier = Modifier.fillMaxWidth().height(56.dp), shape = style.tileShape) {
+        OutlinedButton(onClick = onSave, modifier = Modifier.fillMaxWidth().height(56.dp), shape = style.tileShape) {
             Text("Записать в журнал")
         }
-        Text("Журнал появится на этапе 3.", style = MaterialTheme.typography.bodySmall, color = style.muted)
         Button(onClick = onClose, modifier = Modifier.fillMaxWidth().height(56.dp), shape = style.tileShape) {
             Text("Закрыть", style = MaterialTheme.typography.titleMedium)
         }
@@ -375,3 +383,19 @@ private fun ResultView(s: TimerSnapshot, onClose: () -> Unit) {
 /** Режимы, где отмечаются круги или раунды со временем каждого. */
 private val TimerMode.hasSplits get() = this == TimerMode.STOPWATCH || this == TimerMode.AMRAP
 private val TimerMode.splitTitle get() = if (this == TimerMode.AMRAP) "Раунд" else "Круг"
+
+/** Лучше ли результат комплекса, чем прежние попытки в журнале (For Time — время, AMRAP — раунды). */
+@Composable
+private fun rememberNewRecord(s: TimerSnapshot): Boolean {
+    val app = LocalContext.current.applicationContext as TempoApp
+    val record by produceState(false, s.workout?.id) {
+        val ref = s.workout ?: return@produceState
+        val previous = app.journalRepository.all().filter { it.workoutId == ref.id }
+        value = when (s.mode) {
+            TimerMode.FOR_TIME -> previous.mapNotNull { it.resultTimeMs }.minOrNull()?.let { s.totalElapsedMs < it } ?: false
+            TimerMode.AMRAP -> previous.mapNotNull { it.resultRounds }.maxOrNull()?.let { s.laps.size > it } ?: false
+            else -> false
+        }
+    }
+    return record
+}
