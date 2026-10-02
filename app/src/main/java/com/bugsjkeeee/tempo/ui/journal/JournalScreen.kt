@@ -1,5 +1,9 @@
 package com.bugsjkeeee.tempo.ui.journal
 
+import androidx.compose.foundation.layout.size
+import androidx.compose.ui.graphics.Color
+import androidx.compose.foundation.shape.RoundedCornerShape
+import java.time.DayOfWeek
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.AlertDialog
 import androidx.compose.runtime.rememberCoroutineScope
@@ -113,7 +117,6 @@ class JournalViewModel(private val app: TempoApp) : ViewModel() {
 fun JournalEntry.resultText(): String = when {
     format == WorkoutFormat.FOR_TIME && resultTimeMs != null -> "Время ${formatPrecise(resultTimeMs)}"
     format == WorkoutFormat.AMRAP && resultRounds != null -> plural(resultRounds, "раунд", "раунда", "раундов")
-    volume > 0 -> "Тоннаж ${formatWeight(volume)} кг"
     sets.isNotEmpty() -> plural(sets.size, "подход", "подхода", "подходов")
     else -> ""
 }
@@ -161,6 +164,46 @@ fun JournalScreen(
             },
             dismissButton = { TextButton(onClick = { toDelete = null }) { Text("Отмена") } },
         )
+    }
+}
+
+private const val HeatmapWeeks = 20
+
+/** Регулярность как на GitHub: столбец — неделя, клетка — день, цвет — число тренировок. */
+@Composable
+private fun Heatmap(byDay: Map<LocalDate, List<JournalEntry>>) {
+    val style = LocalTempoStyle.current
+    val accent = MaterialTheme.colorScheme.primary
+    val today = LocalDate.now()
+    val start = today.with(DayOfWeek.MONDAY).minusWeeks((HeatmapWeeks - 1).toLong())
+    fun color(count: Int) = when {
+        count < 0 -> Color.Transparent
+        count == 0 -> style.segmentIdle
+        count == 1 -> accent.copy(alpha = 0.45f)
+        count == 2 -> accent.copy(alpha = 0.75f)
+        else -> accent
+    }
+    val cell = RoundedCornerShape(3.dp)
+    Tile(Modifier.fillMaxWidth()) {
+        TileLabel("Последние $HeatmapWeeks недель", TempoIcons.Calendar)
+        Spacer(Modifier.height(8.dp))
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(3.dp)) {
+            repeat(HeatmapWeeks) { w ->
+                Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) {
+                    repeat(7) { d ->
+                        val day = start.plusWeeks(w.toLong()).plusDays(d.toLong())
+                        val count = if (day.isAfter(today)) -1 else byDay[day]?.size ?: 0
+                        Box(Modifier.fillMaxWidth().aspectRatio(1f).background(color(count), cell))
+                    }
+                }
+            }
+        }
+        Spacer(Modifier.height(8.dp))
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+            Text("Меньше", style = MaterialTheme.typography.labelSmall, color = style.muted)
+            listOf(0, 1, 2, 3).forEach { Box(Modifier.size(12.dp).background(color(it), cell)) }
+            Text("Больше", style = MaterialTheme.typography.labelSmall, color = style.muted)
+        }
     }
 }
 
@@ -253,6 +296,7 @@ private fun CalendarTab(state: JournalState, padding: PaddingValues, onEntry: (L
                 StatTile("${state.regularity.streakWeeks}", "недель подряд", Modifier.weight(1f))
             }
         }
+        item { Heatmap(byDay) }
         item {
             Tile(Modifier.fillMaxWidth()) {
                 Row(verticalAlignment = Alignment.CenterVertically) {

@@ -130,6 +130,11 @@ data class Workout(
     val description: String = "",
     /** Тренировка добавлена пользователем. */
     val custom: Boolean = false,
+    /** Программа из нескольких дней (сплит): id, название, номер дня и число дней. */
+    val program: String? = null,
+    val programTitle: String? = null,
+    val programDay: Int? = null,
+    val programDays: Int? = null,
 )
 
 /** Ссылка на тренировку, запущенную в таймере, — чтобы записать результат в журнал. */

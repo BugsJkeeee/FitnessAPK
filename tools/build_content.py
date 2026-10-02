@@ -16,7 +16,7 @@ import sys
 ROOT = os.path.join(os.path.dirname(__file__), "..")
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "content"))
 from exercises import EXERCISES  # noqa: E402
-from workouts import CARDIO, FUNCTIONAL, STRENGTH  # noqa: E402
+from workouts import CARDIO, FUNCTIONAL, PROGRAMS, STRENGTH  # noqa: E402
 
 MUSCLES = {"chest": "Грудь", "back": "Спина", "legs": "Ноги", "shoulders": "Плечи", "arms": "Руки", "abs": "Пресс", "full": "Всё тело"}
 EQUIPMENT = {
@@ -90,10 +90,16 @@ def build(source_db):
             else:
                 duration = int(math.ceil((t["work"] + t["rest"]) * t["rounds"] / 60))
                 timer = dict(mode="INTERVALS", workSec=t["work"], restSec=t["rest"], rounds=t["rounds"])
-        workouts.append(dict(
+        item = dict(
             id=f"{prefix}{n:03d}", name=w["name"], type=kind, format=fmt, level=w["level"], durationMin=duration,
             muscles=muscles, equipment=equipment, items=items_json, timer=timer, description=w["desc"],
-        ))
+        )
+        program = w.get("program")
+        if program:
+            day = sum(1 for x in workouts if x.get("program") == program) + 1
+            item.update(program=program, programTitle=PROGRAMS[program], programDay=day,
+                        programDays=sum(1 for x in STRENGTH if x.get("program") == program))
+        workouts.append(item)
 
     for n, w in enumerate(FUNCTIONAL, 1):
         add("f", n, w)

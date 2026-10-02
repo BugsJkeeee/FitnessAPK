@@ -1,7 +1,9 @@
 package com.bugsjkeeee.tempo
 
 import android.graphics.Color
+import android.content.Intent
 import android.os.Bundle
+import androidx.compose.runtime.mutableStateOf
 import androidx.activity.SystemBarStyle
 import androidx.compose.runtime.LaunchedEffect
 import androidx.activity.ComponentActivity
@@ -16,8 +18,12 @@ import com.bugsjkeeee.tempo.ui.TempoNavHost
 import com.bugsjkeeee.tempo.ui.theme.TempoTheme
 
 class MainActivity : ComponentActivity() {
+    /** Действие из виджета; сбрасывается после обработки. */
+    private val widgetAction = mutableStateOf<String?>(null)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (savedInstanceState == null) widgetAction.value = intent?.getStringExtra(TempoWidget.EXTRA_ACTION)
         enableEdgeToEdge()
         val settings = (application as TempoApp).settingsRepository.settings
         setContent {
@@ -33,8 +39,14 @@ class MainActivity : ComponentActivity() {
                 enableEdgeToEdge(statusBarStyle = bars, navigationBarStyle = bars)
             }
             TempoTheme(darkTheme = dark) {
-                TempoNavHost()
+                TempoNavHost(widgetAction = widgetAction.value, onWidgetActionHandled = { widgetAction.value = null })
             }
         }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        intent.getStringExtra(TempoWidget.EXTRA_ACTION)?.let { widgetAction.value = it }
     }
 }

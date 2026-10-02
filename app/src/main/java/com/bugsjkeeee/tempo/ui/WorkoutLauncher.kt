@@ -1,5 +1,7 @@
 package com.bugsjkeeee.tempo.ui
 
+import com.bugsjkeeee.tempo.timer.TimerMode
+import com.bugsjkeeee.tempo.content.warmupFor
 import com.bugsjkeeee.tempo.TempoApp
 import com.bugsjkeeee.tempo.content.Workout
 import com.bugsjkeeee.tempo.content.WorkoutRef
@@ -9,6 +11,14 @@ import kotlinx.coroutines.flow.first
  * Запуск тренировки кнопкой «Начать»: функциональная — таймер с её параметрами,
  * силовая — экран исполнения. Возвращает маршрут, который нужно открыть.
  */
+/** Таймер разминки перед тренировкой: интервалы по числу упражнений разминки. */
+suspend fun launchWarmup(app: TempoApp, workout: Workout): String {
+    val w = warmupFor(workout)
+    val base = app.settingsRepository.timerSettings.first()
+    app.timerController.start(TimerMode.INTERVALS, base.copy(workSec = w.workSec, restSec = w.restSec, intervalRounds = w.items.size))
+    return Routes.TIMER_RUN
+}
+
 suspend fun launchWorkout(app: TempoApp, workout: Workout): String {
     val spec = workout.timer ?: return Routes.execute(workout.id)
     val settings = spec.applyTo(app.settingsRepository.timerSettings.first())

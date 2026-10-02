@@ -1,5 +1,7 @@
 package com.bugsjkeeee.tempo.ui
 
+import kotlinx.coroutines.flow.first
+import com.bugsjkeeee.tempo.TempoWidget
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.foundation.layout.WindowInsets
@@ -186,7 +188,11 @@ private fun NavBackStackEntry.picked(key: String): String? {
 }
 
 @Composable
-fun TempoNavHost(navController: NavHostController = rememberNavController()) {
+fun TempoNavHost(
+    navController: NavHostController = rememberNavController(),
+    widgetAction: String? = null,
+    onWidgetActionHandled: () -> Unit = {},
+) {
     val backStack by navController.currentBackStackEntryAsState()
     val route = backStack?.destination?.route
     val tab = tabs.firstOrNull { it.route == route }
@@ -199,6 +205,29 @@ fun TempoNavHost(navController: NavHostController = rememberNavController()) {
     // Если таймер уже идёт (например, приложение открыли из уведомления), сразу показываем его.
     LaunchedEffect(Unit) {
         if (controller.state.value != null) navController.navigate(Routes.TIMER_RUN)
+    }
+
+    // Кнопки виджета: «Таймер» — старт с последними настройками (или открыть идущий), «Генератор» — вкладка.
+    val app = LocalContext.current.applicationContext as TempoApp
+    LaunchedEffect(widgetAction) {
+        when (widgetAction) {
+            TempoWidget.ACTION_TIMER -> {
+                if (controller.state.value == null) {
+                    controller.start(app.settingsRepository.lastMode.first(), app.settingsRepository.timerSettings.first())
+                }
+                if (route != Routes.TIMER_RUN) navController.navigate(Routes.TIMER_RUN)
+            }
+            TempoWidget.ACTION_RANDOM -> {
+                if (route != Routes.RANDOM) randomReset++
+                navController.navigate(Routes.RANDOM) {
+                    popUpTo(navController.graph.findStartDestination().id) { saveState = true }
+                    launchSingleTop = true
+                    restoreState = true
+                }
+            }
+            else -> return@LaunchedEffect
+        }
+        onWidgetActionHandled()
     }
 
     Scaffold(

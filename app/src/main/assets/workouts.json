@@ -7702,7 +7702,11 @@
    }
   ],
   "timer": null,
-  "description": "Четырёхдневный сплит, день 1 из 4."
+  "description": "Четырёхдневный сплит, день 1 из 4.",
+  "program": "split4",
+  "programTitle": "Сплит 4",
+  "programDay": 1,
+  "programDays": 4
  },
  {
   "id": "s060",
@@ -7744,7 +7748,11 @@
    }
   ],
   "timer": null,
-  "description": "Четырёхдневный сплит, день 2 из 4."
+  "description": "Четырёхдневный сплит, день 2 из 4.",
+  "program": "split4",
+  "programTitle": "Сплит 4",
+  "programDay": 2,
+  "programDays": 4
  },
  {
   "id": "s061",
@@ -7784,7 +7792,11 @@
    }
   ],
   "timer": null,
-  "description": "Четырёхдневный сплит, день 3 из 4."
+  "description": "Четырёхдневный сплит, день 3 из 4.",
+  "program": "split4",
+  "programTitle": "Сплит 4",
+  "programDay": 3,
+  "programDays": 4
  },
  {
   "id": "s062",
@@ -7826,7 +7838,11 @@
    }
   ],
   "timer": null,
-  "description": "Четырёхдневный сплит, день 4 из 4."
+  "description": "Четырёхдневный сплит, день 4 из 4.",
+  "program": "split4",
+  "programTitle": "Сплит 4",
+  "programDay": 4,
+  "programDays": 4
  },
  {
   "id": "s063",
@@ -7885,7 +7901,11 @@
    }
   ],
   "timer": null,
-  "description": "Трёхдневный сплит по мышцам-антагонистам, день 1 из 3. Упражнения на грудь и спину можно чередовать суперсетами."
+  "description": "Трёхдневный сплит по мышцам-антагонистам, день 1 из 3. Упражнения на грудь и спину можно чередовать суперсетами.",
+  "program": "antagonists",
+  "programTitle": "Сплит антагонисты",
+  "programDay": 1,
+  "programDays": 3
  },
  {
   "id": "s064",
@@ -7935,7 +7955,11 @@
    }
   ],
   "timer": null,
-  "description": "Трёхдневный сплит по мышцам-антагонистам, день 2 из 3."
+  "description": "Трёхдневный сплит по мышцам-антагонистам, день 2 из 3.",
+  "program": "antagonists",
+  "programTitle": "Сплит антагонисты",
+  "programDay": 2,
+  "programDays": 3
  },
  {
   "id": "s065",
@@ -7987,7 +8011,11 @@
    }
   ],
   "timer": null,
-  "description": "Трёхдневный сплит по мышцам-антагонистам, день 3 из 3. Бицепс и трицепс можно чередовать суперсетами."
+  "description": "Трёхдневный сплит по мышцам-антагонистам, день 3 из 3. Бицепс и трицепс можно чередовать суперсетами.",
+  "program": "antagonists",
+  "programTitle": "Сплит антагонисты",
+  "programDay": 3,
+  "programDays": 3
  },
  {
   "id": "s066",
@@ -8041,7 +8069,11 @@
    }
   ],
   "timer": null,
-  "description": "Трёхдневный сплит по мышцам-синергистам, день 1 из 3."
+  "description": "Трёхдневный сплит по мышцам-синергистам, день 1 из 3.",
+  "program": "synergists",
+  "programTitle": "Сплит синергисты",
+  "programDay": 1,
+  "programDays": 3
  },
  {
   "id": "s067",
@@ -8105,7 +8137,11 @@
    }
   ],
   "timer": null,
-  "description": "Трёхдневный сплит по мышцам-синергистам, день 2 из 3."
+  "description": "Трёхдневный сплит по мышцам-синергистам, день 2 из 3.",
+  "program": "synergists",
+  "programTitle": "Сплит синергисты",
+  "programDay": 2,
+  "programDays": 3
  },
  {
   "id": "s068",
@@ -8165,7 +8201,11 @@
    }
   ],
   "timer": null,
-  "description": "Трёхдневный сплит по мышцам-синергистам, день 3 из 3."
+  "description": "Трёхдневный сплит по мышцам-синергистам, день 3 из 3.",
+  "program": "synergists",
+  "programTitle": "Сплит синергисты",
+  "programDay": 3,
+  "programDays": 3
  },
  {
   "id": "c001",

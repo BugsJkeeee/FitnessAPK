@@ -1,5 +1,8 @@
 package com.bugsjkeeee.tempo.ui.components
 
+import androidx.compose.foundation.layout.Box
+import com.bugsjkeeee.tempo.content.warmupFor
+import com.bugsjkeeee.tempo.content.Warmup
 import androidx.compose.runtime.remember
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -90,9 +93,17 @@ fun WorkoutCard(workout: Workout, favorite: Boolean, onClick: () -> Unit, modifi
 
 /** Подробное описание тренировки: параметры, оборудование, упражнения с картинками. */
 @Composable
-fun WorkoutDetails(workout: Workout, exercises: Map<String, Exercise>, onExercise: (Exercise) -> Unit) {
+fun WorkoutDetails(
+    workout: Workout,
+    exercises: Map<String, Exercise>,
+    onWarmup: (() -> Unit)? = null,
+    onExercise: (Exercise) -> Unit,
+) {
     val style = LocalTempoStyle.current
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        if (workout.programTitle != null && workout.programDay != null) {
+            Note("Программа «${workout.programTitle}» · день ${workout.programDay} из ${workout.programDays}", Modifier.padding(horizontal = 4.dp))
+        }
         Row(Modifier.fillMaxWidth().height(IntrinsicSize.Min), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             InfoTile("Формат", workout.format.title, Modifier.weight(1f).fillMaxHeight(), TempoIcons.Format)
             InfoTile("Время", "~${workout.durationMin} мин", Modifier.weight(1f).fillMaxHeight(), TempoIcons.Timer)
@@ -106,6 +117,7 @@ fun WorkoutDetails(workout: Workout, exercises: Map<String, Exercise>, onExercis
             Text(workout.muscles.joinToString(", ") { it.title }, style = MaterialTheme.typography.bodyMedium)
         }
         if (workout.description.isNotBlank()) Note(workout.description, Modifier.padding(horizontal = 4.dp))
+        WarmupTile(warmupFor(workout), onWarmup)
         Tile(Modifier.fillMaxWidth()) {
             TileLabel("Упражнения", TempoIcons.Clipboard)
             workout.items.forEachIndexed { i, item ->
@@ -127,6 +139,35 @@ fun WorkoutDetails(workout: Workout, exercises: Map<String, Exercise>, onExercis
                     }
                     Icon(TempoIcons.ChevronRight, contentDescription = null, tint = style.muted, modifier = Modifier.size(18.dp))
                 }
+            }
+        }
+    }
+}
+
+/** Разминка: свёрнута по умолчанию, раскрывается нажатием; кнопка запускает таймер 45/15. */
+@Composable
+private fun WarmupTile(warmup: Warmup, onStart: (() -> Unit)?) {
+    var expanded by rememberSaveable { mutableStateOf(false) }
+    val style = LocalTempoStyle.current
+    Tile(Modifier.fillMaxWidth(), onClick = { expanded = !expanded }) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Box(Modifier.weight(1f)) { TileLabel("Разминка · ~${warmup.minutes} мин", TempoIcons.Flame) }
+            Icon(if (expanded) TempoIcons.ChevronUp else TempoIcons.ChevronDown, contentDescription = null, tint = style.muted, modifier = Modifier.size(18.dp))
+        }
+        if (expanded) {
+            warmup.items.forEachIndexed { i, text ->
+                Text("${i + 1}. $text", style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(vertical = 3.dp))
+            }
+            Text(
+                "Каждое упражнение — ${warmup.workSec} с, ${warmup.restSec} с на переход.",
+                style = MaterialTheme.typography.bodySmall,
+                color = style.muted,
+                modifier = Modifier.padding(top = 6.dp),
+            )
+            warmup.note?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = style.muted) }
+            if (onStart != null) {
+                Spacer(Modifier.height(10.dp))
+                SecondaryButton("Таймер разминки", onStart, Modifier.fillMaxWidth(), TempoIcons.Timer)
             }
         }
     }

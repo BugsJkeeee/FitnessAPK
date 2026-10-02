@@ -27,10 +27,7 @@ data class JournalEntry(
     val resultRounds: Int? = null,
     val note: String = "",
     val sets: List<JournalSet> = emptyList(),
-) {
-    /** Тоннаж — сумма «вес × повторы» по подходам с весом. */
-    val volume: Double get() = sets.sumOf { (it.weight ?: 0.0) * (it.reps ?: 0) }
-}
+)
 
 fun EntryWithSets.toDomain() = JournalEntry(
     id = entry.id,

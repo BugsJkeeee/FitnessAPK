@@ -1,5 +1,6 @@
 package com.bugsjkeeee.tempo.ui.base
 
+import com.bugsjkeeee.tempo.ui.launchWarmup
 import com.bugsjkeeee.tempo.ui.icons.TempoIcons
 import android.content.Intent
 import android.net.Uri
@@ -120,6 +121,7 @@ fun WorkoutDetailScreen(
     val vm = appViewModel { WorkoutDetailViewModel(it, id) }
     val state by vm.state.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()
+    val app = LocalContext.current.applicationContext as TempoApp
     var confirmDelete by rememberSaveable { mutableStateOf(false) }
     val style = LocalTempoStyle.current
     val w = state.workout
@@ -141,7 +143,11 @@ fun WorkoutDetailScreen(
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            item { WorkoutDetails(w, state.exercises) { onExercise(it.id) } }
+            item { WorkoutDetails(
+                    w,
+                    state.exercises,
+                    onWarmup = { scope.launch { onNavigate(launchWarmup(app, w)) } },
+                ) { onExercise(it.id) } }
             item {
                 PrimaryButton("Начать", onClick = { scope.launch { onNavigate(vm.launch(w)) } }, icon = TempoIcons.Play)
             }

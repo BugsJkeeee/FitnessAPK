@@ -136,11 +136,10 @@ private fun phaseShort(phase: Phase) = when (phase) {
     Phase.REST -> "Отдых"
 }
 
-/** Действие кнопки-молнии: «+1 раунд» в AMRAP, «круг» в секундомере, «финиш» в For Time. */
+/** Действие кнопки-молнии: «+1 раунд» в AMRAP и For Time, «круг» в секундомере. */
 private fun boltAction(s: TimerSnapshot, c: TimerController): (() -> Unit)? = when {
     s.phase != Phase.WORK -> null
-    s.mode == TimerMode.AMRAP || s.mode == TimerMode.STOPWATCH -> c::lap
-    s.mode == TimerMode.FOR_TIME -> c::stop
+    s.mode == TimerMode.AMRAP || s.mode == TimerMode.STOPWATCH || s.mode == TimerMode.FOR_TIME -> c::lap
     else -> null
 }
 
@@ -148,13 +147,13 @@ private fun boltHint(s: TimerSnapshot): String? = when {
     s.phase != Phase.WORK -> null
     s.mode == TimerMode.AMRAP -> "Молния — +1 раунд"
     s.mode == TimerMode.STOPWATCH -> "Молния — отметить круг"
-    s.mode == TimerMode.FOR_TIME -> "Молния — финиш"
+    s.mode == TimerMode.FOR_TIME -> "Молния — +1 раунд, «Финиш» — конец комплекса"
     else -> null
 }
 
 /** Подпись под цифрами: раунд, число раундов AMRAP или кругов. */
 private fun counterText(s: TimerSnapshot): String? = when {
-    s.mode == TimerMode.AMRAP -> "Раундов: ${s.laps.size}"
+    s.mode == TimerMode.AMRAP || s.mode == TimerMode.FOR_TIME -> "Раундов: ${s.laps.size}"
     s.mode == TimerMode.STOPWATCH -> "Кругов: ${s.laps.size}"
     s.totalRounds > 1 -> "Раунд ${s.round} / ${s.totalRounds}"
     else -> null
@@ -359,9 +358,9 @@ private fun Bolt(s: TimerSnapshot, controller: TimerController, c: RunColors) {
         Text(totalText(s), style = Digits.copy(fontSize = 14.sp, fontWeight = FontWeight.Normal), color = c.muted, textAlign = TextAlign.Center)
         val last = s.laps.lastOrNull()
         val extra = when {
-            last != null && (s.mode == TimerMode.AMRAP || s.mode == TimerMode.STOPWATCH) -> {
+            last != null && s.mode.hasSplits -> {
                 val lap = last - (s.laps.getOrNull(s.laps.size - 2) ?: 0L)
-                (if (s.mode == TimerMode.AMRAP) "Последний раунд " else "Последний круг ") + formatPrecise(lap)
+                (if (s.mode == TimerMode.STOPWATCH) "Последний круг " else "Последний раунд ") + formatPrecise(lap)
             }
             else -> boltHint(s)
         }
@@ -374,7 +373,12 @@ private fun Controls(s: TimerSnapshot, controller: TimerController, c: RunColors
     val paused = s.status == RunStatus.PAUSED
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterHorizontally)) {
         ControlCard(if (paused) TempoIcons.Play else TempoIcons.Pause, if (paused) "Дальше" else "Пауза", c, Modifier.weight(1f), onClick = controller::togglePause)
-        ControlCard(TempoIcons.Stop, "Стоп", c, Modifier.weight(1f), onClick = onStop)
+        if (s.mode == TimerMode.FOR_TIME) {
+            // Конец комплекса — без подтверждения, время фиксируется сразу.
+            ControlCard(TempoIcons.Flag, "Финиш", c, Modifier.weight(1f), onClick = controller::stop)
+        } else {
+            ControlCard(TempoIcons.Stop, "Стоп", c, Modifier.weight(1f), onClick = onStop)
+        }
         ControlCard(TempoIcons.Skip, "Пропуск", c, Modifier.weight(1f), enabled = s.segmentDurationMs != null, onClick = controller::skip)
     }
 }
@@ -437,7 +441,7 @@ private fun ResultView(s: TimerSnapshot, onClose: () -> Unit, onSave: () -> Unit
         }
         if (s.mode.hasSplits && s.laps.isNotEmpty()) {
             Tile(Modifier.fillMaxWidth()) {
-                TileLabel(if (s.mode == TimerMode.AMRAP) "Раунды" else "Круги", TempoIcons.Flag)
+                TileLabel(if (s.mode == TimerMode.STOPWATCH) "Круги" else "Раунды", TempoIcons.Flag)
                 Spacer(Modifier.height(6.dp))
                 s.laps.forEachIndexed { i, total ->
                     val lap = total - (s.laps.getOrNull(i - 1) ?: 0L)
@@ -456,8 +460,8 @@ private fun ResultView(s: TimerSnapshot, onClose: () -> Unit, onSave: () -> Unit
 }
 
 /** Режимы, где отмечаются круги или раунды со временем каждого. */
-private val TimerMode.hasSplits get() = this == TimerMode.STOPWATCH || this == TimerMode.AMRAP
-private val TimerMode.splitTitle get() = if (this == TimerMode.AMRAP) "Раунд" else "Круг"
+private val TimerMode.hasSplits get() = this == TimerMode.STOPWATCH || this == TimerMode.AMRAP || this == TimerMode.FOR_TIME
+private val TimerMode.splitTitle get() = if (this == TimerMode.STOPWATCH) "Круг" else "Раунд"
 
 /** Лучше ли результат комплекса, чем прежние попытки в журнале (For Time — время, AMRAP — раунды). */
 @Composable

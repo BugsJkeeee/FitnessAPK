@@ -1,5 +1,11 @@
 package com.bugsjkeeee.tempo.ui.random
 
+import androidx.compose.material3.Icon
+import androidx.compose.ui.Alignment
+import com.bugsjkeeee.tempo.ui.Routes
+import com.bugsjkeeee.tempo.content.nextProgramWorkout
+import androidx.compose.ui.platform.LocalContext
+import com.bugsjkeeee.tempo.ui.launchWarmup
 import com.bugsjkeeee.tempo.ui.icons.TempoIcons
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -127,6 +133,10 @@ class RandomViewModel(private val app: TempoApp) : ViewModel() {
     }
 
     suspend fun launch(w: Workout): String = launchWorkout(app, w)
+
+    /** Следующий день программы-сплита, если её уже начинали. */
+    val nextProgram: StateFlow<Workout?> = combine(content.workouts, app.journalRepository.entries) { w, e -> nextProgramWorkout(w, e) }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
 }
 
 @Composable
@@ -134,6 +144,8 @@ fun RandomScreen(contentPadding: PaddingValues, resetKey: Int, onNavigate: (Stri
     val vm = appViewModel { RandomViewModel(it) }
     val state by vm.state.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()
+    val app = LocalContext.current.applicationContext as TempoApp
+    val nextProgram by vm.nextProgram.collectAsStateWithLifecycle()
     // Сброс только при новом открытии вкладки, а не после возврата с экрана упражнения.
     LaunchedEffect(resetKey) { vm.resetIfNew(resetKey) }
     if (!state.loaded) return
@@ -147,6 +159,24 @@ fun RandomScreen(contentPadding: PaddingValues, resetKey: Int, onNavigate: (Stri
         ),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
+        nextProgram?.let { p ->
+            item {
+                Tile(Modifier.fillMaxWidth(), onClick = { onNavigate(Routes.workout(p.id)) }) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Column(Modifier.weight(1f)) {
+                            TileLabel("Продолжить программу", TempoIcons.Calendar)
+                            Text(p.name.substringAfter(": "), style = MaterialTheme.typography.titleMedium)
+                            Text(
+                                "${p.programTitle} · день ${p.programDay} из ${p.programDays}",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = LocalTempoStyle.current.muted,
+                            )
+                        }
+                        Icon(TempoIcons.ChevronRight, contentDescription = null, tint = LocalTempoStyle.current.muted)
+                    }
+                }
+            }
+        }
         item { FilterPanel(state.filters, vm::setFilters) }
         item {
             PrimaryButton(
@@ -175,7 +205,11 @@ fun RandomScreen(contentPadding: PaddingValues, resetKey: Int, onNavigate: (Stri
                     Text(w.name, style = MaterialTheme.typography.headlineLarge, color = MaterialTheme.colorScheme.onBackground)
                 }
             }
-            item { WorkoutDetails(w, state.exercises) { onExercise(it.id) } }
+            item { WorkoutDetails(
+                    w,
+                    state.exercises,
+                    onWarmup = { scope.launch { onNavigate(launchWarmup(app, w)) } },
+                ) { onExercise(it.id) } }
             item {
                 PrimaryButton("Начать", onClick = { scope.launch { onNavigate(vm.launch(w)) } }, icon = TempoIcons.Play)
             }

@@ -13,8 +13,12 @@ def F(name, fmt, level, items, desc="", **timer):
     return dict(name=name, format=fmt, level=level, items=items, desc=desc, timer=timer)
 
 
-def S(name, level, items, desc=""):
-    return dict(name=name, format="SETS", level=level, items=items, desc=desc, timer={})
+def S(name, level, items, desc="", program=None):
+    return dict(name=name, format="SETS", level=level, items=items, desc=desc, timer={}, program=program)
+
+
+# Программы из нескольких дней: id → название. Дни нумеруются по порядку тренировок в списке.
+PROGRAMS = {"split4": "Сплит 4", "antagonists": "Сплит антагонисты", "synergists": "Сплит синергисты"}
 
 
 FUNCTIONAL = [
@@ -389,31 +393,31 @@ STRENGTH = [
 
     # --- Сплиты (diary-workout.ru). Подходы и повторы — стандартные: базовые 4×8, изолирующие 3×10–12, пресс 3×15. ---
     S("Сплит 4: ноги", 2, [("back_squat", 4, 8), ("stiff_leg_dl", 4, 10), ("db_lunge", 3, 12), ("calf_raise", 4, 15)],
-      "Четырёхдневный сплит, день 1 из 4."),
+      "Четырёхдневный сплит, день 1 из 4.", program="split4"),
     S("Сплит 4: грудь и трицепс", 2, [("bench_press", 4, 8), ("db_fly", 3, 12), ("dip", 3, 10), ("seated_french_press", 3, 12)],
-      "Четырёхдневный сплит, день 2 из 4."),
+      "Четырёхдневный сплит, день 2 из 4.", program="split4"),
     S("Сплит 4: спина и бицепс", 2, [("barbell_row", 4, 8), ("good_morning", 3, 10), ("barbell_shrug", 3, 12), ("barbell_curl", 3, 10)],
-      "Четырёхдневный сплит, день 3 из 4."),
+      "Четырёхдневный сплит, день 3 из 4.", program="split4"),
     S("Сплит 4: плечи и пресс", 2, [("overhead_press", 4, 8), ("lateral_raise", 3, 12), ("situp", 3, 15), ("hanging_leg_raise", 3, 12)],
-      "Четырёхдневный сплит, день 4 из 4."),
+      "Четырёхдневный сплит, день 4 из 4.", program="split4"),
     S("Сплит антагонисты: грудь и спина", 3,
       [("bench_press", 4, 8), ("pullup", 4, 8), ("incline_bench_press", 3, 10), ("barbell_row", 3, 10), ("db_fly", 3, 12), ("db_row", 3, 10), ("barbell_pullover", 3, 12)],
-      "Трёхдневный сплит по мышцам-антагонистам, день 1 из 3. Упражнения на грудь и спину можно чередовать суперсетами."),
+      "Трёхдневный сплит по мышцам-антагонистам, день 1 из 3. Упражнения на грудь и спину можно чередовать суперсетами.", program="antagonists"),
     S("Сплит антагонисты: ноги", 3,
       [("back_squat", 4, 8), ("stiff_leg_dl", 4, 10), ("leg_curl", 3, 12), ("leg_extension", 3, 12), ("barbell_lunge", 3, 10), ("calf_raise", 4, 15)],
-      "Трёхдневный сплит по мышцам-антагонистам, день 2 из 3."),
+      "Трёхдневный сплит по мышцам-антагонистам, день 2 из 3.", program="antagonists"),
     S("Сплит антагонисты: руки и дельты", 2,
       [("barbell_curl", 3, 10), ("dip_triceps", 3, 10), ("upright_row", 3, 12), ("seated_db_curl", 3, 12), ("skull_crusher", 3, 12), ("overhead_press", 4, 8)],
-      "Трёхдневный сплит по мышцам-антагонистам, день 3 из 3. Бицепс и трицепс можно чередовать суперсетами."),
+      "Трёхдневный сплит по мышцам-антагонистам, день 3 из 3. Бицепс и трицепс можно чередовать суперсетами.", program="antagonists"),
     S("Сплит синергисты: грудь и бицепс", 2,
       [("db_incline_press", 4, 10), ("bench_press", 4, 8), ("barbell_pullover", 3, 12), ("barbell_curl", 3, 10), ("hammer_curl", 3, 12), ("decline_leg_raise", 3, 15)],
-      "Трёхдневный сплит по мышцам-синергистам, день 1 из 3."),
+      "Трёхдневный сплит по мышцам-синергистам, день 1 из 3.", program="synergists"),
     S("Сплит синергисты: ноги и плечи", 3,
       [("back_squat", 4, 8), ("stiff_leg_dl", 4, 10), ("calf_raise", 4, 15), ("db_lunge", 3, 12), ("overhead_press", 4, 8), ("db_shoulder_press", 3, 10), ("rear_delt_raise", 3, 12), ("situp", 3, 15)],
-      "Трёхдневный сплит по мышцам-синергистам, день 2 из 3."),
+      "Трёхдневный сплит по мышцам-синергистам, день 2 из 3.", program="synergists"),
     S("Сплит синергисты: спина и трицепс", 3,
       [("db_row", 3, 10), ("deadlift", 4, 6), ("barbell_row", 3, 10), ("barbell_shrug", 3, 12), ("close_grip_bench", 3, 10), ("seated_french_press", 3, 12), ("hanging_leg_raise", 3, 12)],
-      "Трёхдневный сплит по мышцам-синергистам, день 3 из 3."),
+      "Трёхдневный сплит по мышцам-синергистам, день 3 из 3.", program="synergists"),
 ]
 
 

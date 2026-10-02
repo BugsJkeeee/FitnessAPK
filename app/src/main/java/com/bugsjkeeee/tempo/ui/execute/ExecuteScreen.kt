@@ -1,5 +1,11 @@
 package com.bugsjkeeee.tempo.ui.execute
 
+import androidx.compose.ui.platform.LocalFocusManager
+import com.bugsjkeeee.tempo.ui.components.formatDateShort
+import com.bugsjkeeee.tempo.ui.components.formatWeight
+import com.bugsjkeeee.tempo.data.suggestWeight
+import com.bugsjkeeee.tempo.data.lastPerformance
+import com.bugsjkeeee.tempo.data.LastPerformance
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.ui.draw.alpha
@@ -93,6 +99,10 @@ data class ExerciseBlock(
     val targetReps: Int?,
     val sets: List<SetRow>,
     val unlocked: Int = 1,
+    /** Подходы из прошлой тренировки с этим упражнением. */
+    val previous: LastPerformance? = null,
+    /** Рекомендованный рабочий вес. */
+    val suggested: Double? = null,
 )
 
 data class ExecuteState(
@@ -113,11 +123,16 @@ class ExecuteViewModel(private val app: TempoApp, private val workoutId: String)
         viewModelScope.launch {
             val w = app.contentRepository.workouts.first().firstOrNull { it.id == workoutId }
             val ex = app.contentRepository.exerciseMap()
+            val history = app.journalRepository.all()
             _state.value = ExecuteState(
                 loaded = true,
                 workout = w,
                 blocks = w?.items.orEmpty().map { item ->
-                    ExerciseBlock(ex[item.exercise], item.exercise, item.reps, List(item.sets ?: 3) { SetRow() })
+                    ExerciseBlock(
+                        ex[item.exercise], item.exercise, item.reps, List(item.sets ?: 3) { SetRow() },
+                        previous = lastPerformance(history, item.exercise),
+                        suggested = suggestWeight(history, item.exercise, item.reps),
+                    )
                 },
             )
         }
@@ -134,9 +149,16 @@ class ExecuteViewModel(private val app: TempoApp, private val workoutId: String)
 
     /** Отметка подхода: запускает отдых и переносит вес в следующий подход, если там пусто. */
     fun toggleDone(b: Int, s: Int) {
-        val row = _state.value.blocks[b].sets[s]
+        val block = _state.value.blocks[b]
+        var row = block.sets[s]
         val done = !row.done
-        updateSet(b, s) { it.copy(done = done) }
+        // Пустые поля при отметке заполняются подсказками: рекомендованный или прошлый вес, целевые повторы.
+        if (done) {
+            val hint = weightHint(block, s)
+            if (row.weight.isBlank() && hint != null) row = row.copy(weight = hint)
+            if (row.reps.isBlank()) repsHint(block, s)?.let { row = row.copy(reps = it) }
+        }
+        updateSet(b, s) { row.copy(done = done) }
         if (done) {
             _state.update { st ->
                 st.copy(blocks = st.blocks.mapIndexed { bi, block -> if (bi == b) block.copy(unlocked = maxOf(block.unlocked, s + 2)) else block })
@@ -268,6 +290,14 @@ fun ExecuteScreen(workoutId: String, onClose: () -> Unit) {
                         Column(Modifier.weight(1f)) {
                             Text(block.exercise?.name ?: block.exerciseId, style = MaterialTheme.typography.titleMedium)
                             block.targetReps?.let { Text("цель: $it повт.", style = MaterialTheme.typography.bodySmall, color = style.muted) }
+                            block.previous?.let { Text(previousText(it), style = MaterialTheme.typography.bodySmall, color = style.muted) }
+                            block.suggested?.let {
+                                Text(
+                                    "Рекомендация: ${formatWeight(it)} кг",
+                                    style = MaterialTheme.typography.bodySmall.copy(fontWeight = androidx.compose.ui.text.font.FontWeight.SemiBold),
+                                    color = MaterialTheme.colorScheme.primary,
+                                )
+                            }
                         }
                     }
                     Spacer(Modifier.height(8.dp))
@@ -276,6 +306,8 @@ fun ExecuteScreen(workoutId: String, onClose: () -> Unit) {
                             number = s + 1,
                             row = row,
                             enabled = s < block.unlocked || row.done,
+                            weightHint = weightHint(block, s),
+                            repsHint = repsHint(block, s),
                             onWeight = { vm.setWeight(b, s, it) },
                             onReps = { vm.setReps(b, s, it) },
                             onToggle = { vm.toggleDone(b, s) },
@@ -331,15 +363,34 @@ fun ExecuteScreen(workoutId: String, onClose: () -> Unit) {
     }
 }
 
+/** Подсказка веса для подхода: рекомендация, иначе вес того же подхода в прошлый раз. */
+private fun weightHint(block: ExerciseBlock, s: Int): String? =
+    (block.suggested ?: block.previous?.sets?.getOrNull(s)?.weight ?: block.previous?.sets?.lastOrNull()?.weight)
+        ?.takeIf { it > 0 }?.let(::formatWeight)
+
+/** Подсказка повторов: цель тренировки, иначе повторы того же подхода в прошлый раз. */
+private fun repsHint(block: ExerciseBlock, s: Int): String? =
+    (block.targetReps ?: block.previous?.sets?.getOrNull(s)?.reps)?.toString()
+
+/** «Прошлый раз 12.09: 60×10 · 60×10 · 55×8». */
+private fun previousText(p: LastPerformance): String =
+    "Прошлый раз ${formatDateShort(p.date)}: " + p.sets.joinToString(" · ") { set ->
+        val w = set.weight?.takeIf { it > 0 }?.let { formatWeight(it) + "×" }.orEmpty()
+        w + (set.reps?.toString() ?: "—")
+    }
+
 @Composable
 private fun SetRowView(
     number: Int,
     row: SetRow,
     enabled: Boolean,
+    weightHint: String?,
+    repsHint: String?,
     onWeight: (String) -> Unit,
     onReps: (String) -> Unit,
     onToggle: () -> Unit,
 ) {
+    val focusManager = LocalFocusManager.current
     val bg = if (row.done) LocalTempoStyle.current.positive.copy(alpha = 0.18f) else androidx.compose.ui.graphics.Color.Transparent
     Row(
         Modifier.fillMaxWidth().alpha(if (enabled) 1f else 0.4f).background(bg, LocalTempoStyle.current.tileShape).padding(vertical = 4.dp),
@@ -351,6 +402,7 @@ private fun SetRowView(
             value = row.weight,
             onValueChange = onWeight,
             label = { Text("кг") },
+            placeholder = weightHint?.let { { Text(it, style = Digits.copy(fontSize = 18.sp), color = LocalTempoStyle.current.muted) } },
             singleLine = true,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
             textStyle = Digits.copy(fontSize = 18.sp),
@@ -361,6 +413,7 @@ private fun SetRowView(
             value = row.reps,
             onValueChange = onReps,
             label = { Text("повт.") },
+            placeholder = repsHint?.let { { Text(it, style = Digits.copy(fontSize = 18.sp), color = LocalTempoStyle.current.muted) } },
             singleLine = true,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             textStyle = Digits.copy(fontSize = 18.sp),
@@ -369,7 +422,11 @@ private fun SetRowView(
         )
         FilledIconToggleButton(
             checked = row.done,
-            onCheckedChange = { onToggle() },
+            onCheckedChange = {
+                // Как «ОК» на клавиатуре: убрать фокус и клавиатуру.
+                focusManager.clearFocus()
+                onToggle()
+            },
             enabled = enabled,
             colors = IconButtonDefaults.filledIconToggleButtonColors(
                 checkedContainerColor = LocalTempoStyle.current.positive,

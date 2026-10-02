@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Tempo</string>
+    <string name="widget_description">Быстрый старт таймера и генератор тренировки</string>
+    <string name="widget_timer">▶  Таймер</string>
+    <string name="widget_random">Генератор</string>
 </resources>
