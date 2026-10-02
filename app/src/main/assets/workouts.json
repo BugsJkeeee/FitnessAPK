@@ -3709,7 +3709,7 @@
   "type": "functional",
   "format": "FOR_TIME",
   "level": 3,
-  "durationMin": 35,
+  "durationMin": 70,
   "muscles": [
    "legs",
    "full"
@@ -3721,22 +3721,22 @@
   "items": [
    {
     "exercise": "treadmill_run",
-    "dose": "1 км"
+    "dose": "1 км / 1,5 км / 2 км"
    },
    {
     "exercise": "muscle_up",
-    "dose": "10/7"
+    "dose": "10 / 15 / 20"
    },
    {
     "exercise": "air_squat",
-    "dose": "100"
+    "dose": "100 / 150 / 200"
    }
   ],
   "timer": {
    "mode": "FOR_TIME",
-   "capSec": 2100
+   "capSec": 4200
   },
-  "description": "3 раунда, можно с рюкзаком 9/6 кг."
+  "description": "Hero-комплекс, 3 раунда с нарастанием: 1 км бега, 10 выходов, 100 приседаний; затем 1,5 км, 15, 150; затем 2 км, 20, 200. В жилете 9/6 кг."
  },
  {
   "id": "f110",
@@ -3820,6 +3820,1508 @@
    "rounds": 12
   },
   "description": "12 минут: каждую минуту связка «тяга к груди + взятие + фронтальный присед». Начинайте легко и повышайте вес к концу."
+ },
+ {
+  "id": "f113",
+  "name": "Барсук",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 35,
+  "muscles": [
+   "full",
+   "back",
+   "arms",
+   "legs"
+  ],
+  "equipment": [
+   "barbell",
+   "pullup_bar",
+   "treadmill"
+  ],
+  "items": [
+   {
+    "exercise": "power_clean",
+    "dose": "30 в полный присед, 43/30 кг"
+   },
+   {
+    "exercise": "pullup",
+    "dose": "30"
+   },
+   {
+    "exercise": "treadmill_run",
+    "dose": "800 м"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 2100
+  },
+  "description": "3 раунда."
+ },
+ {
+  "id": "f114",
+  "name": "JT",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 20,
+  "muscles": [
+   "shoulders",
+   "arms",
+   "chest",
+   "full"
+  ],
+  "equipment": [
+   "dip_bars"
+  ],
+  "items": [
+   {
+    "exercise": "handstand_pushup",
+    "dose": "21-15-9"
+   },
+   {
+    "exercise": "dip",
+    "dose": "21-15-9"
+   },
+   {
+    "exercise": "pushup",
+    "dose": "21-15-9"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 1200
+  },
+  "description": "21-15-9 каждого упражнения."
+ },
+ {
+  "id": "f115",
+  "name": "Эрин",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 20,
+  "muscles": [
+   "full",
+   "back",
+   "arms"
+  ],
+  "equipment": [
+   "dumbbell",
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "db_clean",
+    "dose": "15, 18/11 кг"
+   },
+   {
+    "exercise": "pullup",
+    "dose": "21"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 1200
+  },
+  "description": "5 раундов."
+ },
+ {
+  "id": "f116",
+  "name": "Рэнди",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 10,
+  "muscles": [
+   "full"
+  ],
+  "equipment": [
+   "barbell"
+  ],
+  "items": [
+   {
+    "exercise": "power_snatch",
+    "dose": "75, 34/25 кг"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 600
+  },
+  "description": "75 рывков на время."
+ },
+ {
+  "id": "f117",
+  "name": "Райан",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 25,
+  "muscles": [
+   "full"
+  ],
+  "equipment": [
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "muscle_up",
+    "dose": "7"
+   },
+   {
+    "exercise": "burpee",
+    "dose": "21"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 1500
+  },
+  "description": "5 раундов."
+ },
+ {
+  "id": "f118",
+  "name": "Лоредо",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 40,
+  "muscles": [
+   "legs",
+   "chest",
+   "arms",
+   "full"
+  ],
+  "equipment": [
+   "treadmill"
+  ],
+  "items": [
+   {
+    "exercise": "air_squat",
+    "dose": "24"
+   },
+   {
+    "exercise": "pushup",
+    "dose": "24"
+   },
+   {
+    "exercise": "walking_lunge",
+    "dose": "24"
+   },
+   {
+    "exercise": "treadmill_run",
+    "dose": "400 м"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 2400
+  },
+  "description": "6 раундов."
+ },
+ {
+  "id": "f119",
+  "name": "Семеро",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 35,
+  "muscles": [
+   "shoulders",
+   "arms",
+   "full",
+   "abs",
+   "back",
+   "legs"
+  ],
+  "equipment": [
+   "barbell",
+   "kettlebell",
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "handstand_pushup",
+    "dose": "7"
+   },
+   {
+    "exercise": "thruster",
+    "dose": "7, 61/43 кг"
+   },
+   {
+    "exercise": "toes_to_bar",
+    "dose": "7"
+   },
+   {
+    "exercise": "deadlift",
+    "dose": "7, 61/43 кг"
+   },
+   {
+    "exercise": "burpee",
+    "dose": "7"
+   },
+   {
+    "exercise": "kb_swing",
+    "dose": "7, 24/16 кг"
+   },
+   {
+    "exercise": "pullup",
+    "dose": "7"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 2100
+  },
+  "description": "7 раундов."
+ },
+ {
+  "id": "f120",
+  "name": "Калсу",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 40,
+  "muscles": [
+   "full"
+  ],
+  "equipment": [
+   "barbell"
+  ],
+  "items": [
+   {
+    "exercise": "thruster",
+    "dose": "100, 61/43 кг"
+   },
+   {
+    "exercise": "burpee",
+    "dose": "5 в начале каждой минуты"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 2400
+  },
+  "description": "Начните с 5 бёрпи, затем трастеры; в начале каждой следующей минуты — снова 5 бёрпи."
+ },
+ {
+  "id": "f121",
+  "name": "Дэниел",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 40,
+  "muscles": [
+   "back",
+   "arms",
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "barbell",
+   "pullup_bar",
+   "treadmill"
+  ],
+  "items": [
+   {
+    "exercise": "pullup",
+    "dose": "50"
+   },
+   {
+    "exercise": "treadmill_run",
+    "dose": "400 м"
+   },
+   {
+    "exercise": "thruster",
+    "dose": "21, 43/30 кг"
+   },
+   {
+    "exercise": "treadmill_run",
+    "dose": "800 м"
+   },
+   {
+    "exercise": "thruster",
+    "dose": "21"
+   },
+   {
+    "exercise": "treadmill_run",
+    "dose": "400 м"
+   },
+   {
+    "exercise": "pullup",
+    "dose": "50"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 2400
+  },
+  "description": "Выполните по порядку."
+ },
+ {
+  "id": "f122",
+  "name": "Джоши",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 25,
+  "muscles": [
+   "full",
+   "back",
+   "arms"
+  ],
+  "equipment": [
+   "dumbbell",
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "db_snatch",
+    "dose": "21 правой + 21 левой, 18/11 кг"
+   },
+   {
+    "exercise": "pullup",
+    "dose": "21 в уголке — после каждой руки"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 1500
+  },
+  "description": "3 раунда."
+ },
+ {
+  "id": "f123",
+  "name": "Мистер Джошуа",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 40,
+  "muscles": [
+   "legs",
+   "full",
+   "abs",
+   "back"
+  ],
+  "equipment": [
+   "barbell",
+   "treadmill"
+  ],
+  "items": [
+   {
+    "exercise": "treadmill_run",
+    "dose": "400 м"
+   },
+   {
+    "exercise": "situp",
+    "dose": "30"
+   },
+   {
+    "exercise": "deadlift",
+    "dose": "15, 113/79 кг"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 2400
+  },
+  "description": "5 раундов."
+ },
+ {
+  "id": "f124",
+  "name": "Аббат",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 40,
+  "muscles": [
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "barbell",
+   "treadmill"
+  ],
+  "items": [
+   {
+    "exercise": "treadmill_run",
+    "dose": "1,6 км"
+   },
+   {
+    "exercise": "clean_and_jerk",
+    "dose": "21, 70/47 кг"
+   },
+   {
+    "exercise": "treadmill_run",
+    "dose": "800 м"
+   },
+   {
+    "exercise": "clean_and_jerk",
+    "dose": "21"
+   },
+   {
+    "exercise": "treadmill_run",
+    "dose": "1,6 км"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 2400
+  },
+  "description": "Выполните по порядку."
+ },
+ {
+  "id": "f125",
+  "name": "Брэдли",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 35,
+  "muscles": [
+   "legs",
+   "full",
+   "back",
+   "arms",
+   "chest"
+  ],
+  "equipment": [
+   "pullup_bar",
+   "treadmill"
+  ],
+  "items": [
+   {
+    "exercise": "treadmill_run",
+    "dose": "100 м спринт"
+   },
+   {
+    "exercise": "pullup",
+    "dose": "10"
+   },
+   {
+    "exercise": "pushup",
+    "dose": "20"
+   },
+   {
+    "exercise": "air_squat",
+    "dose": "30"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 2100
+  },
+  "description": "10 раундов."
+ },
+ {
+  "id": "f126",
+  "name": "Брем",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 35,
+  "muscles": [
+   "back",
+   "legs",
+   "full",
+   "shoulders",
+   "arms"
+  ],
+  "equipment": [
+   "barbell",
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "deadlift",
+    "dose": "5, 125/84 кг"
+   },
+   {
+    "exercise": "hang_clean",
+    "dose": "5"
+   },
+   {
+    "exercise": "push_press",
+    "dose": "5"
+   },
+   {
+    "exercise": "pullup",
+    "dose": "20"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 2100
+  },
+  "description": "10 раундов одной штангой."
+ },
+ {
+  "id": "f127",
+  "name": "Булджер",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 35,
+  "muscles": [
+   "legs",
+   "full",
+   "back",
+   "arms"
+  ],
+  "equipment": [
+   "barbell",
+   "pullup_bar",
+   "treadmill"
+  ],
+  "items": [
+   {
+    "exercise": "treadmill_run",
+    "dose": "150 м"
+   },
+   {
+    "exercise": "pullup",
+    "dose": "7, грудью к перекладине"
+   },
+   {
+    "exercise": "front_squat",
+    "dose": "7, 61/43 кг"
+   },
+   {
+    "exercise": "burpee",
+    "dose": "7"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 2100
+  },
+  "description": "10 раундов."
+ },
+ {
+  "id": "f128",
+  "name": "Чад 1000",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 70,
+  "muscles": [
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "box"
+  ],
+  "items": [
+   {
+    "exercise": "step_up",
+    "dose": "1000, ящик 50 см"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 4200
+  },
+  "description": "1000 зашагиваний, можно с рюкзаком 20/16 кг."
+ },
+ {
+  "id": "f129",
+  "name": "Коффи",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 50,
+  "muscles": [
+   "legs",
+   "full",
+   "back",
+   "arms"
+  ],
+  "equipment": [
+   "barbell",
+   "box",
+   "pullup_bar",
+   "treadmill"
+  ],
+  "items": [
+   {
+    "exercise": "treadmill_run",
+    "dose": "800 м"
+   },
+   {
+    "exercise": "back_squat",
+    "dose": "50, 102/70 кг"
+   },
+   {
+    "exercise": "box_jump",
+    "dose": "50"
+   },
+   {
+    "exercise": "pullup",
+    "dose": "50 строгих"
+   },
+   {
+    "exercise": "treadmill_run",
+    "dose": "800 м"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 3000
+  },
+  "description": "Выполните по порядку."
+ },
+ {
+  "id": "f130",
+  "name": "Коллин",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 45,
+  "muscles": [
+   "legs",
+   "full",
+   "back",
+   "shoulders",
+   "arms"
+  ],
+  "equipment": [
+   "barbell",
+   "box",
+   "treadmill"
+  ],
+  "items": [
+   {
+    "exercise": "treadmill_run",
+    "dose": "400 м"
+   },
+   {
+    "exercise": "deadlift",
+    "dose": "12, 102/70 кг"
+   },
+   {
+    "exercise": "box_jump",
+    "dose": "12"
+   },
+   {
+    "exercise": "handstand_pushup",
+    "dose": "12"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 2700
+  },
+  "description": "6 раундов."
+ },
+ {
+  "id": "f131",
+  "name": "Крейн",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 40,
+  "muscles": [
+   "full",
+   "back",
+   "legs"
+  ],
+  "equipment": [
+   "barbell",
+   "box",
+   "rower"
+  ],
+  "items": [
+   {
+    "exercise": "row_erg",
+    "dose": "1000 м"
+   },
+   {
+    "exercise": "burpee",
+    "dose": "50"
+   },
+   {
+    "exercise": "deadlift",
+    "dose": "50, 102/70 кг"
+   },
+   {
+    "exercise": "box_jump",
+    "dose": "50"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 2400
+  },
+  "description": "2 раунда."
+ },
+ {
+  "id": "f132",
+  "name": "Даллас 5",
+  "type": "functional",
+  "format": "INTERVALS",
+  "level": 3,
+  "durationMin": 30,
+  "muscles": [
+   "back",
+   "legs",
+   "full",
+   "arms",
+   "shoulders"
+  ],
+  "equipment": [
+   "barbell",
+   "box",
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "deadlift",
+    "dose": "5, 70/47 кг"
+   },
+   {
+    "exercise": "clean_and_jerk",
+    "dose": "5"
+   },
+   {
+    "exercise": "box_jump",
+    "dose": "5"
+   },
+   {
+    "exercise": "pullup",
+    "dose": "5"
+   },
+   {
+    "exercise": "handstand_pushup",
+    "dose": "5"
+   }
+  ],
+  "timer": {
+   "mode": "INTERVALS",
+   "workSec": 300,
+   "restSec": 60,
+   "rounds": 5
+  },
+  "description": "5 отрезков: 5 минут — как можно больше раундов, 1 минута отдыха."
+ },
+ {
+  "id": "f133",
+  "name": "Дел",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 40,
+  "muscles": [
+   "full",
+   "legs",
+   "back",
+   "arms"
+  ],
+  "equipment": [
+   "barbell",
+   "pullup_bar",
+   "treadmill"
+  ],
+  "items": [
+   {
+    "exercise": "burpee",
+    "dose": "50 в начале и 50 в конце"
+   },
+   {
+    "exercise": "treadmill_run",
+    "dose": "400 м × 4 — между упражнениями"
+   },
+   {
+    "exercise": "pullup",
+    "dose": "25 + 25"
+   },
+   {
+    "exercise": "thruster",
+    "dose": "25, 52/34 кг"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 2400
+  },
+  "description": "Бёрпи 50, бег 400 м, подтягивания 25, бег, трастеры 25, бег, подтягивания 25, бег, бёрпи 50."
+ },
+ {
+  "id": "f134",
+  "name": "Донни",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 25,
+  "muscles": [
+   "back",
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "barbell"
+  ],
+  "items": [
+   {
+    "exercise": "deadlift",
+    "dose": "21-15-9-9-15-21, 102/70 кг"
+   },
+   {
+    "exercise": "burpee",
+    "dose": "21-15-9-9-15-21"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 1500
+  },
+  "description": "Сначала по убывающей, затем по возрастающей."
+ },
+ {
+  "id": "f135",
+  "name": "Гейтор",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 25,
+  "muscles": [
+   "legs",
+   "chest",
+   "arms",
+   "back",
+   "full"
+  ],
+  "equipment": [
+   "barbell",
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "front_squat",
+    "dose": "5, 84/57 кг"
+   },
+   {
+    "exercise": "pushup",
+    "dose": "10"
+   },
+   {
+    "exercise": "pullup",
+    "dose": "15"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 1500
+  },
+  "description": "8 раундов."
+ },
+ {
+  "id": "f136",
+  "name": "Хансен",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 35,
+  "muscles": [
+   "full",
+   "abs"
+  ],
+  "equipment": [
+   "kettlebell"
+  ],
+  "items": [
+   {
+    "exercise": "kb_swing",
+    "dose": "30, 32/24 кг"
+   },
+   {
+    "exercise": "burpee",
+    "dose": "30"
+   },
+   {
+    "exercise": "situp",
+    "dose": "30"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 2100
+  },
+  "description": "5 раундов."
+ },
+ {
+  "id": "f137",
+  "name": "Хелтон",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 40,
+  "muscles": [
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "dumbbell",
+   "treadmill"
+  ],
+  "items": [
+   {
+    "exercise": "treadmill_run",
+    "dose": "800 м"
+   },
+   {
+    "exercise": "db_clean",
+    "dose": "30 в присед, 22,5/16 кг"
+   },
+   {
+    "exercise": "burpee",
+    "dose": "30"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 2400
+  },
+  "description": "3 раунда."
+ },
+ {
+  "id": "f138",
+  "name": "Джек",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 20,
+  "muscles": [
+   "shoulders",
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "barbell",
+   "box",
+   "kettlebell"
+  ],
+  "items": [
+   {
+    "exercise": "push_press",
+    "dose": "10-9-…-1, 52/34 кг"
+   },
+   {
+    "exercise": "kb_swing",
+    "dose": "10-9-…-1, 24/16 кг"
+   },
+   {
+    "exercise": "box_jump",
+    "dose": "10-9-…-1"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 1200
+  },
+  "description": "Убывающая лесенка от 10 до 1."
+ },
+ {
+  "id": "f139",
+  "name": "Джерри",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 40,
+  "muscles": [
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "rower",
+   "treadmill"
+  ],
+  "items": [
+   {
+    "exercise": "treadmill_run",
+    "dose": "1,6 км"
+   },
+   {
+    "exercise": "row_erg",
+    "dose": "2000 м"
+   },
+   {
+    "exercise": "treadmill_run",
+    "dose": "1,6 км"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 2400
+  },
+  "description": "Выполните по порядку."
+ },
+ {
+  "id": "f140",
+  "name": "Джош",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 20,
+  "muscles": [
+   "full",
+   "back",
+   "arms"
+  ],
+  "equipment": [
+   "barbell",
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "overhead_squat",
+    "dose": "21-15-9, 43/30 кг"
+   },
+   {
+    "exercise": "pullup",
+    "dose": "42-30-18"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 1200
+  },
+  "description": "Приседания над головой, затем вдвое больше подтягиваний."
+ },
+ {
+  "id": "f141",
+  "name": "Маккласки",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 40,
+  "muscles": [
+   "full",
+   "back",
+   "arms",
+   "legs"
+  ],
+  "equipment": [
+   "pullup_bar",
+   "treadmill"
+  ],
+  "items": [
+   {
+    "exercise": "muscle_up",
+    "dose": "9"
+   },
+   {
+    "exercise": "burpee",
+    "dose": "15 с подтягиванием"
+   },
+   {
+    "exercise": "pullup",
+    "dose": "21"
+   },
+   {
+    "exercise": "treadmill_run",
+    "dose": "800 м"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 2400
+  },
+  "description": "3 раунда."
+ },
+ {
+  "id": "f142",
+  "name": "Мун",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 20,
+  "muscles": [
+   "full",
+   "shoulders",
+   "legs"
+  ],
+  "equipment": [
+   "barbell"
+  ],
+  "items": [
+   {
+    "exercise": "hang_clean",
+    "dose": "10, 43/30 кг"
+   },
+   {
+    "exercise": "push_press",
+    "dose": "15"
+   },
+   {
+    "exercise": "air_squat",
+    "dose": "20"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 1200
+  },
+  "description": "7 раундов."
+ },
+ {
+  "id": "f143",
+  "name": "Ральф",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 35,
+  "muscles": [
+   "back",
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "barbell",
+   "box"
+  ],
+  "items": [
+   {
+    "exercise": "deadlift",
+    "dose": "8 в начале и 8 в конце, 113/79 кг"
+   },
+   {
+    "exercise": "burpee",
+    "dose": "16 + 16"
+   },
+   {
+    "exercise": "box_jump",
+    "dose": "24"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 2100
+  },
+  "description": "4 раунда: 8 становых, 16 бёрпи, 24 запрыгивания, 16 бёрпи, 8 становых."
+ },
+ {
+  "id": "f144",
+  "name": "Рой",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 35,
+  "muscles": [
+   "back",
+   "legs",
+   "full",
+   "arms",
+   "chest",
+   "abs"
+  ],
+  "equipment": [
+   "barbell",
+   "box",
+   "pullup_bar",
+   "treadmill"
+  ],
+  "items": [
+   {
+    "exercise": "deadlift",
+    "dose": "15, 102/70 кг"
+   },
+   {
+    "exercise": "box_jump",
+    "dose": "20"
+   },
+   {
+    "exercise": "pullup",
+    "dose": "25"
+   },
+   {
+    "exercise": "pushup",
+    "dose": "30"
+   },
+   {
+    "exercise": "situp",
+    "dose": "35"
+   },
+   {
+    "exercise": "treadmill_run",
+    "dose": "1,6 км"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 2100
+  },
+  "description": "Выполните по порядку."
+ },
+ {
+  "id": "f145",
+  "name": "Северин",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 30,
+  "muscles": [
+   "back",
+   "arms",
+   "chest",
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "pullup",
+    "dose": "50 строгих"
+   },
+   {
+    "exercise": "pushup",
+    "dose": "100"
+   },
+   {
+    "exercise": "air_squat",
+    "dose": "150"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 1800
+  },
+  "description": "Выполните по порядку."
+ },
+ {
+  "id": "f146",
+  "name": "Смолл",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 45,
+  "muscles": [
+   "full",
+   "legs"
+  ],
+  "equipment": [
+   "box",
+   "rower",
+   "treadmill"
+  ],
+  "items": [
+   {
+    "exercise": "row_erg",
+    "dose": "1000 м"
+   },
+   {
+    "exercise": "burpee",
+    "dose": "50"
+   },
+   {
+    "exercise": "box_jump",
+    "dose": "50"
+   },
+   {
+    "exercise": "treadmill_run",
+    "dose": "800 м"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 2700
+  },
+  "description": "3 раунда."
+ },
+ {
+  "id": "f147",
+  "name": "Стивен",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 35,
+  "muscles": [
+   "abs",
+   "back",
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "machine",
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "situp",
+    "dose": "30-25-20-15-10-5"
+   },
+   {
+    "exercise": "hyperextension",
+    "dose": "30-25-20-15-10-5 × 2 (таз и спина)"
+   },
+   {
+    "exercise": "hanging_knee_raise",
+    "dose": "30-25-20-15-10-5"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 2100
+  },
+  "description": "Убывающая лесенка: на каждой ступени все упражнения."
+ },
+ {
+  "id": "f148",
+  "name": "Уэс",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 40,
+  "muscles": [
+   "legs",
+   "full",
+   "back",
+   "arms",
+   "shoulders"
+  ],
+  "equipment": [
+   "barbell",
+   "pullup_bar",
+   "treadmill"
+  ],
+  "items": [
+   {
+    "exercise": "treadmill_run",
+    "dose": "800 м × 3"
+   },
+   {
+    "exercise": "pullup",
+    "dose": "14-10-6 строгих"
+   },
+   {
+    "exercise": "handstand_pushup",
+    "dose": "14-10-6"
+   },
+   {
+    "exercise": "overhead_squat",
+    "dose": "14-10-6, 61/43 кг"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 2400
+  },
+  "description": "Бег 800 м, затем по 14 повторов каждого; бег, по 10; бег, по 6."
+ },
+ {
+  "id": "f149",
+  "name": "Уилмот",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 25,
+  "muscles": [
+   "legs",
+   "chest",
+   "arms",
+   "full"
+  ],
+  "equipment": [
+   "dip_bars"
+  ],
+  "items": [
+   {
+    "exercise": "air_squat",
+    "dose": "50"
+   },
+   {
+    "exercise": "dip",
+    "dose": "25"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 1500
+  },
+  "description": "6 раундов."
+ },
+ {
+  "id": "f150",
+  "name": "Вуд",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 30,
+  "muscles": [
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "barbell",
+   "treadmill"
+  ],
+  "items": [
+   {
+    "exercise": "treadmill_run",
+    "dose": "400 м"
+   },
+   {
+    "exercise": "burpee",
+    "dose": "10 с запрыгиванием на ящик"
+   },
+   {
+    "exercise": "sumo_high_pull",
+    "dose": "10, 43/30 кг"
+   },
+   {
+    "exercise": "thruster",
+    "dose": "10"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 1800
+  },
+  "description": "5 раундов."
+ },
+ {
+  "id": "f151",
+  "name": "Циммерман",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 35,
+  "muscles": [
+   "back",
+   "arms",
+   "legs",
+   "full",
+   "shoulders"
+  ],
+  "equipment": [
+   "barbell",
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "pullup",
+    "dose": "11, грудью к перекладине"
+   },
+   {
+    "exercise": "front_squat",
+    "dose": "11, 43/30 кг"
+   },
+   {
+    "exercise": "hang_clean",
+    "dose": "11"
+   },
+   {
+    "exercise": "push_press",
+    "dose": "11"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 2100
+  },
+  "description": "11 раундов."
  },
  {
   "id": "s001",

@@ -1,5 +1,7 @@
 package com.bugsjkeeee.tempo.ui.base
 
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.imePadding
 import com.bugsjkeeee.tempo.ui.icons.TempoIcons
@@ -181,9 +183,10 @@ fun WorkoutEditScreen(
             item {
                 TOutlinedTextField(
                     value = d.name,
-                    onValueChange = { v -> vm.update { it.copy(name = v) } },
+                    onValueChange = { v -> vm.update { it.copy(name = v.replace("\n", " ")) } },
                     label = { Text("Название") },
-                    singleLine = true,
+                    singleLine = false,
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                     modifier = Modifier.fillMaxWidth(),
                 )
             }
@@ -237,9 +240,10 @@ fun WorkoutEditScreen(
                     } else {
                         TOutlinedTextField(
                             value = item.dose ?: "",
-                            onValueChange = { set(item.copy(dose = it)) },
+                            onValueChange = { set(item.copy(dose = it.replace("\n", " "))) },
                             label = { Text("Дозировка, например «15» или «21-15-9, 40 кг»") },
-                            singleLine = true,
+                            singleLine = false,
+                            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                             modifier = Modifier.fillMaxWidth(),
                         )
                     }

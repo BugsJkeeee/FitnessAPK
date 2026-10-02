@@ -1,5 +1,6 @@
 package com.bugsjkeeee.tempo.ui.journal
 
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.imePadding
 import com.bugsjkeeee.tempo.ui.icons.TempoIcons
@@ -285,9 +286,10 @@ fun JournalEditScreen(
             item {
                 TOutlinedTextField(
                     value = d.title,
-                    onValueChange = { v -> vm.update { it.copy(title = v) } },
+                    onValueChange = { v -> vm.update { it.copy(title = v.replace("\n", " ")) } },
                     label = { Text("Название") },
-                    singleLine = true,
+                    singleLine = false,
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                     modifier = Modifier.fillMaxWidth(),
                 )
             }
