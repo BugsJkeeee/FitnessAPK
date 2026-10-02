@@ -3213,6 +3213,615 @@
   "description": "12 раундов: 40 с работы, 20 с отдыха на переход."
  },
  {
+  "id": "f096",
+  "name": "Барбара",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 40,
+  "muscles": [
+   "back",
+   "arms",
+   "chest",
+   "abs",
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "pullup_bar"
+  ],
+  "items": [
+   {
+    "exercise": "pullup",
+    "dose": "20"
+   },
+   {
+    "exercise": "pushup",
+    "dose": "30"
+   },
+   {
+    "exercise": "situp",
+    "dose": "40"
+   },
+   {
+    "exercise": "air_squat",
+    "dose": "50"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 2400
+  },
+  "description": "5 раундов, между раундами 3 минуты отдыха. Результат — общее время."
+ },
+ {
+  "id": "f097",
+  "name": "Половина Мёрфа",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 40,
+  "muscles": [
+   "legs",
+   "full",
+   "back",
+   "arms",
+   "chest"
+  ],
+  "equipment": [
+   "pullup_bar",
+   "treadmill"
+  ],
+  "items": [
+   {
+    "exercise": "treadmill_run",
+    "dose": "800 м"
+   },
+   {
+    "exercise": "pullup",
+    "dose": "50"
+   },
+   {
+    "exercise": "pushup",
+    "dose": "100"
+   },
+   {
+    "exercise": "air_squat",
+    "dose": "150"
+   },
+   {
+    "exercise": "treadmill_run",
+    "dose": "800 м"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 2400
+  },
+  "description": "Облегчённый Мёрф: бег, затем подтягивания, отжимания и приседания в любой разбивке, в конце снова бег."
+ },
+ {
+  "id": "f098",
+  "name": "Кейтрой Мейнард",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 35,
+  "muscles": [
+   "legs",
+   "chest",
+   "arms",
+   "full"
+  ],
+  "equipment": [
+   "box"
+  ],
+  "items": [
+   {
+    "exercise": "step_up",
+    "dose": "44, ящик 60/45 см"
+   },
+   {
+    "exercise": "pushup",
+    "dose": "12"
+   },
+   {
+    "exercise": "air_squat",
+    "dose": "12"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 2100
+  },
+  "description": "5 раундов. Можно в утяжелённом жилете. В последнем раунде — 15 приседаний."
+ },
+ {
+  "id": "f099",
+  "name": "Шеф",
+  "type": "functional",
+  "format": "INTERVALS",
+  "level": 2,
+  "durationMin": 20,
+  "muscles": [
+   "full",
+   "chest",
+   "arms",
+   "legs"
+  ],
+  "equipment": [
+   "barbell"
+  ],
+  "items": [
+   {
+    "exercise": "power_clean",
+    "dose": "3, 60/43 кг"
+   },
+   {
+    "exercise": "pushup",
+    "dose": "6"
+   },
+   {
+    "exercise": "air_squat",
+    "dose": "9"
+   }
+  ],
+  "timer": {
+   "mode": "INTERVALS",
+   "workSec": 180,
+   "restSec": 60,
+   "rounds": 5
+  },
+  "description": "5 отрезков: 3 минуты — как можно больше раундов, 1 минута отдыха. Каждый отрезок продолжайте с того места, где остановились. Результат — сумма раундов."
+ },
+ {
+  "id": "f100",
+  "name": "7-7-7",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 20,
+  "muscles": [
+   "back",
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "barbell"
+  ],
+  "items": [
+   {
+    "exercise": "deadlift",
+    "dose": "7, 40/30 кг"
+   },
+   {
+    "exercise": "thruster",
+    "dose": "7"
+   },
+   {
+    "exercise": "burpee",
+    "dose": "7"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 1200
+  },
+  "description": "7 раундов одной штангой."
+ },
+ {
+  "id": "f101",
+  "name": "Понедельничный чиппер",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 25,
+  "muscles": [
+   "full",
+   "shoulders",
+   "legs",
+   "back"
+  ],
+  "equipment": [
+   "barbell"
+  ],
+  "items": [
+   {
+    "exercise": "burpee",
+    "dose": "5 — перед каждым упражнением и в конце"
+   },
+   {
+    "exercise": "thruster",
+    "dose": "10, 40/30 кг"
+   },
+   {
+    "exercise": "sumo_high_pull",
+    "dose": "15"
+   },
+   {
+    "exercise": "push_press",
+    "dose": "20"
+   },
+   {
+    "exercise": "hang_clean",
+    "dose": "25"
+   },
+   {
+    "exercise": "deadlift",
+    "dose": "30"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 1500
+  },
+  "description": "Одна штанга на весь комплекс. Между упражнениями — 5 бёрпи."
+ },
+ {
+  "id": "f102",
+  "name": "Гидравлика",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 25,
+  "muscles": [
+   "full",
+   "shoulders",
+   "legs"
+  ],
+  "equipment": [
+   "barbell",
+   "kettlebell",
+   "rower"
+  ],
+  "items": [
+   {
+    "exercise": "row_erg",
+    "dose": "50/35 кал"
+   },
+   {
+    "exercise": "kb_swing",
+    "dose": "40, 24/16 кг"
+   },
+   {
+    "exercise": "push_press",
+    "dose": "30, 50/35 кг"
+   },
+   {
+    "exercise": "kb_swing",
+    "dose": "40"
+   },
+   {
+    "exercise": "row_erg",
+    "dose": "50/35 кал"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 1500
+  },
+  "description": "Выполните по порядку."
+ },
+ {
+  "id": "f103",
+  "name": "Дьявол на гребле",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 20,
+  "muscles": [
+   "full",
+   "legs"
+  ],
+  "equipment": [
+   "box",
+   "dumbbell",
+   "rower"
+  ],
+  "items": [
+   {
+    "exercise": "row_erg",
+    "dose": "9/7 кал"
+   },
+   {
+    "exercise": "box_jump",
+    "dose": "6, 60/45 см"
+   },
+   {
+    "exercise": "devil_press",
+    "dose": "3, 15/10 кг"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 1200
+  },
+  "description": "10 раундов. Старайтесь держать одинаковый темп во всех раундах."
+ },
+ {
+  "id": "f104",
+  "name": "Гребля и гантели 30",
+  "type": "functional",
+  "format": "AMRAP",
+  "level": 2,
+  "durationMin": 30,
+  "muscles": [
+   "full",
+   "shoulders",
+   "legs",
+   "abs"
+  ],
+  "equipment": [
+   "barbell",
+   "dumbbell",
+   "kettlebell",
+   "rower"
+  ],
+  "items": [
+   {
+    "exercise": "row_erg",
+    "dose": "500 м"
+   },
+   {
+    "exercise": "push_press",
+    "dose": "5+5, гантель 20/15 кг"
+   },
+   {
+    "exercise": "db_lunge",
+    "dose": "5+5, 15/12 кг"
+   },
+   {
+    "exercise": "kb_swing",
+    "dose": "5+5 одной рукой, 16/12 кг"
+   },
+   {
+    "exercise": "v_up",
+    "dose": "10"
+   }
+  ],
+  "timer": {
+   "mode": "AMRAP",
+   "durationSec": 1800
+  },
+  "description": "Как можно больше раундов за 30 минут. «5+5» — на каждую сторону."
+ },
+ {
+  "id": "f105",
+  "name": "Гребля и трастеры 8",
+  "type": "functional",
+  "format": "AMRAP",
+  "level": 1,
+  "durationMin": 8,
+  "muscles": [
+   "full"
+  ],
+  "equipment": [
+   "dumbbell",
+   "rower"
+  ],
+  "items": [
+   {
+    "exercise": "row_erg",
+    "dose": "10/8 кал"
+   },
+   {
+    "exercise": "db_thruster",
+    "dose": "8, 12,5/10 кг"
+   }
+  ],
+  "timer": {
+   "mode": "AMRAP",
+   "durationSec": 480
+  },
+  "description": "Как можно больше раундов за 8 минут."
+ },
+ {
+  "id": "f106",
+  "name": "Open 18.2",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 12,
+  "muscles": [
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "dumbbell"
+  ],
+  "items": [
+   {
+    "exercise": "db_squat",
+    "dose": "1-2-3-…-10, 2×22,5/15 кг"
+   },
+   {
+    "exercise": "burpee",
+    "dose": "1-2-3-…-10"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 720
+  },
+  "description": "Восходящая лесенка: на каждой ступени N приседаний с гантелями и N бёрпи. В оставшееся время — разовый максимум во взятии на грудь."
+ },
+ {
+  "id": "f107",
+  "name": "Open 20.1",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 2,
+  "durationMin": 15,
+  "muscles": [
+   "full"
+  ],
+  "equipment": [
+   "barbell"
+  ],
+  "items": [
+   {
+    "exercise": "clean_and_jerk",
+    "dose": "8, 43/29 кг — с пола над головой любым способом"
+   },
+   {
+    "exercise": "burpee",
+    "dose": "10, через штангу"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 900
+  },
+  "description": "10 раундов."
+ },
+ {
+  "id": "f108",
+  "name": "Open 21.2",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 20,
+  "muscles": [
+   "full"
+  ],
+  "equipment": [
+   "dumbbell"
+  ],
+  "items": [
+   {
+    "exercise": "db_snatch",
+    "dose": "10-20-30-40-50, 22,5/15 кг"
+   },
+   {
+    "exercise": "burpee",
+    "dose": "15 с перепрыгиванием через ящик после каждой серии"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 1200
+  },
+  "description": "Рывки гантели сериями 10, 20, 30, 40, 50, после каждой серии — 15 бёрпи через ящик 60/45 см."
+ },
+ {
+  "id": "f109",
+  "name": "Люс",
+  "type": "functional",
+  "format": "FOR_TIME",
+  "level": 3,
+  "durationMin": 35,
+  "muscles": [
+   "legs",
+   "full"
+  ],
+  "equipment": [
+   "pullup_bar",
+   "treadmill"
+  ],
+  "items": [
+   {
+    "exercise": "treadmill_run",
+    "dose": "1 км"
+   },
+   {
+    "exercise": "muscle_up",
+    "dose": "10/7"
+   },
+   {
+    "exercise": "air_squat",
+    "dose": "100"
+   }
+  ],
+  "timer": {
+   "mode": "FOR_TIME",
+   "capSec": 2100
+  },
+  "description": "3 раунда, можно с рюкзаком 9/6 кг."
+ },
+ {
+  "id": "f110",
+  "name": "Рывок EMOM 23",
+  "type": "functional",
+  "format": "EMOM",
+  "level": 3,
+  "durationMin": 23,
+  "muscles": [
+   "full"
+  ],
+  "equipment": [
+   "barbell"
+  ],
+  "items": [
+   {
+    "exercise": "power_snatch",
+    "dose": "5 / 3 / 1 / 5 повторов по блокам"
+   }
+  ],
+  "timer": {
+   "mode": "EMOM",
+   "intervalSec": 60,
+   "rounds": 23
+  },
+  "description": "Четыре блока по 5 минут с минутой отдыха между ними: 5 повторов лёгким весом, 3 — средним, 1 тяжёлым (каждые 30 с), снова 5 лёгким."
+ },
+ {
+  "id": "f111",
+  "name": "Взятие EMOM 23",
+  "type": "functional",
+  "format": "EMOM",
+  "level": 3,
+  "durationMin": 23,
+  "muscles": [
+   "full"
+  ],
+  "equipment": [
+   "barbell"
+  ],
+  "items": [
+   {
+    "exercise": "power_clean",
+    "dose": "5 / 3 / 1 / 5 повторов по блокам"
+   }
+  ],
+  "timer": {
+   "mode": "EMOM",
+   "intervalSec": 60,
+   "rounds": 23
+  },
+  "description": "Как «Рывок EMOM 23», но со взятием на грудь: блоки по 5 минут, между ними минута отдыха."
+ },
+ {
+  "id": "f112",
+  "name": "Взятие и фронтальный присед",
+  "type": "functional",
+  "format": "EMOM",
+  "level": 2,
+  "durationMin": 12,
+  "muscles": [
+   "full",
+   "legs"
+  ],
+  "equipment": [
+   "barbell"
+  ],
+  "items": [
+   {
+    "exercise": "power_clean",
+    "dose": "1"
+   },
+   {
+    "exercise": "front_squat",
+    "dose": "1"
+   }
+  ],
+  "timer": {
+   "mode": "EMOM",
+   "intervalSec": 60,
+   "rounds": 12
+  },
+  "description": "12 минут: каждую минуту связка «тяга к груди + взятие + фронтальный присед». Начинайте легко и повышайте вес к концу."
+ },
+ {
   "id": "s001",
   "name": "Грудь: штанга",
   "type": "strength",
