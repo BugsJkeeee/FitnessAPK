@@ -1,5 +1,7 @@
 package com.bugsjkeeee.tempo.ui.journal
 
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.imePadding
 import com.bugsjkeeee.tempo.ui.icons.TempoIcons
 import com.bugsjkeeee.tempo.ui.components.TButton
 import com.bugsjkeeee.tempo.ui.components.TOutlinedButton
@@ -267,7 +269,7 @@ fun JournalEditScreen(
     Scaffold(topBar = { BackTopBar(if (entryId == 0L) "Запись в журнал" else "Редактирование", onDone) }) { padding ->
         if (!d.loaded) return@Scaffold
         LazyColumn(
-            Modifier.fillMaxSize().padding(padding),
+            Modifier.fillMaxSize().padding(padding).consumeWindowInsets(padding).imePadding(),
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {

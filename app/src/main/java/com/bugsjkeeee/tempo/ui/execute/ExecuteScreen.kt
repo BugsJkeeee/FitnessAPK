@@ -1,5 +1,8 @@
 package com.bugsjkeeee.tempo.ui.execute
 
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.ui.draw.alpha
 import com.bugsjkeeee.tempo.ui.icons.TempoIcons
 import com.bugsjkeeee.tempo.ui.components.TButton
 import com.bugsjkeeee.tempo.ui.components.TOutlinedButton
@@ -83,7 +86,14 @@ const val REST_SECONDS = 120
 
 data class SetRow(val weight: String = "", val reps: String = "", val done: Boolean = false)
 
-data class ExerciseBlock(val exercise: Exercise?, val exerciseId: String, val targetReps: Int?, val sets: List<SetRow>)
+/** [unlocked] — сколько подходов открыто для ввода: следующий открывается отметкой предыдущего и больше не блокируется. */
+data class ExerciseBlock(
+    val exercise: Exercise?,
+    val exerciseId: String,
+    val targetReps: Int?,
+    val sets: List<SetRow>,
+    val unlocked: Int = 1,
+)
 
 data class ExecuteState(
     val loaded: Boolean = false,
@@ -128,6 +138,9 @@ class ExecuteViewModel(private val app: TempoApp, private val workoutId: String)
         val done = !row.done
         updateSet(b, s) { it.copy(done = done) }
         if (done) {
+            _state.update { st ->
+                st.copy(blocks = st.blocks.mapIndexed { bi, block -> if (bi == b) block.copy(unlocked = maxOf(block.unlocked, s + 2)) else block })
+            }
             val next = _state.value.blocks[b].sets.getOrNull(s + 1)
             if (next != null && next.weight.isBlank()) updateSet(b, s + 1) { it.copy(weight = row.weight) }
             _state.update { it.copy(restEndsAt = System.currentTimeMillis() + REST_SECONDS * 1000L, restTotalMs = REST_SECONDS * 1000L) }
@@ -243,7 +256,7 @@ fun ExecuteScreen(workoutId: String, onClose: () -> Unit) {
     ) { padding ->
         if (!state.loaded) return@Scaffold
         LazyColumn(
-            Modifier.fillMaxSize().padding(padding),
+            Modifier.fillMaxSize().padding(padding).consumeWindowInsets(padding).imePadding(),
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
@@ -262,6 +275,7 @@ fun ExecuteScreen(workoutId: String, onClose: () -> Unit) {
                         SetRowView(
                             number = s + 1,
                             row = row,
+                            enabled = s < block.unlocked || row.done,
                             onWeight = { vm.setWeight(b, s, it) },
                             onReps = { vm.setReps(b, s, it) },
                             onToggle = { vm.toggleDone(b, s) },
@@ -318,10 +332,17 @@ fun ExecuteScreen(workoutId: String, onClose: () -> Unit) {
 }
 
 @Composable
-private fun SetRowView(number: Int, row: SetRow, onWeight: (String) -> Unit, onReps: (String) -> Unit, onToggle: () -> Unit) {
+private fun SetRowView(
+    number: Int,
+    row: SetRow,
+    enabled: Boolean,
+    onWeight: (String) -> Unit,
+    onReps: (String) -> Unit,
+    onToggle: () -> Unit,
+) {
     val bg = if (row.done) LocalTempoStyle.current.positive.copy(alpha = 0.18f) else androidx.compose.ui.graphics.Color.Transparent
     Row(
-        Modifier.fillMaxWidth().background(bg, LocalTempoStyle.current.tileShape).padding(vertical = 4.dp),
+        Modifier.fillMaxWidth().alpha(if (enabled) 1f else 0.4f).background(bg, LocalTempoStyle.current.tileShape).padding(vertical = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
@@ -334,6 +355,7 @@ private fun SetRowView(number: Int, row: SetRow, onWeight: (String) -> Unit, onR
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
             textStyle = Digits.copy(fontSize = 18.sp),
             modifier = Modifier.weight(1f),
+            enabled = enabled,
         )
         TOutlinedTextField(
             value = row.reps,
@@ -343,10 +365,12 @@ private fun SetRowView(number: Int, row: SetRow, onWeight: (String) -> Unit, onR
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             textStyle = Digits.copy(fontSize = 18.sp),
             modifier = Modifier.weight(1f),
+            enabled = enabled,
         )
         FilledIconToggleButton(
             checked = row.done,
             onCheckedChange = { onToggle() },
+            enabled = enabled,
             colors = IconButtonDefaults.filledIconToggleButtonColors(
                 checkedContainerColor = LocalTempoStyle.current.positive,
             ),

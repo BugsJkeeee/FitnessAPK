@@ -1,5 +1,7 @@
 package com.bugsjkeeee.tempo.ui.settings
 
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.imePadding
 import com.bugsjkeeee.tempo.ui.icons.TempoIcons
 import com.bugsjkeeee.tempo.ui.components.TButton
 import com.bugsjkeeee.tempo.ui.components.TOutlinedButton
@@ -122,7 +124,7 @@ fun SettingsScreen(onBack: () -> Unit) {
     ) { padding ->
         val s = settings ?: return@Scaffold
         LazyColumn(
-            modifier = Modifier.fillMaxSize().padding(padding),
+            modifier = Modifier.fillMaxSize().padding(padding).consumeWindowInsets(padding).imePadding(),
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {

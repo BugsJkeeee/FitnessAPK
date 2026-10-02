@@ -1,5 +1,7 @@
 package com.bugsjkeeee.tempo.ui.base
 
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.imePadding
 import com.bugsjkeeee.tempo.ui.icons.TempoIcons
 import com.bugsjkeeee.tempo.ui.components.TButton
 import com.bugsjkeeee.tempo.ui.components.TOutlinedButton
@@ -172,7 +174,7 @@ fun WorkoutEditScreen(
     Scaffold(topBar = { BackTopBar(if (id == null) "Своя тренировка" else "Редактирование", onDone) }) { padding ->
         if (!d.loaded) return@Scaffold
         LazyColumn(
-            modifier = Modifier.fillMaxSize().padding(padding),
+            modifier = Modifier.fillMaxSize().padding(padding).consumeWindowInsets(padding).imePadding(),
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
@@ -283,7 +285,7 @@ fun WorkoutPickerScreen(onPicked: (String) -> Unit, onBack: () -> Unit) {
     var query by rememberSaveable { mutableStateOf("") }
     Scaffold(topBar = { BackTopBar("Выбор тренировки", onBack) }) { padding ->
         LazyColumn(
-            Modifier.fillMaxSize().padding(padding),
+            Modifier.fillMaxSize().padding(padding).consumeWindowInsets(padding).imePadding(),
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {

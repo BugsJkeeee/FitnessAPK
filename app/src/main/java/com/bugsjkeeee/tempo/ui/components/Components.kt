@@ -1,5 +1,8 @@
 package com.bugsjkeeee.tempo.ui.components
 
+import androidx.compose.foundation.layout.isImeVisible
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -594,19 +597,40 @@ fun TempoTextField(
     keyboardOptions: androidx.compose.foundation.text.KeyboardOptions = androidx.compose.foundation.text.KeyboardOptions.Default,
     keyboardActions: androidx.compose.foundation.text.KeyboardActions = androidx.compose.foundation.text.KeyboardActions.Default,
     textStyle: androidx.compose.ui.text.TextStyle = MaterialTheme.typography.bodyLarge,
+    enabled: Boolean = true,
 ) {
     val style = LocalTempoStyle.current
+    val focusManager = androidx.compose.ui.platform.LocalFocusManager.current
+    val bringIntoView = remember { androidx.compose.foundation.relocation.BringIntoViewRequester() }
+    var focused by remember { mutableStateOf(false) }
+    val imeVisible = androidx.compose.foundation.layout.WindowInsets.isImeVisible
+    // Клавиатура выезжает после получения фокуса — прокручиваем, когда она показалась.
+    LaunchedEffect(focused, imeVisible) {
+        if (focused) {
+            kotlinx.coroutines.delay(150)
+            bringIntoView.bringIntoView()
+        }
+    }
+    val options = if (singleLine && keyboardOptions.imeAction == androidx.compose.ui.text.input.ImeAction.Default) {
+        keyboardOptions.copy(imeAction = androidx.compose.ui.text.input.ImeAction.Done)
+    } else keyboardOptions
+    val actions = if (keyboardActions == androidx.compose.foundation.text.KeyboardActions.Default) {
+        androidx.compose.foundation.text.KeyboardActions(onDone = { focusManager.clearFocus() })
+    } else keyboardActions
     androidx.compose.material3.OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
-        modifier = modifier,
+        enabled = enabled,
+        modifier = modifier
+            .bringIntoViewRequester(bringIntoView)
+            .onFocusChanged { focused = it.isFocused },
         label = label?.let { { Text(it) } },
         placeholder = placeholder?.let { { Text(it, color = style.muted) } },
         leadingIcon = leadingIcon?.let { { Icon(it, contentDescription = null, tint = style.muted, modifier = Modifier.size(18.dp)) } },
         singleLine = singleLine,
         minLines = minLines,
-        keyboardOptions = keyboardOptions,
-        keyboardActions = keyboardActions,
+        keyboardOptions = options,
+        keyboardActions = actions,
         textStyle = textStyle,
         shape = style.smallShape,
         colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
@@ -616,6 +640,8 @@ fun TempoTextField(
             focusedBorderColor = MaterialTheme.colorScheme.primary,
             cursorColor = MaterialTheme.colorScheme.primary,
             focusedLabelColor = MaterialTheme.colorScheme.primary,
+            disabledContainerColor = style.tile,
+            disabledBorderColor = style.outline.copy(alpha = 0.5f),
         ),
     )
 }
@@ -675,7 +701,12 @@ fun TOutlinedButton(
     }
 }
 
-/** Поле ввода с параметрами OutlinedTextField, оформленное как карточки. */
+/**
+ * Поле ввода с параметрами OutlinedTextField, оформленное как карточки.
+ * Однострочное поле по «Готово» скрывает клавиатуру; при фокусе поле прокручивается так,
+ * чтобы его не закрывала клавиатура (у прокручиваемого списка должен быть imePadding).
+ */
+@OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class, ExperimentalLayoutApi::class)
 @Composable
 fun TOutlinedTextField(
     value: String,
@@ -689,19 +720,40 @@ fun TOutlinedTextField(
     keyboardOptions: androidx.compose.foundation.text.KeyboardOptions = androidx.compose.foundation.text.KeyboardOptions.Default,
     keyboardActions: androidx.compose.foundation.text.KeyboardActions = androidx.compose.foundation.text.KeyboardActions.Default,
     textStyle: androidx.compose.ui.text.TextStyle = MaterialTheme.typography.bodyLarge,
+    enabled: Boolean = true,
 ) {
     val style = LocalTempoStyle.current
+    val focusManager = androidx.compose.ui.platform.LocalFocusManager.current
+    val bringIntoView = remember { androidx.compose.foundation.relocation.BringIntoViewRequester() }
+    var focused by remember { mutableStateOf(false) }
+    val imeVisible = androidx.compose.foundation.layout.WindowInsets.isImeVisible
+    // Клавиатура выезжает после получения фокуса — прокручиваем, когда она показалась.
+    LaunchedEffect(focused, imeVisible) {
+        if (focused) {
+            kotlinx.coroutines.delay(150)
+            bringIntoView.bringIntoView()
+        }
+    }
+    val options = if (singleLine && keyboardOptions.imeAction == androidx.compose.ui.text.input.ImeAction.Default) {
+        keyboardOptions.copy(imeAction = androidx.compose.ui.text.input.ImeAction.Done)
+    } else keyboardOptions
+    val actions = if (keyboardActions == androidx.compose.foundation.text.KeyboardActions.Default) {
+        androidx.compose.foundation.text.KeyboardActions(onDone = { focusManager.clearFocus() })
+    } else keyboardActions
     androidx.compose.material3.OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
-        modifier = modifier,
+        enabled = enabled,
+        modifier = modifier
+            .bringIntoViewRequester(bringIntoView)
+            .onFocusChanged { focused = it.isFocused },
         label = label,
         placeholder = placeholder,
         leadingIcon = leadingIcon,
         singleLine = singleLine,
         minLines = minLines,
-        keyboardOptions = keyboardOptions,
-        keyboardActions = keyboardActions,
+        keyboardOptions = options,
+        keyboardActions = actions,
         textStyle = textStyle,
         shape = style.smallShape,
         colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
@@ -711,6 +763,8 @@ fun TOutlinedTextField(
             focusedBorderColor = MaterialTheme.colorScheme.primary,
             cursorColor = MaterialTheme.colorScheme.primary,
             focusedLabelColor = MaterialTheme.colorScheme.primary,
+            disabledContainerColor = style.tile,
+            disabledBorderColor = style.outline.copy(alpha = 0.5f),
         ),
     )
 }
