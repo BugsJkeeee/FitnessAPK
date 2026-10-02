@@ -1,5 +1,8 @@
 package com.bugsjkeeee.tempo.ui.components
 
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.foundation.layout.isImeVisible
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.foundation.relocation.bringIntoViewRequester
@@ -600,30 +603,13 @@ fun TempoTextField(
     enabled: Boolean = true,
 ) {
     val style = LocalTempoStyle.current
-    val focusManager = androidx.compose.ui.platform.LocalFocusManager.current
-    val bringIntoView = remember { androidx.compose.foundation.relocation.BringIntoViewRequester() }
-    var focused by remember { mutableStateOf(false) }
-    val imeVisible = androidx.compose.foundation.layout.WindowInsets.isImeVisible
-    // Клавиатура выезжает после получения фокуса — прокручиваем, когда она показалась.
-    LaunchedEffect(focused, imeVisible) {
-        if (focused) {
-            kotlinx.coroutines.delay(150)
-            bringIntoView.bringIntoView()
-        }
-    }
-    val options = if (singleLine && keyboardOptions.imeAction == androidx.compose.ui.text.input.ImeAction.Default) {
-        keyboardOptions.copy(imeAction = androidx.compose.ui.text.input.ImeAction.Done)
-    } else keyboardOptions
-    val actions = if (keyboardActions == androidx.compose.foundation.text.KeyboardActions.Default) {
-        androidx.compose.foundation.text.KeyboardActions(onDone = { focusManager.clearFocus() })
-    } else keyboardActions
+    val options = fieldKeyboardOptions(keyboardOptions, singleLine)
+    val actions = fieldKeyboardActions(keyboardActions)
     androidx.compose.material3.OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
         enabled = enabled,
-        modifier = modifier
-            .bringIntoViewRequester(bringIntoView)
-            .onFocusChanged { focused = it.isFocused },
+        modifier = modifier.then(keepAboveKeyboard()),
         label = label?.let { { Text(it) } },
         placeholder = placeholder?.let { { Text(it, color = style.muted) } },
         leadingIcon = leadingIcon?.let { { Icon(it, contentDescription = null, tint = style.muted, modifier = Modifier.size(18.dp)) } },
@@ -706,7 +692,6 @@ fun TOutlinedButton(
  * Однострочное поле по «Готово» скрывает клавиатуру; при фокусе поле прокручивается так,
  * чтобы его не закрывала клавиатура (у прокручиваемого списка должен быть imePadding).
  */
-@OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class, ExperimentalLayoutApi::class)
 @Composable
 fun TOutlinedTextField(
     value: String,
@@ -723,30 +708,13 @@ fun TOutlinedTextField(
     enabled: Boolean = true,
 ) {
     val style = LocalTempoStyle.current
-    val focusManager = androidx.compose.ui.platform.LocalFocusManager.current
-    val bringIntoView = remember { androidx.compose.foundation.relocation.BringIntoViewRequester() }
-    var focused by remember { mutableStateOf(false) }
-    val imeVisible = androidx.compose.foundation.layout.WindowInsets.isImeVisible
-    // Клавиатура выезжает после получения фокуса — прокручиваем, когда она показалась.
-    LaunchedEffect(focused, imeVisible) {
-        if (focused) {
-            kotlinx.coroutines.delay(150)
-            bringIntoView.bringIntoView()
-        }
-    }
-    val options = if (singleLine && keyboardOptions.imeAction == androidx.compose.ui.text.input.ImeAction.Default) {
-        keyboardOptions.copy(imeAction = androidx.compose.ui.text.input.ImeAction.Done)
-    } else keyboardOptions
-    val actions = if (keyboardActions == androidx.compose.foundation.text.KeyboardActions.Default) {
-        androidx.compose.foundation.text.KeyboardActions(onDone = { focusManager.clearFocus() })
-    } else keyboardActions
+    val options = fieldKeyboardOptions(keyboardOptions, singleLine)
+    val actions = fieldKeyboardActions(keyboardActions)
     androidx.compose.material3.OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
         enabled = enabled,
-        modifier = modifier
-            .bringIntoViewRequester(bringIntoView)
-            .onFocusChanged { focused = it.isFocused },
+        modifier = modifier.then(keepAboveKeyboard()),
         label = label,
         placeholder = placeholder,
         leadingIcon = leadingIcon,
@@ -767,4 +735,45 @@ fun TOutlinedTextField(
             disabledBorderColor = style.outline.copy(alpha = 0.5f),
         ),
     )
+}
+
+
+/**
+ * Поле при фокусе прокручивается так, чтобы его не закрывала клавиатура
+ * (у прокручиваемого списка должен быть imePadding).
+ */
+@OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class, ExperimentalLayoutApi::class)
+@Composable
+private fun keepAboveKeyboard(): Modifier {
+    val requester = remember { androidx.compose.foundation.relocation.BringIntoViewRequester() }
+    var focused by remember { mutableStateOf(false) }
+    val imeVisible = androidx.compose.foundation.layout.WindowInsets.isImeVisible
+    // Клавиатура выезжает уже после получения фокуса — прокручиваем, когда она показалась и список ужался.
+    LaunchedEffect(focused, imeVisible) {
+        if (focused && imeVisible) {
+            kotlinx.coroutines.delay(120)
+            requester.bringIntoView()
+        }
+    }
+    return Modifier.bringIntoViewRequester(requester).onFocusChanged { focused = it.isFocused }
+}
+
+/** Текст начинается с заглавной буквы; однострочное поле получает кнопку «Готово». */
+private fun fieldKeyboardOptions(options: androidx.compose.foundation.text.KeyboardOptions, singleLine: Boolean): androidx.compose.foundation.text.KeyboardOptions {
+    var o = options
+    val textual = o.keyboardType == KeyboardType.Text || o.keyboardType == KeyboardType.Unspecified
+    if (textual && (o.capitalization == KeyboardCapitalization.None || o.capitalization == KeyboardCapitalization.Unspecified)) {
+        o = o.copy(capitalization = KeyboardCapitalization.Sentences)
+    }
+    if (singleLine && (o.imeAction == ImeAction.Default || o.imeAction == ImeAction.Unspecified)) o = o.copy(imeAction = ImeAction.Done)
+    return o
+}
+
+/** По «Готово» клавиатура скрывается, если экран не задал своё действие. */
+@Composable
+private fun fieldKeyboardActions(actions: androidx.compose.foundation.text.KeyboardActions): androidx.compose.foundation.text.KeyboardActions {
+    val focusManager = androidx.compose.ui.platform.LocalFocusManager.current
+    return if (actions == androidx.compose.foundation.text.KeyboardActions.Default) {
+        androidx.compose.foundation.text.KeyboardActions(onDone = { focusManager.clearFocus() })
+    } else actions
 }

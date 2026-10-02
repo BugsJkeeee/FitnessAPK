@@ -1,5 +1,6 @@
 package com.bugsjkeeee.tempo.ui.weight
 
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.material3.SelectableDates
 import com.bugsjkeeee.tempo.ui.icons.TempoIcons
 import com.bugsjkeeee.tempo.ui.components.TButton
@@ -112,7 +113,7 @@ fun WeightScreen(contentPadding: PaddingValues) {
     val current = state.points.maxByOrNull { it.epochDay }
 
     LazyColumn(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().imePadding(),
         contentPadding = PaddingValues(
             start = 16.dp, end = 16.dp,
             top = contentPadding.calculateTopPadding() + 8.dp,
