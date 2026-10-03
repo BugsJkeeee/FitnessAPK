@@ -48,7 +48,7 @@ data class PhasePalette(
 private val LightPhases = PhasePalette(
     prep = Accent, onPrep = Color.White,
     work = Color(0xFFFAFAFA), onWork = Color(0xFF1A1A1A),
-    rest = Color(0xFFE8FFB0), onRest = Color(0xFF1A1A1A),
+    rest = Color(0xFFC8FF00), onRest = Color(0xFF111111),
     workControl = Color.White, workTrack = Color(0xFFE8E8E8),
 )
 

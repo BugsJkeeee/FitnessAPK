@@ -25,6 +25,12 @@ EQUIPMENT = {
     "machine": "Тренажёры и блоки", "bench": "Скамья",
     "treadmill": "Беговая дорожка", "bike": "Велотренажёр", "elliptical": "Эллипс", "stepper": "Степпер",
 }
+# Интервальные тренировки, где каждый раунд — следующее упражнение по кругу (на таймере показывается «сейчас / далее»).
+ROTATION = {
+    "Чередование 12", "Четыре станции", "Трастеры и подтягивания", "Гантели EMOM", "Жим и присед", "Пресс EMOM",
+    "Табата пресс", "Кардио-микс", "Двойная табата", "Интервалы 40/20 гантели", "Интервалы 40/20 без оборудования",
+    "Интервалы 30/30 гиря", "Табата турник", "Вело EMOM", "Кардио-силовой круг", "Круг по тренажёрам",
+}
 FORMATS = {"FOR_TIME": "For Time", "AMRAP": "AMRAP", "EMOM": "EMOM", "TABATA": "Табата", "INTERVALS": "Интервалы", "STEADY": "Непрерывно", "SETS": "Подходы"}
 
 
@@ -94,6 +100,8 @@ def build(source_db):
             id=f"{prefix}{n:03d}", name=w["name"], type=kind, format=fmt, level=w["level"], durationMin=duration,
             muscles=muscles, equipment=equipment, items=items_json, timer=timer, description=w["desc"],
         )
+        if w["name"] in ROTATION:
+            item["rotation"] = True
         program = w.get("program")
         if program:
             day = sum(1 for x in workouts if x.get("program") == program) + 1

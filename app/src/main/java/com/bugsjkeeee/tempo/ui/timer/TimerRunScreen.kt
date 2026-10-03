@@ -1,5 +1,10 @@
 package com.bugsjkeeee.tempo.ui.timer
 
+import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.ui.text.style.TextOverflow
+import com.bugsjkeeee.tempo.timer.TimerGuide
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.rememberTextMeasurer
@@ -188,6 +193,8 @@ private fun ActiveView(s: TimerSnapshot, controller: TimerController, onMinimize
         muted = content.copy(alpha = 0.55f),
     )
     var confirmStop by rememberSaveable { mutableStateOf(false) }
+    var showGuide by rememberSaveable { mutableStateOf(false) }
+    val guide = s.guide?.takeIf { it.items.isNotEmpty() }
 
     BoxWithConstraints(Modifier.fillMaxSize().background(background).systemBarsPadding()) {
         val w = maxWidth
@@ -199,6 +206,7 @@ private fun ActiveView(s: TimerSnapshot, controller: TimerController, onMinimize
                 }
                 Column(Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(14.dp)) {
                     Title(s, colors)
+                    if (guide != null) GuideBlock(s, guide, colors) { showGuide = true }
                     Bolt(s, controller, colors)
                     Controls(s, controller, colors) { confirmStop = true }
                 }
@@ -210,8 +218,13 @@ private fun ActiveView(s: TimerSnapshot, controller: TimerController, onMinimize
             ) {
                 Title(s, colors)
                 Spacer(Modifier.weight(1f))
-                Dial(s, colors, minOf(300.dp, w - 60.dp, h * 0.42f))
+                // С подсказкой упражнений циферблат ужимается только на невысоких экранах.
+                Dial(s, colors, minOf(300.dp, w - 60.dp, h * if (guide != null) 0.38f else 0.42f))
                 Spacer(Modifier.weight(1f))
+                if (guide != null) {
+                    GuideBlock(s, guide, colors) { showGuide = true }
+                    Spacer(Modifier.weight(0.6f))
+                }
                 Bolt(s, controller, colors)
                 Spacer(Modifier.weight(1f))
                 Controls(s, controller, colors) { confirmStop = true }
@@ -225,6 +238,8 @@ private fun ActiveView(s: TimerSnapshot, controller: TimerController, onMinimize
             modifier = Modifier.padding(12.dp).size(40.dp).clip(CircleShape).clickable(onClick = onMinimize).padding(8.dp),
         )
     }
+
+    if (showGuide && guide != null) GuideSheet(guide) { showGuide = false }
 
     if (confirmStop) {
         AlertDialog(
@@ -285,7 +300,7 @@ private fun Title(s: TimerSnapshot, c: RunColors) {
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
             Box(Modifier.width(60.dp).height(1.dp).background(c.content.copy(alpha = 0.2f)))
             SpacedText(
-                (s.mode.title + if (s.status == RunStatus.PAUSED) " · ПАУЗА" else "").uppercase(),
+                ((s.guide?.title ?: s.mode.title) + if (s.status == RunStatus.PAUSED) " · ПАУЗА" else "").uppercase(),
                 Thin.copy(fontSize = 14.sp, letterSpacing = 8.sp),
                 c.content,
                 Modifier.weight(1f, fill = false),
@@ -340,7 +355,7 @@ private fun Bolt(s: TimerSnapshot, controller: TimerController, c: RunColors) {
     val action = boltAction(s, controller)
     val paused = s.status == RunStatus.PAUSED
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Box(
+        if (action != null || s.guide == null) Box(
             Modifier
                 .size(64.dp)
                 .then(if (c.shadow) Modifier.shadow(8.dp, CircleShape, ambientColor = Color(0x22000000), spotColor = Color(0x22000000)) else Modifier)
@@ -352,7 +367,7 @@ private fun Bolt(s: TimerSnapshot, controller: TimerController, c: RunColors) {
         ) {
             Icon(TempoIcons.Bolt, contentDescription = boltHint(s), tint = c.content, modifier = Modifier.size(28.dp))
         }
-        Spacer(Modifier.height(20.dp))
+        Spacer(Modifier.height(if (action != null || s.guide == null) 20.dp else 4.dp))
         Text("ФАЗА: ${phaseShort(s.phase).uppercase()}", style = Thin.copy(fontSize = 13.sp, letterSpacing = 2.sp, fontWeight = FontWeight.Medium), color = c.content)
         Spacer(Modifier.height(6.dp))
         Text(totalText(s), style = Digits.copy(fontSize = 14.sp, fontWeight = FontWeight.Normal), color = c.muted, textAlign = TextAlign.Center)
@@ -477,4 +492,171 @@ private fun rememberNewRecord(s: TimerSnapshot): Boolean {
         }
     }
     return record
+}
+
+/** Карточка в стиле кнопок управления текущей фазы. */
+@Composable
+private fun guideCard(c: RunColors): Modifier {
+    val shape = RoundedCornerShape(20.dp)
+    return Modifier
+        .fillMaxWidth()
+        .then(if (c.shadow) Modifier.shadow(6.dp, shape, ambientColor = Color(0x14000000), spotColor = Color(0x14000000)) else Modifier)
+        .background(c.control, shape)
+        .border(1.dp, c.controlBorder, shape)
+        .clip(shape)
+}
+
+private val GuideLabel = TextStyle(fontFamily = Inter, fontSize = 10.sp, letterSpacing = 2.sp, fontWeight = FontWeight.SemiBold)
+
+/**
+ * Подсказка упражнений под циферблатом. Чередование по раундам — «Сейчас / Далее»;
+ * короткий комплекс (до 3 упражнений) — список; длинный — одна строка, нажатие открывает шторку.
+ * Длинный текст обрезается многоточием, полный — в шторке.
+ */
+@Composable
+private fun GuideBlock(s: TimerSnapshot, g: TimerGuide, c: RunColors, onOpen: () -> Unit) {
+    val accent = MaterialTheme.colorScheme.primary
+    when {
+        g.rotate -> {
+            val n = g.items.size
+            val upcoming = s.phase != Phase.WORK
+            val index = when (s.phase) {
+                Phase.PREP -> 0
+                Phase.REST -> s.round % n
+                Phase.WORK -> (s.round - 1).coerceAtLeast(0) % n
+            }
+            val item = g.items[index]
+            val isLast = s.round >= s.totalRounds
+            Column(guideCard(c).clickable(onClick = onOpen).padding(horizontal = 16.dp, vertical = 12.dp)) {
+                Text(
+                    (if (upcoming) "Далее · ${index + 1} из $n" else "Сейчас").uppercase(),
+                    style = GuideLabel,
+                    color = c.muted,
+                )
+                Text(
+                    item.name,
+                    style = TextStyle(fontFamily = Inter, fontSize = 22.sp, fontWeight = FontWeight.SemiBold, lineHeight = 26.sp),
+                    color = c.content,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.padding(top = 4.dp),
+                )
+                if (item.dose.isNotBlank()) {
+                    Text(item.dose, style = MaterialTheme.typography.bodySmall, color = c.muted, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                }
+                if (!upcoming && !isLast && n > 1) {
+                    val next = g.items[(index + 1) % n]
+                    Box(Modifier.padding(vertical = 8.dp).fillMaxWidth().height(1.dp).background(c.content.copy(alpha = 0.1f)))
+                    Text(
+                        "Далее: " + next.name,
+                        style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Medium),
+                        color = c.muted,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
+                if (n in 2..12) {
+                    Row(Modifier.padding(top = 10.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                        repeat(n) { i ->
+                            val color = when {
+                                i == index -> if (s.phase == Phase.WORK) accent else c.content
+                                i < index -> c.content.copy(alpha = 0.8f)
+                                else -> c.content.copy(alpha = 0.18f)
+                            }
+                            Box(Modifier.width(18.dp).height(4.dp).background(color, RoundedCornerShape(2.dp)))
+                        }
+                    }
+                }
+            }
+        }
+        g.items.size <= 3 -> Column(guideCard(c).clickable(onClick = onOpen).padding(horizontal = 16.dp, vertical = 10.dp)) {
+            g.items.forEach { item ->
+                Row(Modifier.fillMaxWidth().padding(vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        item.name,
+                        style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
+                        color = c.content,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.weight(1f),
+                    )
+                    if (item.dose.isNotBlank()) {
+                        Text(
+                            item.dose,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = c.muted,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            textAlign = TextAlign.End,
+                            modifier = Modifier.padding(start = 10.dp).widthIn(max = 150.dp),
+                        )
+                    }
+                }
+            }
+        }
+        else -> Row(
+            guideCard(c).clickable(onClick = onOpen).padding(horizontal = 16.dp, vertical = 11.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Column(Modifier.weight(1f)) {
+                Text("Комплекс · ${g.items.size} упражнений".uppercase(), style = GuideLabel, color = c.muted)
+                Text(
+                    g.items.joinToString(" · ") { (it.name + " " + it.dose.substringBefore(",")).trim() },
+                    style = MaterialTheme.typography.bodySmall,
+                    color = c.content,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.padding(top = 3.dp),
+                )
+            }
+            Icon(TempoIcons.ChevronUp, contentDescription = "Показать комплекс", tint = c.muted, modifier = Modifier.size(18.dp))
+        }
+    }
+}
+
+/** Шторка с полным списком упражнений; таймер при этом продолжает идти. */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun GuideSheet(g: TimerGuide, onDismiss: () -> Unit) {
+    val style = LocalTempoStyle.current
+    ModalBottomSheet(
+        onDismissRequest = onDismiss,
+        sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+        containerColor = MaterialTheme.colorScheme.surface,
+    ) {
+        Column(
+            Modifier
+                .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
+                .padding(start = 20.dp, end = 20.dp, bottom = 28.dp),
+        ) {
+            Text(g.title, style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold), color = MaterialTheme.colorScheme.onSurface)
+            if (g.subtitle.isNotBlank()) Text(g.subtitle, style = MaterialTheme.typography.bodySmall, color = style.muted)
+            Spacer(Modifier.height(8.dp))
+            g.items.forEachIndexed { i, item ->
+                if (i > 0) Box(Modifier.fillMaxWidth().height(1.dp).background(style.outline.copy(alpha = 0.6f)))
+                Row(Modifier.fillMaxWidth().padding(vertical = 10.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Box(Modifier.size(26.dp).background(style.segmentIdle, CircleShape), contentAlignment = Alignment.Center) {
+                        Text("${i + 1}", style = MaterialTheme.typography.labelMedium, color = style.chipText)
+                    }
+                    Spacer(Modifier.width(12.dp))
+                    Column(Modifier.weight(1f)) {
+                        Text(item.name, style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Medium), color = MaterialTheme.colorScheme.onSurface)
+                        if (item.dose.isNotBlank()) {
+                            Text(item.dose, style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Medium), color = MaterialTheme.colorScheme.primary)
+                        }
+                    }
+                }
+            }
+            if (g.note.isNotBlank()) {
+                Spacer(Modifier.height(8.dp))
+                Text(
+                    g.note,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = style.secondaryText,
+                    modifier = Modifier.fillMaxWidth().background(style.segmentIdle, RoundedCornerShape(12.dp)).padding(12.dp),
+                )
+            }
+        }
+    }
 }

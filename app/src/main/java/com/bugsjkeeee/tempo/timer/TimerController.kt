@@ -36,6 +36,8 @@ data class TimerSnapshot(
     val laps: List<Long>,
     /** Тренировка из базы, запущенная в таймере, — для записи результата в журнал. */
     val workout: WorkoutRef? = null,
+    /** Упражнения для подсказки на экране. */
+    val guide: TimerGuide? = null,
 ) {
     val segmentRemainingMs: Long? get() = segmentDurationMs?.let { (it - segmentElapsedMs).coerceAtLeast(0) }
 }
@@ -60,9 +62,11 @@ class TimerController(
     private fun now() = SystemClock.elapsedRealtime()
 
     private var workout: WorkoutRef? = null
+    private var guide: TimerGuide? = null
 
-    fun start(mode: TimerMode, timerSettings: TimerSettings, workout: WorkoutRef? = null) {
+    fun start(mode: TimerMode, timerSettings: TimerSettings, workout: WorkoutRef? = null, guide: TimerGuide? = null) {
         this.workout = workout
+        this.guide = guide
         scope.launch {
             settings = settingsRepository.current()
             val plan = buildPlan(mode, timerSettings, settings.prepSec)
@@ -162,6 +166,7 @@ class TimerController(
             totalDurationMs = plan.totalMs?.minus(plan.prepMs),
             laps = r.laps.toList(),
             workout = workout,
+            guide = guide,
         )
     }
 }

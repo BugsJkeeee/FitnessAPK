@@ -135,6 +135,8 @@ data class Workout(
     val programTitle: String? = null,
     val programDay: Int? = null,
     val programDays: Int? = null,
+    /** Каждый раунд таймера — следующее упражнение по кругу. */
+    val rotation: Boolean = false,
 )
 
 /** Ссылка на тренировку, запущенную в таймере, — чтобы записать результат в журнал. */

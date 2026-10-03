@@ -1977,7 +1977,8 @@
    "intervalSec": 60,
    "rounds": 12
   },
-  "description": "Нечётные минуты — бёрпи, чётные — гоблет-присед."
+  "description": "Нечётные минуты — бёрпи, чётные — гоблет-присед.",
+  "rotation": true
  },
  {
   "id": "f059",
@@ -2017,7 +2018,8 @@
    "intervalSec": 60,
    "rounds": 16
   },
-  "description": "Циклы по 4 минуты, 4 круга."
+  "description": "Циклы по 4 минуты, 4 круга.",
+  "rotation": true
  },
  {
   "id": "f060",
@@ -2078,7 +2080,8 @@
    "intervalSec": 60,
    "rounds": 20
   },
-  "description": "Чередование по минутам."
+  "description": "Чередование по минутам.",
+  "rotation": true
  },
  {
   "id": "f062",
@@ -2147,7 +2150,8 @@
    "intervalSec": 60,
    "rounds": 14
   },
-  "description": "Чередование по минутам."
+  "description": "Чередование по минутам.",
+  "rotation": true
  },
  {
   "id": "f064",
@@ -2257,7 +2261,8 @@
    "intervalSec": 60,
    "rounds": 16
   },
-  "description": "Чередование по минутам."
+  "description": "Чередование по минутам.",
+  "rotation": true
  },
  {
   "id": "f068",
@@ -2292,7 +2297,8 @@
    "intervalSec": 60,
    "rounds": 9
   },
-  "description": "3 круга по 3 минуты."
+  "description": "3 круга по 3 минуты.",
+  "rotation": true
  },
  {
   "id": "f069",
@@ -2471,7 +2477,8 @@
    "restSec": 10,
    "rounds": 8
   },
-  "description": "8 раундов 20/10, упражнения по кругу."
+  "description": "8 раундов 20/10, упражнения по кругу.",
+  "rotation": true
  },
  {
   "id": "f075",
@@ -2564,7 +2571,8 @@
    "restSec": 10,
    "rounds": 8
   },
-  "description": "8 раундов 20/10, упражнения по кругу."
+  "description": "8 раундов 20/10, упражнения по кругу.",
+  "rotation": true
  },
  {
   "id": "f078",
@@ -2596,7 +2604,8 @@
    "restSec": 10,
    "rounds": 16
   },
-  "description": "16 раундов 20/10."
+  "description": "16 раундов 20/10.",
+  "rotation": true
  },
  {
   "id": "f079",
@@ -2645,7 +2654,8 @@
    "restSec": 20,
    "rounds": 10
   },
-  "description": "10 раундов: 40 с работы, 20 с отдыха."
+  "description": "10 раундов: 40 с работы, 20 с отдыха.",
+  "rotation": true
  },
  {
   "id": "f080",
@@ -2690,7 +2700,8 @@
    "restSec": 20,
    "rounds": 10
   },
-  "description": "10 раундов 40/20, упражнения по кругу дважды."
+  "description": "10 раундов 40/20, упражнения по кругу дважды.",
+  "rotation": true
  },
  {
   "id": "f081",
@@ -2749,7 +2760,8 @@
    "restSec": 30,
    "rounds": 12
   },
-  "description": "12 раундов 30/30."
+  "description": "12 раундов 30/30.",
+  "rotation": true
  },
  {
   "id": "f083",
@@ -2783,7 +2795,8 @@
    "restSec": 10,
    "rounds": 8
   },
-  "description": "8 раундов 20/10."
+  "description": "8 раундов 20/10.",
+  "rotation": true
  },
  {
   "id": "f084",
@@ -3096,7 +3109,8 @@
    "intervalSec": 60,
    "rounds": 16
   },
-  "description": "16 минут, упражнения чередуются каждую минуту."
+  "description": "16 минут, упражнения чередуются каждую минуту.",
+  "rotation": true
  },
  {
   "id": "f093",
@@ -3210,7 +3224,8 @@
    "restSec": 20,
    "rounds": 12
   },
-  "description": "12 раундов: 40 с работы, 20 с отдыха на переход."
+  "description": "12 раундов: 40 с работы, 20 с отдыха на переход.",
+  "rotation": true
  },
  {
   "id": "f096",
@@ -8635,7 +8650,8 @@
    "restSec": 60,
    "rounds": 5
   },
-  "description": "Каждый раунд — новый тренажёр в указанном порядке, минута отдыха — на переход."
+  "description": "Каждый раунд — новый тренажёр в указанном порядке, минута отдыха — на переход.",
+  "rotation": true
  },
  {
   "id": "c016",
